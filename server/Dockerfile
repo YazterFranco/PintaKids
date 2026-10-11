@@ -15,8 +15,7 @@ ENV NODE_ENV=production \
 # La base de datos y las llaves VAPID viven en el volumen, fuera de la imagen.
 # El volumen hereda el dueño de /data, así que el usuario node debe poder escribir ahí.
 RUN mkdir -p /data && chown node:node /data
-VOLUME ["/data"]
 EXPOSE 8080
 
-USER node
+# Railway monta el volumen como root: el contenedor corre como root dentro de su aislamiento.
 CMD ["node", "--disable-warning=ExperimentalWarning", "src/server.ts"]
