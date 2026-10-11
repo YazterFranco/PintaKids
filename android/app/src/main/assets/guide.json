@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "updatedAt": "2026-10-10",
+  "disclaimer": "Esta guía es orientación general y no reemplaza las instrucciones de Sinaproc, del Instituto de Geociencias de la Universidad de Panamá (IGC-UP) ni de las autoridades. Los datos de sismos pueden ser preliminares y cambiar. Los ítems marcados como por confirmar deben verificarse con Sinaproc antes de considerarse oficiales.",
+  "sources": [
+    { "name": "Instituto de Geociencias UP (IGC-UP): datos sísmicos", "url": "https://sismosgeociencias.up.ac.pa/" },
+    { "name": "Sinaproc: recomendaciones oficiales (pendiente de verificar fuente oficial)", "url": "" }
+  ],
+  "sections": [
+    {
+      "id": "antes",
+      "title": "Antes de un sismo",
+      "phase": "before",
+      "items": [
+        { "text": "Prepare un kit básico: linterna, radio a pilas, agua, medicinas y copias de documentos en una bolsa impermeable.", "confirmed": false },
+        { "text": "Defina dos rutas de salida desde su casa, su trabajo y su escuela, y un punto de encuentro para la familia.", "confirmed": false },
+        { "text": "Sujete estanterías, calentadores y muebles altos a la pared. Guarde los objetos pesados en los estantes bajos.", "confirmed": false }
+      ]
+    },
+    {
+      "id": "durante",
+      "title": "Durante el sismo",
+      "phase": "during",
+      "items": [
+        { "text": "Agáchese, cúbrase bajo una mesa resistente y sujétese hasta que termine la sacudida.", "confirmed": false },
+        { "text": "Aléjese de ventanas, espejos, estanterías y lámparas que puedan caer.", "confirmed": false },
+        { "text": "No corra hacia la salida durante la sacudida: los objetos caen y el riesgo en el trayecto es alto.", "confirmed": false },
+        { "text": "Si está en exteriores, busque un espacio abierto lejos de edificios, cables eléctricos y postes.", "confirmed": false },
+        { "text": "Si conduce, detenga el vehículo en un lugar despejado, lejos de puentes, árboles y postes, y permanezca dentro.", "confirmed": false },
+        { "text": "No use el ascensor. Si está en un edificio alto, espere a que termine la sacudida antes de moverse.", "confirmed": false }
+      ]
+    },
+    {
+      "id": "despues",
+      "title": "Después del sismo",
+      "phase": "after",
+      "items": [
+        { "text": "Revise si hay personas heridas y brinde primeros auxilios básicos. No mueva a una persona con lesiones graves, salvo que haya peligro inmediato.", "confirmed": false },
+        { "text": "Si huele gas, abra ventanas, salga y no encienda interruptores, velas ni cerillas. Avise a las autoridades desde afuera.", "confirmed": false },
+        { "text": "Revise si hay cortocircuitos o daños estructurales antes de usar la electricidad.", "confirmed": false },
+        { "text": "Use el teléfono solo para emergencias. Llame al 911 si hay heridos o un peligro inmediato.", "confirmed": false },
+        { "text": "Salga con calzado resistente: pueden haber vidrios y escombros.", "confirmed": false },
+        { "text": "No entre a edificios dañados. Espere la revisión de las autoridades.", "confirmed": false },
+        { "text": "Siga la información de fuentes oficiales y no difunda rumores.", "confirmed": false }
+      ]
+    },
+    {
+      "id": "tsunami",
+      "title": "Si hay riesgo de tsunami (costa)",
+      "phase": "tsunami",
+      "items": [
+        { "text": "Si siente un sismo fuerte o largo estando cerca de la costa, o si el mar se retira de forma inusual, diríjase a terreno alto o tierra adentro de inmediato.", "confirmed": false },
+        { "text": "No espere la alerta oficial. Aléjese de playas, ríos y manglares.", "confirmed": false },
+        { "text": "Siga las rutas de evacuación señalizadas y no regrese hasta que la autoridad lo autorice.", "confirmed": false }
+      ]
+    },
+    {
+      "id": "replicas",
+      "title": "Réplicas",
+      "phase": "aftershocks",
+      "items": [
+        { "text": "Espere réplicas: repita las medidas de «Durante el sismo» cada vez que sienta una sacudida.", "confirmed": false },
+        { "text": "Revise su plan y su kit después de cada evento fuerte.", "confirmed": false }
+      ]
+    }
+  ]
+}

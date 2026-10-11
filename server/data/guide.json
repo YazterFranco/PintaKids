@@ -1,0 +1,134 @@
+{
+  "version": 2,
+  "updatedAt": "2026-10-10",
+  "disclaimer": "Esta guía es orientación general y no reemplaza las instrucciones de Sinaproc, del Instituto de Geociencias de la Universidad de Panamá (IGC-UP) ni de las autoridades. Los datos de sismos pueden ser preliminares y cambiar.",
+  "sources": [
+    { "name": "Instituto de Geociencias UP (IGC-UP): datos sísmicos", "url": "https://sismosgeociencias.up.ac.pa/" },
+    { "name": "SINAPROC: directorio y recomendaciones", "url": "https://www.sinaproc.gob.pa/" },
+    { "name": "Cuerpo de Bomberos de Panamá: números de emergencia (octubre 2026)", "url": "https://www.telemetro.com/nacionales/sismo-panama-estos-son-los-numeros-emergencia-sinaproc-bomberos-policia-y-sume-911-n6094756" }
+  ],
+  "sections": [
+    {
+      "id": "antes",
+      "title": "Antes de un sismo",
+      "phase": "before",
+      "items": [
+        { "text": "Prepare un kit básico: linterna, radio a pilas, agua, medicinas y copias de documentos en una bolsa impermeable.", "confirmed": false },
+        { "text": "Defina dos rutas de salida desde su casa, su trabajo y su escuela, y un punto de encuentro para la familia.", "confirmed": false },
+        { "text": "Sujete estanterías, calentadores y muebles altos a la pared. Guarde los objetos pesados en los estantes bajos.", "confirmed": false },
+        { "text": "Tenga un número de contacto familiar fuera de la ciudad: tras un sismo fuerte las llamadas locales colapsan antes que las de larga distancia.", "confirmed": false },
+        { "text": "Guarde una copia de llaves, documentos y un número de teléfono escrito en papel: si se va la luz o el celular, sigue sirviendo.", "confirmed": false }
+      ]
+    },
+    {
+      "id": "durante",
+      "title": "Durante el sismo",
+      "phase": "during",
+      "items": [
+        { "text": "Agáchese, cúbrase bajo una mesa resistente y sujétese hasta que termine la sacudida.", "confirmed": false },
+        { "text": "Aléjese de ventanas, espejos, estanterías y lámparas que puedan caer.", "confirmed": false },
+        { "text": "No corra hacia la salida durante la sacudida: los objetos caen y el riesgo en el trayecto es alto.", "confirmed": false },
+        { "text": "Si está en exteriores, busque un espacio abierto lejos de edificios, cables eléctricos y postes.", "confirmed": false },
+        { "text": "Si conduce, detenga el vehículo en un lugar despejado, lejos de puentes, árboles y postes, y permanezca dentro.", "confirmed": false },
+        { "text": "No use el ascensor. Si está en un edificio alto, espere a que termine la sacudida antes de moverse.", "confirmed": false }
+      ]
+    },
+    {
+      "id": "despues",
+      "title": "Después del sismo",
+      "phase": "after",
+      "items": [
+        { "text": "Revise si hay personas heridas y brinde primeros auxilios básicos. No mueva a una persona con lesiones graves, salvo que haya peligro inmediato.", "confirmed": false },
+        { "text": "Si huele gas, abra ventanas, salga y no encienda interruptores, velas ni cerillas. Avise a las autoridades desde afuera.", "confirmed": false },
+        { "text": "Revise si hay cortocircuitos o daños estructurales antes de usar la electricidad.", "confirmed": false },
+        { "text": "Use el teléfono solo para emergencias. Llame al 911 si hay heridos o un peligro inmediato.", "confirmed": false },
+        { "text": "Salga con calzado resistente: pueden haber vidrios y escombros.", "confirmed": false },
+        { "text": "No entre a edificios dañados. Espere la revisión de las autoridades.", "confirmed": false },
+        { "text": "Siga la información de fuentes oficiales y no difunda rumores.", "confirmed": false },
+        { "text": "Espere réplicas: pueden causar daños adicionales en estructuras ya afectadas.", "confirmed": false }
+      ]
+    },
+    {
+      "id": "luz",
+      "title": "Si se va la luz",
+      "phase": "power",
+      "items": [
+        { "text": "Use linterna, nunca velas ni mecheros: tras un sismo puede haber fuga de gas invisible.", "confirmed": false },
+        { "text": "Desconecte electrodomésticos y aires acondicionados para evitar daños cuando regrese la corriente.", "confirmed": false },
+        { "text": "Mantenga la refrigeradora cerrada: con la puerta cerrada la comida dura unas 4 horas; después revise olores y estado antes de consumir.", "confirmed": false },
+        { "text": "No use parrillas, anafes ni tanques de gas dentro de la casa: el monóxido de carbono no se ve ni se huele y mata.", "confirmed": false },
+        { "text": "Racione el celular: brillo bajo, modo ahorro, y reserve batería para emergencias. Una batería externa cargada vale oro.", "confirmed": false },
+        { "text": "Si queda atrapado en un ascensor, use el botón de emergencia o llame al 911. Nunca intente salir por su cuenta.", "confirmed": false },
+        { "text": "Si ve cables eléctricos caídos, aléjese al menos 10 metros y avise al 911: asuma que están energizados.", "confirmed": false },
+        { "text": "Anuncie en casa quién tiene la linterna y la radio para no buscarlas a oscuras en la emergencia.", "confirmed": false }
+      ]
+    },
+    {
+      "id": "maleta",
+      "title": "La maleta de emergencia (72 horas)",
+      "phase": "kit",
+      "items": [
+        { "text": "Agua: 2 litros por persona por día, para mínimo 3 días.", "confirmed": false },
+        { "text": "Comida que no requiere refrigeración ni cocción larga (enlatados, granola, frutos secos) y un abre-latas manual.", "confirmed": false },
+        { "text": "Radio a pilas o de manivela y linterna con pilas de repuesto.", "confirmed": false },
+        { "text": "Botiquín: alcohol, gasas, curitas, guantes y los medicamentos de cada miembro de la familia para al menos una semana.", "confirmed": false },
+        { "text": "Copias de cédula, títulos de propiedad y pólizas en una carpeta impermeable, más efectivo en billetes pequeños (los datáfonos y bancos pueden no funcionar).", "confirmed": false },
+        { "text": "Ropa abrigadora, impermeable y un par de zapatos cerrados y resistentes por persona.", "confirmed": false },
+        { "text": "Silbato (para pedir ayuda si queda atrapado), mascarillas contra polvo y guantes de trabajo.", "confirmed": false },
+        { "text": "Cargadores de celular, batería externa cargada y una lista de teléfonos importantes escrita en papel.", "confirmed": false },
+        { "text": "Artículos de higiene: papel, bolsas plásticas, toallitas, desinfectante.", "confirmed": false },
+        { "text": "Para cada quien: leche y pañales si hay bebés, medicinas y lentes si hay adultos mayores, correa y comida si hay mascotas.", "confirmed": false },
+        { "text": "Revisé la maleta cada 6 meses: cambie agua, pilas y comida vencida, y ajuste la ropa al tamaño actual.", "confirmed": false },
+        { "text": "Guárdela cerca de la salida y asegúrese de que todos los adultos sepan dónde está.", "confirmed": false }
+      ]
+    },
+    {
+      "id": "tsunami",
+      "title": "Si hay riesgo de tsunami (costa)",
+      "phase": "tsunami",
+      "items": [
+        { "text": "Si siente un sismo fuerte o largo estando cerca de la costa, o si el mar se retira de forma inusual, diríjase a terreno alto o tierra adentro de inmediato.", "confirmed": false },
+        { "text": "No espere la alerta oficial. Aléjese de playas, ríos y manglares.", "confirmed": false },
+        { "text": "Siga las rutas de evacuación señalizadas y no regrese hasta que la autoridad lo autorice.", "confirmed": false }
+      ]
+    },
+    {
+      "id": "replicas",
+      "title": "Réplicas",
+      "phase": "aftershocks",
+      "items": [
+        { "text": "Espere réplicas: repita las medidas de «Durante el sismo» cada vez que sienta una sacudida.", "confirmed": false },
+        { "text": "Las réplicas pueden durar días, semanas o más, y algunas pueden ser fuertes.", "confirmed": false },
+        { "text": "Revise su plan y su kit después de cada evento fuerte.", "confirmed": false }
+      ]
+    }
+  ],
+  "emergencyNumbers": [
+    { "name": "Emergencias 911 (SUME)", "phone": "911", "note": "Policía, bomberos y ambulancia, 24/7", "highlight": true },
+    { "name": "SINAPROC · Centro de Operaciones", "phone": "520-4426", "alt": "520-4427 / 520-4429", "note": "Protección Civil, 24/7" },
+    { "name": "SINAPROC · WhatsApp", "phone": "6998-4809", "note": "Canal oficial de reportes 24/7" },
+    { "name": "Cuerpo de Bomberos", "phone": "103", "note": "Incendios y rescate" },
+    { "name": "Policía Nacional", "phone": "104", "note": "Orden público" },
+    { "name": "Cruz Roja Panameña", "phone": "*455", "note": "Ambulancias y socorro" },
+    { "name": "Caja de Seguro Social", "phone": "107", "note": "Emergencias de salud CSS" },
+    { "name": "SENAN", "phone": "108", "alt": "520-6018 / 520-6019", "note": "Servicio Nacional Aeronaval (mar y costas)" },
+    { "name": "SENAFRONT", "phone": "109", "note": "Servicio Nacional de Fronteras" },
+    { "name": "311 · Atención ciudadana", "phone": "311", "note": "Información y trámites del Estado, 24/7" }
+  ],
+  "radios": [
+    { "name": "Noticias RPC Radio", "freq": "970 AM · 106.3 FM · 90.9 FM", "city": "Panamá", "url": "https://www.rpcradio.com/en-linea/", "note": "Noticiero continuo; Medcom" },
+    { "name": "Telemetro Radio", "freq": "En línea (98.1 FM históricamente)", "city": "Panamá", "url": "https://www.telemetro.com/radio", "note": "Noticias Medcom" },
+    { "name": "Antena 8", "freq": "100.1 FM", "city": "Panamá", "url": "https://www.antena8.com/", "note": "Noticias y análisis" },
+    { "name": "Radio Panamá", "freq": "94.5 FM", "city": "Panamá", "url": "https://radiopanama.com.pa/", "note": "Noticias y entrevista" },
+    { "name": "KW Continente", "freq": "710 AM · 95.9 FM", "city": "Panamá", "url": "https://www.kwcontinente.com/", "note": "Noticias y opinión" },
+    { "name": "Radio Nacional de Panamá", "freq": "860 AM", "city": "Panamá", "url": "", "note": "Canal del Estado; suele transmitir cadena nacional en emergencias" }
+  ],
+  "links": [
+    { "name": "IGC-UP · Sismos en vivo", "url": "https://sismosgeociencias.up.ac.pa/", "note": "La fuente sísmica oficial de Panamá" },
+    { "name": "SINAPROC · Alertas oficiales", "url": "https://www.sinaproc.gob.pa/alertas/", "note": "Alertas de prevención por provincia" },
+    { "name": "SINAPROC en redes", "url": "https://twitter.com/Sinaproc_Panama", "note": "@Sinaproc_Panama" },
+    { "name": "USGS · Últimos sismos del mundo", "url": "https://earthquake.usgs.gov/earthquakes/map/", "note": "Datos globales en tiempo real" },
+    { "name": "EMSC · Reportar si lo sintió", "url": "https://www.emsc-csem.org/", "note": "Su reporte mejora la información del sismo" },
+    { "name": "PTWC · Avisos de tsunami", "url": "https://www.tsunami.gov/", "note": "Centro de Alerta de Tsunamis del Pacífico" }
+  ]
+}

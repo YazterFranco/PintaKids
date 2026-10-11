@@ -1,0 +1,20 @@
+node_modules/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+.env
+server/data/*.sqlite*
+firebase-sa*.json
+
+# Firma Android (nunca subir)
+android/keystore.properties
+android/*.keystore
+android/*.jks
+
+# Android: artefactos y máquina-local
+android/local.properties
+android/.gradle/
+android/app/build/
+android/build/
+.DS_Store
+**/.DS_Store

@@ -1,0 +1,194 @@
+import { createServer } from 'node:http';
+import type { IncomingMessage, ServerResponse } from 'node:http';
+import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { Db } from './db.ts';
+import { Hub, type Conn } from './hub.ts';
+import { LiveFeed } from './live.ts';
+import { Runtime } from './runtime.ts';
+import { createApi, authenticateDevice } from './api.ts';
+import { staticFile } from './static.ts';
+import { loadOrCreateVapid, WebPushSender } from './webpush.ts';
+import { startHttpPoller, startEmscSocket } from './pollers.ts';
+import { parseIgcHtml } from './sources/igc.ts';
+import { parseUsgsFeed } from './sources/usgs.ts';
+import { SOURCE_POLL_MS, HEARTBEAT_MS } from './config.ts';
+
+const env = process.env;
+const PORT = Number(env.PORT ?? 8080);
+const DB_PATH = env.DB_PATH ?? './data/alertas.sqlite';
+const MAX_BODY = 16 * 1024;
+const SERVER_DIR = dirname(fileURLToPath(import.meta.url));
+const WEB_DIR = join(SERVER_DIR, '..', 'web');
+
+const guide: unknown = JSON.parse(readFileSync(new URL('../data/guide.json', import.meta.url), 'utf8'));
+
+const db = new Db(DB_PATH);
+const hub = new Hub(db);
+const live = new LiveFeed();
+
+// Llaves VAPID junto a la base de datos (se crean la primera vez, permisos 600).
+const vapid = loadOrCreateVapid(join(dirname(DB_PATH), 'vapid.json'));
+const webPush = new WebPushSender(vapid, env.VAPID_SUBJECT ?? 'mailto:alertas@example.com');
+
+const runtime = new Runtime(db, hub, () => Date.now(), { web: webPush, live });
+const api = createApi({ db, runtime, hub, guide, adminToken: env.ADMIN_TOKEN, vapidPublicKey: vapid.publicKey, live });
+
+const pollers = [
+  startHttpPoller({
+    name: 'igc',
+    url: env.IGC_URL ?? 'https://sismosgeociencias.up.ac.pa/',
+    intervalMs: SOURCE_POLL_MS.igc,
+    runtime,
+    parse: (text, now) => parseIgcHtml(text, now),
+  }),
+  startHttpPoller({
+    name: 'usgs',
+    url: env.USGS_URL ?? 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson',
+    intervalMs: SOURCE_POLL_MS.usgs,
+    runtime,
+    parse: (text, now) => parseUsgsFeed(JSON.parse(text), now),
+  }),
+];
+const emsc = startEmscSocket({
+  url: env.EMSC_WS_URL ?? 'wss://www.seismicportal.eu/standing_order/websocket',
+  runtime,
+});
+
+const ticker = setInterval(() => {
+  runtime
+    .tick()
+    .then(() => live.broadcast('health', runtime.snapshot()))
+    .catch((e: unknown) => console.error('tick:', e instanceof Error ? e.message : e));
+}, 60_000);
+const heartbeat = setInterval(() => {
+  hub.heartbeat();
+  live.heartbeat();
+}, HEARTBEAT_MS);
+
+function readBody(req: IncomingMessage): Promise<string | 'TOO_LARGE'> {
+  return new Promise((resolve, reject) => {
+    let size = 0;
+    const chunks: Buffer[] = [];
+    req.on('data', (c: Buffer) => {
+      size += c.length;
+      if (size > MAX_BODY) {
+        resolve('TOO_LARGE');
+        req.destroy();
+      } else {
+        chunks.push(c);
+      }
+    });
+    req.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
+    req.on('error', reject);
+  });
+}
+
+function send(res: ServerResponse, status: number, body?: unknown): void {
+  if (status === 204) {
+    res.writeHead(204);
+    res.end();
+    return;
+  }
+  res.writeHead(status, {
+    'content-type': 'application/json; charset=utf-8',
+    'cache-control': 'no-store',
+    'x-content-type-options': 'nosniff',
+  });
+  res.end(JSON.stringify(body ?? {}));
+}
+
+/** Abre un flujo de eventos (text/event-stream) y lo registra con la función de alta indicada. */
+function openStream(req: IncomingMessage, res: ServerResponse, register: (conn: Conn) => () => void): void {
+  res.writeHead(200, {
+    'content-type': 'text/event-stream; charset=utf-8',
+    'cache-control': 'no-store',
+    connection: 'keep-alive',
+    'x-content-type-options': 'nosniff',
+  });
+  res.write('retry: 5000\n: conectado\n\n');
+  const conn: Conn = {
+    write: (chunk) => {
+      res.write(chunk);
+    },
+    close: () => res.end(),
+  };
+  const unregister = register(conn);
+  req.on('close', unregister);
+}
+
+const server = createServer(async (req, res) => {
+  try {
+    const url = new URL(req.url ?? '/', 'http://localhost');
+
+    // Página pública: sin datos personales, solo sismos y estado.
+    if (req.method === 'GET' && url.pathname === '/v1/live') {
+      openStream(req, res, (conn) => {
+        live.attach(conn);
+        live.broadcast('health', runtime.snapshot());
+        return () => live.detach(conn);
+      });
+      return;
+    }
+
+    // Canal en vivo de la app nativa (requiere su credencial).
+    const stream = /^\/v1\/devices\/([A-Za-z0-9_-]+)\/stream$/.exec(url.pathname);
+    if (req.method === 'GET' && stream) {
+      const device = authenticateDevice(db, stream[1], req.headers.authorization);
+      if (!device) {
+        send(res, 401, { error: { code: 'NO_AUTORIZADO', message: 'Dispositivo o secreto inválido.' } });
+        return;
+      }
+      openStream(req, res, (conn) => {
+        hub.attach(device.id, conn, runtime.now());
+        return () => hub.detach(device.id, conn);
+      });
+      return;
+    }
+
+    // Archivos de la página (lista blanca).
+    if (req.method === 'GET') {
+      const file = staticFile(url.pathname, WEB_DIR);
+      if (file) {
+        res.writeHead(200, { 'content-type': file.type, 'cache-control': file.cache, 'x-content-type-options': 'nosniff' });
+        res.end(file.body);
+        return;
+      }
+    }
+
+    const hasBody = req.method === 'POST' || req.method === 'PUT';
+    const body = hasBody ? await readBody(req) : undefined;
+    if (body === 'TOO_LARGE') {
+      send(res, 413, { error: { code: 'DEMASIADO_GRANDE', message: 'Cuerpo demasiado grande.' } });
+      return;
+    }
+    const out = await api({
+      method: req.method ?? 'GET',
+      path: url.pathname,
+      query: url.searchParams,
+      authorization: req.headers.authorization,
+      body,
+    });
+    send(res, out.status, out.body);
+  } catch {
+    send(res, 500, { error: { code: 'ERROR_INTERNO', message: 'Error interno del servidor.' } });
+  }
+});
+
+server.listen(PORT, () => console.log(`Alerta sísmica PA escuchando en el puerto ${PORT}`));
+
+function shutdown(): void {
+  clearInterval(ticker);
+  clearInterval(heartbeat);
+  for (const p of pollers) p.stop();
+  emsc.stop();
+  hub.closeAll();
+  live.closeAll();
+  server.close(() => {
+    db.close();
+    process.exit(0);
+  });
+}
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);
