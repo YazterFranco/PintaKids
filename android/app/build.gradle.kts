@@ -36,8 +36,8 @@ android {
         minSdk = 26
         targetSdk = 35
         // CI puede sobreescribir con -PversionCodeOverride=N -PversionNameOverride=X.Y.Z
-        versionCode = (project.findProperty("versionCodeOverride") as? String)?.toIntOrNull() ?: 3
-        versionName = (project.findProperty("versionNameOverride") as? String) ?: "1.2.0"
+        versionCode = (project.findProperty("versionCodeOverride") as? String)?.toIntOrNull() ?: 6
+        versionName = (project.findProperty("versionNameOverride") as? String) ?: "1.3.0"
         // Editable en Ajustes de la app; este valor es solo el inicial.
         buildConfigField("String", "API_BASE_URL", "\"https://alerta-sismica-pa-production.up.railway.app\"")
     }
