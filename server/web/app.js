@@ -24,7 +24,6 @@
   const SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
   const PAG = 20;
   let pagina = 0;
-  let busq = null;
   let flashId = null;
 
   const clase = (mag) => (mag >= 6 ? 'alto' : mag >= 4.5 ? 'medio' : 'bajo');
@@ -189,7 +188,7 @@
     return d;
   }
 
-  // Redibuja los círculos. Si un detalle estaba abierto, lo vuelve a abrir.
+  // Redibuja los puntos. Si un detalle estaba abierto, lo vuelve a abrir.
   // "ajustar": ajusta la vista para que se vean todos los sismos mostrados (solo al cambiar filtros).
   function pintarMapa(lista, ajustar) {
     if (!mapa) return;
@@ -201,14 +200,19 @@
       if (typeof q.lat !== 'number' || typeof q.lon !== 'number') continue;
       const c = COLOR[clase(q.magnitude)];
       const reciente = Date.now() - q.originTime < HORA_MS;
-      const m = L.circleMarker([q.lat, q.lon], {
-        radius: Math.min(4 + q.magnitude * 2.2, 22),
-        color: c,
-        fillColor: c,
-        fillOpacity: reciente ? 0.8 : 0.45,
-        weight: reciente ? 3 : 1.5,
+      const tam = Math.round(Math.min(9 + q.magnitude * 1.3, 18));
+      const replica = Boolean(q.aftershockOf);
+      const html = `<span class="punto-sismo${reciente ? ' reciente' : ''}${replica ? ' replica' : ''}" style="--c:${c};--s:${tam}px"></span>`;
+      const m = L.marker([q.lat, q.lon], {
+        icon: L.divIcon({ className: 'punto-wrap', html, iconSize: [tam, tam], iconAnchor: [tam / 2, tam / 2] }),
+        riseOnHover: true,
+        keyboard: false,
       });
       m.bindPopup(detalle(q));
+      m.on('click', () => {
+        const el = m.getElement()?.querySelector('.punto-sismo');
+        if (el) { el.classList.remove('latido'); void el.offsetWidth; el.classList.add('latido'); }
+      });
       m.addTo(capa);
       marcadores.set(q.id, m);
       puntos.push([q.lat, q.lon]);
@@ -228,6 +232,8 @@
     if (m) {
       mapa.setView(m.getLatLng(), Math.max(mapa.getZoom(), 8));
       m.openPopup();
+      const el = m.getElement()?.querySelector('.punto-sismo');
+      if (el) { el.classList.remove('latido'); void el.offsetWidth; el.classList.add('latido'); }
     } else if (q && typeof q.lat === 'number') {
       mapa.setView([q.lat, q.lon], 8);
     } else {
@@ -246,7 +252,6 @@
 
   // ---------- Lista, resumen, último sismo ----------
   function ventanaActiva() {
-    if (busq) return busq;
     return { desde: Date.now() - ventanaH * HORA_MS, hasta: Infinity };
   }
 
@@ -294,6 +299,7 @@
     const mag = $('ult-mag');
     mag.textContent = `M${u.magnitude.toFixed(1)}`;
     mag.className = `mag ${clase(u.magnitude)}`;
+    $('ult-replica').hidden = !u.aftershockOf;
     $('ult-region').textContent = u.region;
     $('ult-cuando').textContent = `${fecha(u.originTime)} · ${hace(u.originTime)}`;
     $('ult-det').textContent =
@@ -377,6 +383,12 @@
       const body = document.createElement('div');
       const r = document.createElement('strong');
       r.textContent = q.region;
+      if (q.aftershockOf) {
+        const badge = document.createElement('span');
+        badge.className = 'badge-replica';
+        badge.textContent = 'Réplica';
+        r.append(' ', badge);
+      }
       const w = document.createElement('small');
       w.className = 'muted';
       const cuando = document.createElement('span');
@@ -415,27 +427,36 @@
     resumen();
     const u = ultimoId ? quakes.get(ultimoId) : null;
     if (u) $('ult-cuando').textContent = `${fecha(u.originTime)} · ${hace(u.originTime)}`;
+    cargarGraficos();
   }
 
-  // ---------- Gráficos ----------
+  // ---------- Gráficos (totales exactos desde /v1/stats/daily) ----------
   let primeraPintada = true;
+  let statsCache = null;
+
+  async function cargarGraficos() {
+    try {
+      statsCache = await getJson('/v1/stats/daily');
+    } catch { /* conserva el último si falla el refresco */ }
+    pintarGraficos();
+  }
+
   function pintarGraficos() {
     const contDias = $('grafico-dias');
     const contMag = $('grafico-mag');
     if (!contDias || !contMag) return;
-    const todos = [...quakes.values()];
 
+    const porDia = new Map((statsCache?.dias ?? []).map((d) => [d.dia, d]));
     const dias = [];
     for (let i = 6; i >= 0; i--) {
       const d = new Date(Date.now() - i * DIA);
-      dias.push({ clave: DIA_CLAVE.format(d), etiqueta: DIA_CORTO.format(d).replace('.', ''), c: 0, m: 0 });
-    }
-    const porClave = new Map(dias.map((x) => [x.clave, x]));
-    for (const q of todos) {
-      const b = porClave.get(DIA_CLAVE.format(new Date(q.originTime)));
-      if (b) { b.c++; b.m = Math.max(b.m, q.magnitude); }
+      const clave = DIA_CLAVE.format(d);
+      const s = porDia.get(clave);
+      dias.push({ clave, etiqueta: DIA_CORTO.format(d).replace('.', ''), c: s ? s.total : 0, m: s ? s.maxMag : 0 });
     }
     const maxC = Math.max(1, ...dias.map((d) => d.c));
+    const total = dias.reduce((a, d) => a + d.c, 0);
+    const masActivo = dias.reduce((a, d) => (d.c > a.c ? d : a), dias[0]);
     const paso = 46, x0 = 8, H = 140, base = H - 24, maxH = 86;
     const W = x0 * 2 + dias.length * paso;
     let barras = '', textos = '';
@@ -449,68 +470,24 @@
       if (d.c) textos += `<text x="${x + 16}" y="${y - 5}" text-anchor="middle" class="gv">${d.c}</text>`;
       textos += `<text x="${x + 16}" y="${base + 16}" text-anchor="middle">${d.etiqueta}</text>`;
     });
+    const resumenTxt = total
+      ? `Total 7 días: <b>${total}</b> sismos · día más activo: <b>${masActivo.etiqueta}</b> con ${masActivo.c}`
+      : 'Sin sismos registrados en los últimos 7 días.';
     contDias.innerHTML =
-      `<svg viewBox="0 0 ${W} ${H}" class="svg-g" role="img" aria-label="Sismos por día en los últimos 7 días">`
+      `<p class="grafico-resumen">${resumenTxt}</p>`
+      + `<svg viewBox="0 0 ${W} ${H}" class="svg-g" role="img" aria-label="Totales de sismos por día en los últimos 7 días">`
       + `<line x1="0" y1="${base}" x2="${W}" y2="${base}" class="eje"/>${barras}${textos}</svg>`;
 
-    const bins = [
-      { t: 'M 2.5–3.9', lo: 2.5, hi: 4, color: COLOR.bajo },
-      { t: 'M 4–4.9', lo: 4, hi: 5, color: '#f79009' },
-      { t: 'M 5–5.9', lo: 5, hi: 6, color: COLOR.medio },
-      { t: 'M 6 o más', lo: 6, hi: 99, color: COLOR.alto },
-    ];
-    for (const q of todos) {
-      const b = bins.find((x) => q.magnitude >= x.lo && q.magnitude < x.hi);
-      if (b) b.c = (b.c || 0) + 1;
-    }
-    bins.forEach((b) => { b.c ??= 0; });
-    const maxB = Math.max(1, ...bins.map((b) => b.c));
+    const BIN_COLORS = [COLOR.bajo, '#f79009', COLOR.medio, COLOR.alto];
+    const bins = (statsCache?.bins ?? []).map((b, i) => ({ ...b, color: BIN_COLORS[i] ?? COLOR.bajo }));
+    const maxB = Math.max(1, ...bins.map((b) => b.total));
     contMag.innerHTML = bins.map((b) => {
-      const w = Math.max(4, Math.round((b.c / maxB) * 100));
+      const w = Math.max(4, Math.round((b.total / maxB) * 100));
       const anim = primeraPintada && !REDUCIDO ? ' anim' : '';
-      return `<div class="hm-row"><span class="hm-t">${b.t}</span><span class="hm-bar${anim}" style="width:${w}%;background:${b.color}"></span><span class="hm-c">${b.c}</span></div>`;
+      return `<div class="hm-row"><span class="hm-t">${b.banda}</span><span class="hm-bar${anim}" style="width:${w}%;background:${b.color}"></span><span class="hm-c">${b.total}</span></div>`;
     }).join('');
     primeraPintada = false;
   }
-
-  // ---------- Búsqueda por fecha y hora ----------
-  function aplicarBusqueda() {
-    const f = $('f-fecha').value;
-    const info = $('busqueda-info');
-    if (!f) {
-      busq = null;
-      info.hidden = false;
-      info.textContent = 'Elija una fecha (y opcionalmente un rango de horas) para filtrar la lista y el mapa. Horario de Panamá.';
-      return;
-    }
-    const t1 = $('f-desde').value || '00:00';
-    const t2 = $('f-hasta').value || '23:59';
-    const desde = Date.parse(`${f}T${t1}:00-05:00`);
-    const hasta = Date.parse(`${f}T${t2}:59-05:00`);
-    if (!Number.isFinite(desde) || !Number.isFinite(hasta) || hasta < desde) {
-      info.hidden = false;
-      info.textContent = 'Rango inválido: la hora final debe ser posterior a la inicial.';
-      return;
-    }
-    busq = { desde, hasta };
-    info.hidden = false;
-    info.textContent = `Mostrando del ${f} ${t1} a las ${t2} (hora de Panamá). Toque «Limpiar» para volver a la vista por ventanas de tiempo.`;
-    pagina = 0;
-    render(true);
-  }
-
-  function limpiarBusqueda() {
-    $('f-fecha').value = '';
-    $('f-desde').value = '';
-    $('f-hasta').value = '';
-    busq = null;
-    $('busqueda-info').hidden = true;
-    pagina = 0;
-    render(true);
-  }
-
-  $('btn-buscar').addEventListener('click', aplicarBusqueda);
-  $('btn-limpiar').addEventListener('click', limpiarBusqueda);
 
   // ---------- Guía, emergencias, radios y enlaces (desde /v1/guide) ----------
   const ICONOS_GUIA = {
@@ -800,6 +777,7 @@
     try {
       renderGuia(await getJson('/v1/guide'));
     } catch { /* la guía es secundaria */ }
+    cargarGraficos();
   }
 
   function conectarEnVivo() {
@@ -807,15 +785,21 @@
     es.onopen = () => setStatus('En vivo', 'ok');
     es.addEventListener('quake', (ev) => {
       const q = JSON.parse(ev.data);
+      const previo = quakes.get(q.id);
       quakes.set(q.id, q);
       flashId = q.id;
       pagina = 0;
       render(false);
-      mostrarNuevo(q);
       const hero = $('hero-sismo');
       if (!REDUCIDO) {
         hero.classList.add('pop-new');
         setTimeout(() => hero.classList.remove('pop-new'), 800);
+      }
+      if (!previo) {
+        mostrarNuevo(q);
+      } else if (previo.magnitude !== q.magnitude || previo.status !== q.status) {
+        avisoGlobal(`Datos actualizados: ahora M${q.magnitude.toFixed(1)} · ${q.region}`, 'ok');
+        cargarGraficos();
       }
     });
     es.addEventListener('health', (ev) => {
@@ -839,12 +823,11 @@
     });
 
     const tiempo = $('filtro-tiempo');
-    if (![1, 24, 168].includes(ventanaH)) ventanaH = 24;
+    if (![1, 24, 72, 168].includes(ventanaH)) ventanaH = 24;
     tiempo.value = String(ventanaH);
     tiempo.addEventListener('change', () => {
       ventanaH = Number(tiempo.value);
       prefs.set('ventanaH', tiempo.value);
-      if (busq) limpiarBusqueda();
       pagina = 0;
       render(true);
     });

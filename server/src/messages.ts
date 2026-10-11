@@ -26,11 +26,14 @@ export interface QuakeMessageOpts {
 
 /** Mensaje push de sismo. El título no lleva "SIMULACRO": la app lo antepone según drill. */
 export function quakeMessage(e: QuakeEvent, o: QuakeMessageOpts): PushData {
-  const title = o.correction
+  const esReplica = Boolean(e.aftershockOf);
+  const baseTitle = o.correction
     ? `Corrección sismo ${magText(e)}`
     : `${LEVEL_TITLE[o.level]} ${magText(e)}`;
+  const title = esReplica && !o.correction ? `Réplica ${magText(e)}` : baseTitle;
 
   const parts: string[] = [];
+  if (esReplica) parts.push('Posible réplica del sismo principal');
   if (o.previousMag !== undefined) parts.push(`Antes: M${o.previousMag.toFixed(1)}`);
   parts.push(e.region);
   parts.push(`${formatPanamaTime(e.originTime)} hora de Panamá`);
@@ -59,6 +62,7 @@ export function quakeMessage(e: QuakeEvent, o: QuakeMessageOpts): PushData {
     originTime: String(e.originTime),
     sentAt: String(o.now),
   };
+  if (e.aftershockOf) data.aftershockOf = e.aftershockOf;
   if (e.depthKm !== null) data.depthKm = String(e.depthKm);
   if (o.loc) {
     data.distanceKm = String(Math.round(haversineKm(o.loc, e)));

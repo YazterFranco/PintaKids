@@ -22,3 +22,8 @@ export const OUTBOX_TTL_MS = STALE_EVENT_MS;
 export const HEARTBEAT_MS = 25_000;
 /** Cuánto tiempo se guardan eventos en la base del servidor. */
 export const RETENTION_MS = 7 * 86_400_000;
+/** Detección de secuencias: una réplica es un sismo menor que sigue a uno mayor cerca y después. */
+export const AFTERSHOCK_WINDOW_MS = 24 * 3_600_000;
+export const AFTERSHOCK_RADIUS_KM = 200;
+/** El principal debe superar a la réplica por al menos esta magnitud. */
+export const AFTERSHOCK_MIN_DELTA = 0.5;

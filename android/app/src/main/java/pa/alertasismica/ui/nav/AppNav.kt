@@ -46,7 +46,7 @@ private data class Tab(val route: String, val label: String, val icon: ImageVect
 
 private val tabs = listOf(
     Tab(ROUTE_WEB, "Mapa", Icons.Filled.Place),
-    Tab(ROUTE_HOME, "Inicio", Icons.Filled.Home),
+    Tab(ROUTE_HOME, "Detalles", Icons.Filled.Home),
     Tab(ROUTE_GUIDE, "Guía", Icons.Filled.Info),
     Tab(ROUTE_DRILL, "Simulacro", Icons.Filled.Notifications),
     Tab(ROUTE_SETTINGS, "Ajustes", Icons.Filled.Settings),

@@ -1,6 +1,6 @@
 import type { Observation, QuakeEvent, Source } from './types.ts';
 import { haversineKm } from './geo.ts';
-import { RETENTION_MS } from './config.ts';
+import { RETENTION_MS, AFTERSHOCK_WINDOW_MS, AFTERSHOCK_RADIUS_KM, AFTERSHOCK_MIN_DELTA } from './config.ts';
 
 /** Dos observaciones son el mismo sismo si ocurren en ≤30 s y ≤50 km. */
 export const MATCH_WINDOW_MS = 30_000;
@@ -31,6 +31,23 @@ function findMatch(events: Map<string, QuakeEvent>, obs: Observation): QuakeEven
 }
 
 const slug = (s: string): string => s.replace(/[^a-zA-Z0-9]/g, '').slice(0, 24);
+
+/**
+ * Busca el sismo principal de una réplica: el más grande ocurrido hasta AFTERSHOCK_WINDOW_MS
+ * antes, dentro de AFTERSHOCK_RADIUS_KM y al menos AFTERSHOCK_MIN_DELTA por encima.
+ */
+export function findMainshock(events: Map<string, QuakeEvent>, e: QuakeEvent): QuakeEvent | undefined {
+  let best: QuakeEvent | undefined;
+  for (const other of events.values()) {
+    if (other.id === e.id) continue;
+    const dt = e.originTime - other.originTime;
+    if (dt < 0 || dt > AFTERSHOCK_WINDOW_MS) continue;
+    if (other.magnitude < e.magnitude + AFTERSHOCK_MIN_DELTA) continue;
+    if (haversineKm(e, other) > AFTERSHOCK_RADIUS_KM) continue;
+    if (!best || other.magnitude > best.magnitude) best = other;
+  }
+  return best;
+}
 
 interface Snapshot {
   magnitude: number;
@@ -95,6 +112,8 @@ export function ingest(events: Map<string, QuakeEvent>, obs: Observation, now: n
       firstSeenAt: now,
       sources,
     };
+    const main = findMainshock(events, event);
+    if (main) event.aftershockOf = main.id;
     events.set(event.id, event);
     return { event, isNew: true, changed: true };
   }

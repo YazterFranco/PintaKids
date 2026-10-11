@@ -259,3 +259,36 @@ test('mensajes: resumen y aviso de sistema tienen eventId único y acción info'
   assert.equal(s.type, 'system');
   assert.equal(s.action, 'info');
 });
+
+// ---------- Secuencias de réplicas ----------
+test('secuencia: un sismo menor tras uno mayor cerca y después se marca como réplica', () => {
+  const events = new Map<string, QuakeEvent>();
+  const main = ingest(events, obs({ sourceId: 'main', magnitude: 6.5, lat: 7.5, lon: -80.4 }), T0);
+  const aft = ingest(events, obs({ sourceId: 'aft', magnitude: 5.2, lat: 7.6, lon: -80.3, originTime: T0 + 2 * 3600_000, observedAt: T0 + 2 * 3600_000 }), T0 + 2 * 3600_000);
+  assert.equal(aft.event.aftershockOf, main.event.id, 'debe quedar ligada al principal');
+  // Un evento más grande que el principal NO es réplica de él.
+  const bigger = ingest(events, obs({ sourceId: 'big', magnitude: 7.0, lat: 7.5, lon: -80.4, originTime: T0 + 3 * 3600_000, observedAt: T0 + 3 * 3600_000 }), T0 + 3 * 3600_000);
+  assert.equal(bigger.event.aftershockOf, undefined);
+  // Lejos (Chiriquí) no se liga al principal de Azuero.
+  const far = ingest(events, obs({ sourceId: 'far', magnitude: 4.5, lat: 8.4, lon: -82.4, originTime: T0 + 4 * 3600_000, observedAt: T0 + 4 * 3600_000 }), T0 + 4 * 3600_000);
+  assert.equal(far.event.aftershockOf, undefined);
+});
+
+test('mensaje: una réplica se titula "Réplica" y avisa del principal', () => {
+  const e = quake({ magnitude: 5.2, aftershockOf: 'q-principal' });
+  const m = quakeMessage(e, { action: 'notify', level: 'important', now: T0 });
+  assert.match(m.title, /^Réplica/);
+  assert.equal(m.aftershockOf, 'q-principal');
+});
+
+test('política: corregir la magnitud de un evento ya avisado dispara un aviso de corrección', () => {
+  const st = emptyState(T0);
+  const first = quake({ id: 'corr', magnitude: 4.6 });
+  const d1 = decideForEvent(first, DEFAULT_SETTINGS, PANAMA_CITY, st, T0);
+  assert.equal(d1?.action, 'notify');
+  // Sube a 4.9 (delta 0.3 ≥ umbral, sigue siendo "importante"): debe llegar una corrección.
+  const upd = quake({ id: 'corr', magnitude: 4.9 });
+  const d2 = decideForEvent(upd, DEFAULT_SETTINGS, PANAMA_CITY, st, T0 + MIN);
+  assert.equal(d2?.action, 'update');
+  assert.equal(d2?.correction, true);
+});

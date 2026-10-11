@@ -3,10 +3,22 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
+    <!-- Trazo sísmico (sismograma) en dorado -->
     <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M54,30 L80,76 L28,76 Z" />
+        android:strokeColor="#FFD166"
+        android:strokeWidth="6"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="#00000000"
+        android:pathData="M22,54 L36,54 L44,36 L54,74 L64,26 L72,54 L86,54" />
+    <!-- Epicentro -->
     <path
-        android:fillColor="#F5A623"
-        android:pathData="M54,50 L64,68 L44,68 Z" />
+        android:fillColor="#FFD166"
+        android:pathData="M64,26 m-6,0 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0" />
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2.5"
+        android:strokeAlpha="0.85"
+        android:fillColor="#00000000"
+        android:pathData="M64,26 m-13,0 a13,13 0 1,0 26,0 a13,13 0 1,0 -26,0" />
 </vector>

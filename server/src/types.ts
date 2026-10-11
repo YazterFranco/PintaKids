@@ -35,6 +35,8 @@ export interface QuakeEvent {
   source: Source;
   updatedAt: number;
   firstSeenAt: number;
+  /** Si este sismo es una réplica, id del sismo principal dentro de la misma secuencia. */
+  aftershockOf?: string;
   /** observaciones por fuente, para auditoría */
   sources: Partial<Record<Source, Observation>>;
 }

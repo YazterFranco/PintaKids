@@ -265,6 +265,33 @@ export function createApi(deps: ApiDeps): (req: ApiRequest) => Promise<ApiRespon
     return ok(db.feelsFor(eventId));
   }
 
+  /** Totales por día (hora de Panamá) de todos los eventos en memoria, para la gráfica de 7 días. */
+  function statsDaily(): ApiResponse {
+    const fmt = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Panama', year: 'numeric', month: '2-digit', day: '2-digit' });
+    const porDia = new Map<string, { total: number; maxMag: number }>();
+    for (const e of runtime.events.values()) {
+      const dia = fmt.format(new Date(e.originTime));
+      const cur = porDia.get(dia) ?? { total: 0, maxMag: 0 };
+      cur.total++;
+      cur.maxMag = Math.max(cur.maxMag, e.magnitude);
+      porDia.set(dia, cur);
+    }
+    const dias = [...porDia.entries()]
+      .map(([dia, v]) => ({ dia, total: v.total, maxMag: Number(v.maxMag.toFixed(1)) }))
+      .sort((a, b) => (a.dia < b.dia ? -1 : 1));
+    const bins = [
+      { banda: 'M2.5-3.9', lo: 2.5, hi: 4, total: 0 },
+      { banda: 'M4-4.9', lo: 4, hi: 5, total: 0 },
+      { banda: 'M5-5.9', lo: 5, hi: 6, total: 0 },
+      { banda: 'M6+', lo: 6, hi: 99, total: 0 },
+    ];
+    for (const e of runtime.events.values()) {
+      const b = bins.find((x) => e.magnitude >= x.lo && e.magnitude < x.hi);
+      if (b) b.total++;
+    }
+    return ok({ dias, bins, generatedAt: runtime.now() });
+  }
+
   function latency(auth: string | undefined): ApiResponse {
     const token = bearer(auth);
     if (!deps.adminToken || !token || !safeEqual(token, deps.adminToken)) {
@@ -301,6 +328,7 @@ export function createApi(deps: ApiDeps): (req: ApiRequest) => Promise<ApiRespon
       if (req.method === 'POST' && path === '/v1/web/subscriptions') return subscribe(req.body);
       if (req.method === 'GET' && path === '/v1/guide') return ok(deps.guide);
       if (req.method === 'GET' && path === '/v1/events') return events(req.query);
+      if (req.method === 'GET' && path === '/v1/stats/daily') return statsDaily();
       if (req.method === 'POST' && path === '/v1/feels') return reportFeel(req.body);
       if (req.method === 'GET' && path === '/v1/feels') return getFeels(req.query);
       if (req.method === 'POST' && path === '/v1/devices') return register(req.body);

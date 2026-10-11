@@ -59,6 +59,7 @@
       <a href="#card-emergencias">Emergencias</a>
       <a href="#card-radio">Radio</a>
       <a href="#card-guia">Qué hacer</a>
+      <a href="#card-educacion">Aprender</a>
       <a href="#card-enlaces">Fuentes</a>
     </div>
   </nav>
@@ -87,7 +88,7 @@
         <div class="hero-fila">
           <span id="ult-mag" class="mag">M—</span>
           <div class="hero-info">
-            <p class="hero-label">Último sismo</p>
+            <p class="hero-label">Último sismo <span id="ult-replica" class="badge-replica" hidden>Réplica</span></p>
             <p class="region" id="ult-region"></p>
             <p class="muted" id="ult-cuando"></p>
             <p class="muted" id="ult-det"></p>
@@ -135,6 +136,7 @@
           <select id="filtro-tiempo">
             <option value="1">Última hora</option>
             <option value="24" selected>Últimas 24 h</option>
+            <option value="72">Últimos 3 días</option>
             <option value="168">Últimos 7 días</option>
           </select>
         </label>
@@ -152,7 +154,7 @@
         <li><span class="punto medio"></span>M 4.5 a 5.9</li>
         <li><span class="punto bajo"></span>Menos de M 4.5</li>
       </ul>
-      <p class="muted">Círculos más grandes = mayor magnitud. Toque un círculo, o un sismo de la lista, para ver el detalle en el mapa.</p>
+      <p class="muted">Cada punto es un sismo (más rojo = más fuerte). Toque un punto, o un sismo de la lista, para verlo con detalle en el mapa.</p>
     </section>
 
     <section class="card" id="card-lista">
@@ -173,22 +175,6 @@
           </select>
         </label>
       </div>
-      <div class="buscador">
-        <label class="campo">Fecha
-          <input type="date" id="f-fecha">
-        </label>
-        <label class="campo">Desde
-          <input type="time" id="f-desde">
-        </label>
-        <label class="campo">Hasta
-          <input type="time" id="f-hasta">
-        </label>
-        <div class="buscador-acciones">
-          <button id="btn-buscar" type="button" class="chip-b">Buscar</button>
-          <button id="btn-limpiar" type="button" class="chip-b">Limpiar</button>
-        </div>
-      </div>
-      <p id="busqueda-info" class="muted" hidden></p>
       <ul id="lista" class="lista"></ul>
       <p id="lista-vacia" class="muted" hidden>Todavía no hay sismos registrados.</p>
       <div class="paginacion">
@@ -203,12 +189,12 @@
         <span class="ic ic-grafico" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 18V10m4 8V6m4 12v-5M4 21h16"/></svg>
         </span>
-        <h2>Actividad de los últimos 7 días</h2>
+        <h2>Totales por día · últimos 7 días</h2>
       </div>
       <div id="grafico-dias" class="grafico scroll-x"></div>
       <h3 class="subtitulo">Distribución por magnitud</h3>
       <div id="grafico-mag" class="hm"></div>
-      <p class="muted">Los gráficos usan los eventos cargados en esta visita (máximo 200).</p>
+      <p class="muted">Conteo total de sismos registrados por cada día (hora de Panamá).</p>
     </section>
 
     <section class="card" id="card-clima">
@@ -294,6 +280,77 @@
         <button id="btn-whats" type="button" class="whats">Enviar por WhatsApp</button>
       </div>
       <p id="share-msg" class="msg" aria-live="polite"></p>
+    </section>
+
+    <section class="card educa" id="card-educacion">
+      <div class="card-head">
+        <span class="ic ic-educa" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 8l10 5 10-5-10-5z"/><path d="M6 10.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-5.5"/></svg>
+        </span>
+        <h2>¿Qué es un sismo? Guía rápida</h2>
+      </div>
+      <p class="muted">Explicación sencilla para entender lo que muestra esta página. Toca cada tema para abrirlo.</p>
+
+      <details class="educa-item" open>
+        <summary><span class="educa-num">1</span> Por qué tiembla la tierra</summary>
+        <div class="educa-cuerpo">
+          <p>La corteza terrestre está partida en placas que se mueven muy lento. En Panamá chocan la placa del Caribe con la placa de Nazca (y la de Norteamérica), y por eso hay tanta actividad. Cuando la roca en una falla se rompe de golpe por la presión acumulada, libera energía en forma de <strong>ondas sísmicas</strong>: eso es un sismo o terremoto.</p>
+          <div class="falla" aria-hidden="true">
+            <div class="falla-bloque izquierda"></div>
+            <div class="falla-linea"></div>
+            <div class="falla-bloque derecha"></div>
+            <div class="falla-onda o1"></div>
+            <div class="falla-onda o2"></div>
+            <div class="falla-onda o3"></div>
+          </div>
+          <p class="muted">Animación: la falla se rompe y las ondas salen del foco.</p>
+        </div>
+      </details>
+
+      <details class="educa-item">
+        <summary><span class="educa-num">2</span> Términos que verás aquí</summary>
+        <div class="educa-cuerpo">
+          <dl class="glosario">
+            <dt>Foco (o hipocentro)</dt><dd>El punto <em>debajo</em> de la tierra donde se rompe la roca.</dd>
+            <dt>Epicentro</dt><dd>El punto en la <em>superficie</em> justo sobre el foco. Es la ubicación que ves en el mapa.</dd>
+            <dt>Profundidad</dt><dd>Qué tan abajo está el foco. Los superficiales se sienten más fuerte.</dd>
+            <dt>Magnitud (M)</dt><dd>La energía liberada, en una escala que crece de 10 en 10: un M6 libera ~30 veces más energía que un M5.</dd>
+            <dt>Intensidad</dt><dd>Qué tanto se sintió y dañó en un lugar (depende de la distancia y el suelo).</dd>
+            <dt>Réplica</dt><dd>Un sismo menor que sigue al principal en la misma zona y días.</dd>
+          </dl>
+        </div>
+      </details>
+
+      <details class="educa-item">
+        <summary><span class="educa-num">3</span> Qué significa cada magnitud</summary>
+        <div class="educa-cuerpo escala">
+          <div class="escala-fila"><span class="escala-bar b1"></span><b>M &lt; 3</b> Micro: casi nadie lo siente.</div>
+          <div class="escala-fila"><span class="escala-bar b2"></span><b>M 3–4.9</b> Leve a moderado: se siente, rara vez daña.</div>
+          <div class="escala-fila"><span class="escala-bar b3"></span><b>M 5–5.9</b> Fuerte: sacudida notoria, daños leves posible.</div>
+          <div class="escala-fila"><span class="escala-bar b4"></span><b>M 6–6.9</b> Mayor: daños serios cerca del epicentro.</div>
+          <div class="escala-fila"><span class="escala-bar b5"></span><b>M ≥ 7</b> Grande: daño amplio; posible tsunami en la costa.</div>
+        </div>
+      </details>
+
+      <details class="educa-item">
+        <summary><span class="educa-num">4</span> Preliminar vs. revisado</summary>
+        <div class="educa-cuerpo">
+          <p>Los primeros minutos el dato es <strong>preliminar</strong>: la magnitud y la ubicación pueden cambiar unos minutos después cuando los sismólogos revisan. Aquí verás "Dato preliminar, puede cambiar" hasta que quede <strong>revisado</strong>. Si el dato cambia de forma importante, esta página lo actualiza sola y, si tienes avisos, te llega una corrección.</p>
+        </div>
+      </details>
+
+      <details class="educa-item">
+        <summary><span class="educa-num">5</span> Aprender más (video)</summary>
+        <div class="educa-cuerpo">
+          <p>Para verlo en movimiento, estos recursos son confiables y gratuitos:</p>
+          <ul class="educa-links">
+            <li><a href="https://www.youtube.com/watch?v=v7ePwcgZyPU" target="_blank" rel="noopener">Animación: cómo se generan los sismos (USGS, en español)</a></li>
+            <li><a href="https://earthquake.usgs.gov/learn/kids/" target="_blank" rel="noopener">USGS · Aprende sobre terremotos</a></li>
+            <li><a href="https://www.sinaproc.gob.pa/medidas-de-prevencion/" target="_blank" rel="noopener">Sinaproc · Medidas de prevención</a></li>
+          </ul>
+          <p class="muted">Ningún video está alojado aquí: son enlaces a fuentes oficiales para no ocupar espacio ni ancho de banda.</p>
+        </div>
+      </details>
     </section>
 
     <section class="card">

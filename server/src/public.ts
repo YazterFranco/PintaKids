@@ -15,5 +15,6 @@ export function publicEvent(e: QuakeEvent) {
     region: e.region,
     source: e.source,
     updatedAt: e.updatedAt,
+    aftershockOf: e.aftershockOf,
   };
 }
