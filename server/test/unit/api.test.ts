@@ -163,3 +163,44 @@ test('borrar dispositivo: 204 y ya no puede autenticarse', async () => {
   assert.equal((await w.api(req({ method: 'DELETE', path: `/v1/devices/${d.deviceId}`, authorization: auth(d.secret) }))).status, 204);
   assert.equal(w.db.getDevice(d.deviceId), null);
 });
+
+const feelObs = (id: string) => ({
+  source: 'igc' as const, sourceId: id, originTime: T0, lat: 8.6, lon: -79.5,
+  depthKm: 10, magnitude: 5.5, status: 'preliminar' as const, region: 'Panamá', observedAt: T0,
+});
+
+async function eventIdFor(w: ReturnType<typeof makeWorld>, id: string): Promise<string> {
+  await w.runtime.ingestObservations([feelObs(id)]);
+  return [...w.runtime.events.keys()][0];
+}
+
+test('lo sentí: valida, redondea ubicación, deduplica por celda y agrega', async () => {
+  const w = makeWorld();
+  const eventId = await eventIdFor(w, 'feel-1');
+  const body = (lat: number, lon: number, intensity: number) =>
+    json({ eventId, location: { lat, lon }, intensity });
+
+  let r = await w.api(req({ method: 'POST', path: '/v1/feels', body: body(8.982, -79.519, 2) }));
+  assert.equal(r.status, 200);
+  assert.equal((r.body as { nuevo: boolean }).nuevo, true);
+
+  // Misma celda redondeada (0.05°) → no cuenta dos veces.
+  r = await w.api(req({ method: 'POST', path: '/v1/feels', body: body(8.984, -79.521, 3) }));
+  assert.equal((r.body as { nuevo: boolean }).nuevo, false);
+
+  // Otra celda sí cuenta.
+  r = await w.api(req({ method: 'POST', path: '/v1/feels', body: body(9.1, -79.4, 1) }));
+  assert.equal((r.body as { nuevo: boolean }).nuevo, true);
+
+  r = await w.api(req({ method: 'GET', path: '/v1/feels', query: new URLSearchParams({ event: eventId }) }));
+  const feels = r.body as { total: number; counts: number[] };
+  assert.equal(feels.total, 2);
+  assert.equal(feels.counts[1], 1, 'un reporte de "fuerte"');
+  assert.equal(feels.counts[0], 1, 'un reporte de "leve"');
+
+  // Validaciones.
+  r = await w.api(req({ method: 'POST', path: '/v1/feels', body: json({ eventId, location: { lat: 8.9, lon: -79.5 }, intensity: 9 }) }));
+  assert.equal(r.status, 400);
+  r = await w.api(req({ method: 'POST', path: '/v1/feels', body: json({ eventId: 'no-existe', location: { lat: 8.9, lon: -79.5 }, intensity: 1 }) }));
+  assert.equal(r.status, 404);
+});

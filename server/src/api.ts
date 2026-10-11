@@ -238,6 +238,33 @@ export function createApi(deps: ApiDeps): (req: ApiRequest) => Promise<ApiRespon
     return ok({ events: list, generatedAt: runtime.now() });
   }
 
+  /** "Lo sentí": cualquiera reporta si sintió un evento reciente. La ubicación se redondea antes de guardar. */
+  function reportFeel(body: string | undefined): ApiResponse {
+    const b = parseBody(body);
+    if (!b.ok) return err(400, 'JSON_INVALIDO', 'El cuerpo debe ser un objeto JSON.');
+    const eventId = str(b.value.eventId);
+    const intensity = num(b.value.intensity);
+    const loc = parseLocation(b.value.location);
+    if (!eventId || !loc.ok) return err(400, 'VALIDACION', 'Se requieren eventId y location {lat, lon}.');
+    if (intensity === null || intensity < 1 || intensity > 3) {
+      return err(400, 'VALIDACION', 'intensity debe ser 1 (leve), 2 (fuerte) o 3 (fuertísimo).');
+    }
+    if (!loc.value) return err(400, 'VALIDACION', 'Hace falta la ubicación para registrar el reporte.');
+    const event = runtime.events.get(eventId);
+    const now = runtime.now();
+    if (!event || now - event.originTime > DAY_MS) {
+      return err(404, 'EVENTO_NO_ENCONTRADO', 'El evento no está disponible para reportar.');
+    }
+    const inserted = db.insertFeel({ eventId, lat: loc.value.lat, lon: loc.value.lon, intensity, at: now });
+    return ok({ ok: true, nuevo: inserted, total: db.feelsFor(eventId).total });
+  }
+
+  function getFeels(query: URLSearchParams): ApiResponse {
+    const eventId = query.get('event');
+    if (!eventId) return err(400, 'VALIDACION', 'Falta el parámetro event.');
+    return ok(db.feelsFor(eventId));
+  }
+
   function latency(auth: string | undefined): ApiResponse {
     const token = bearer(auth);
     if (!deps.adminToken || !token || !safeEqual(token, deps.adminToken)) {
@@ -274,6 +301,8 @@ export function createApi(deps: ApiDeps): (req: ApiRequest) => Promise<ApiRespon
       if (req.method === 'POST' && path === '/v1/web/subscriptions') return subscribe(req.body);
       if (req.method === 'GET' && path === '/v1/guide') return ok(deps.guide);
       if (req.method === 'GET' && path === '/v1/events') return events(req.query);
+      if (req.method === 'POST' && path === '/v1/feels') return reportFeel(req.body);
+      if (req.method === 'GET' && path === '/v1/feels') return getFeels(req.query);
       if (req.method === 'POST' && path === '/v1/devices') return register(req.body);
       if (req.method === 'GET' && path === '/v1/admin/latency') return latency(req.authorization);
 

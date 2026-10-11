@@ -87,6 +87,26 @@ class ApiClient(private val baseUrl: () -> String) {
     /** Devuelve el JSON crudo de la guía para validarlo y guardarlo en GuideRepository. */
     suspend fun guideRaw(): String = rawRequest("GET", "/v1/guide")
 
+    /** Reporta "lo sentí" (1 leve, 2 fuerte, 3 fuertísimo) con la ubicación del teléfono. */
+    suspend fun feel(eventId: String, loc: Pair<Double, Double>, intensity: Int): Int {
+        val body = buildJsonObject {
+            put("eventId", eventId)
+            put("intensity", intensity)
+            putLocation(loc)
+        }
+        val json = request("POST", "/v1/feels", body, null)
+        return json["total"]?.jsonPrimitive?.asLong()?.toInt() ?: 0
+    }
+
+    suspend fun feels(eventId: String): Pair<Int, Boolean> {
+        val json = try {
+            request("GET", "/v1/feels?event=$eventId", null, null)
+        } catch (e: ApiException) {
+            return Pair(0, false)
+        }
+        return Pair(json["total"]?.jsonPrimitive?.asLong()?.toInt() ?: 0, true)
+    }
+
     /**
      * Versión publicada de la app en el servidor (canal de autoactualización).
      * Devuelve null si el servidor no tiene versión publicada (404) o no responde.

@@ -209,6 +209,10 @@ main {
 .hero-info { min-width: 0; }
 .region { font-size: 1.15rem; font-weight: 700; margin: 2px 0; }
 .mag { display: inline-block; font-size: 2.4rem; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+.sentido { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 12px 0 2px; }
+.sentido-pregunta { font-weight: 700; font-size: .95rem; }
+.sentido .chip-b { min-height: 40px; }
+.sentido .chip-b:disabled { opacity: .55; }
 .alto { color: var(--alta); }
 .medio { color: var(--media); }
 .bajo { color: var(--baja); }

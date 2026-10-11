@@ -161,6 +161,7 @@ export class Runtime {
     const now = this.now();
     prune(this.events, now);
     this.db.pruneEvents(now - RETENTION_MS);
+    this.db.pruneFeels(now - RETENTION_MS);
     this.db.pruneOutbox(now - OUTBOX_TTL_MS);
     for (const d of this.db.listDevices()) {
       const ids = takeDigest(d.state, d.settings, now);

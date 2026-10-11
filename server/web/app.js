@@ -298,7 +298,51 @@
     $('ult-cuando').textContent = `${fecha(u.originTime)} · ${hace(u.originTime)}`;
     $('ult-det').textContent =
       `Profundidad ${u.depthKm ?? '—'} km · ${u.status === 'revisado' ? 'Dato revisado' : 'Dato preliminar, puede cambiar'}`;
+    $('sentido').hidden = false;
+    cargarSentido(u.id);
   }
+
+  // ---------- ¿Lo sintió? (reportes ciudadanos, agregados por celda de ~5 km) ----------
+  let sentidoReportado = false;
+
+  async function cargarSentido(id) {
+    const tot = $('sentido-total');
+    if (!id) { $('sentido').hidden = true; return; }
+    sentidoReportado = false;
+    document.querySelectorAll('#sentido .chip-b').forEach((b) => { b.disabled = false; });
+    try {
+      const f = await getJson(`/v1/feels?event=${encodeURIComponent(id)}`);
+      tot.textContent = f.total ? `${f.total} persona${f.total === 1 ? '' : 's'} lo sintió` : 'Sea el primero en reportar';
+    } catch { tot.textContent = ''; }
+  }
+
+  async function reportarSentido(intensity) {
+    if (!ultimoId || sentidoReportado) return;
+    const u = ubicacionGuardada() ?? PRED;
+    let r;
+    try {
+      r = await fetch('/v1/feels', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ eventId: ultimoId, location: { lat: u.lat, lon: u.lon }, intensity }),
+      });
+    } catch {
+      $('sentido-total').textContent = 'Sin conexión para registrar su reporte.';
+      return;
+    }
+    if (!r.ok) {
+      $('sentido-total').textContent = 'No se pudo registrar. Intente de nuevo.';
+      return;
+    }
+    const d = await r.json();
+    sentidoReportado = true;
+    document.querySelectorAll('#sentido .chip-b').forEach((b) => { b.disabled = true; });
+    $('sentido-total').textContent = `Gracias. Ya son ${d.total} persona${d.total === 1 ? '' : 's'} que lo sintieron`;
+  }
+
+  document.querySelectorAll('#sentido .chip-b').forEach((b) => {
+    b.addEventListener('click', () => { reportarSentido(Number(b.dataset.int)); });
+  });
 
   function renderPaginacion(total) {
     const totalPag = Math.max(1, Math.ceil(total / PAG));

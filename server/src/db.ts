@@ -113,6 +113,14 @@ export class Db {
         device_id TEXT PRIMARY KEY,
         at INTEGER NOT NULL
       );
+      CREATE TABLE IF NOT EXISTS feels (
+        event_id TEXT NOT NULL,
+        lat REAL NOT NULL,
+        lon REAL NOT NULL,
+        intensity INTEGER NOT NULL,
+        at INTEGER NOT NULL,
+        PRIMARY KEY (event_id, lat, lon)
+      );
     `);
   }
 
@@ -263,5 +271,32 @@ export class Db {
 
   pruneEvents(beforeOriginTime: number): number {
     return Number(this.sql.prepare('DELETE FROM events WHERE origin_time < ?').run(beforeOriginTime).changes);
+  }
+
+  /** Registra "lo sentí". Uno por evento y por celda de ubicación (redondeada); repeticiones se ignoran. */
+  insertFeel(f: { eventId: string; lat: number; lon: number; intensity: number; at: number }): boolean {
+    return Number(
+      this.sql
+        .prepare('INSERT OR IGNORE INTO feels (event_id, lat, lon, intensity, at) VALUES (?, ?, ?, ?, ?)')
+        .run(f.eventId, f.lat, f.lon, f.intensity, f.at).changes,
+    ) > 0;
+  }
+
+  /** Total y conteo por intensidad (1 leve, 2 fuerte, 3 fuertísimo) de los reportes de un evento. */
+  feelsFor(eventId: string): { total: number; counts: number[] } {
+    const rows = this.sql
+      .prepare('SELECT intensity, COUNT(*) AS n FROM feels WHERE event_id = ? GROUP BY intensity')
+      .all(eventId) as unknown as Array<{ intensity: number; n: number }>;
+    const counts = [0, 0, 0];
+    let total = 0;
+    for (const r of rows) {
+      if (r.intensity >= 1 && r.intensity <= 3) counts[r.intensity - 1] = r.n;
+      total += r.n;
+    }
+    return { total, counts };
+  }
+
+  pruneFeels(before: number): number {
+    return Number(this.sql.prepare('DELETE FROM feels WHERE at < ?').run(before).changes);
   }
 }
