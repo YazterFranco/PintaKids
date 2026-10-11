@@ -16,6 +16,7 @@ import pa.alertasismica.core.AppJson
 import pa.alertasismica.core.Guide
 import pa.alertasismica.core.QuakeEvent
 import pa.alertasismica.core.Settings
+import pa.alertasismica.update.AppVersion
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
@@ -85,6 +86,26 @@ class ApiClient(private val baseUrl: () -> String) {
 
     /** Devuelve el JSON crudo de la guía para validarlo y guardarlo en GuideRepository. */
     suspend fun guideRaw(): String = rawRequest("GET", "/v1/guide")
+
+    /**
+     * Versión publicada de la app en el servidor (canal de autoactualización).
+     * Devuelve null si el servidor no tiene versión publicada (404) o no responde.
+     */
+    suspend fun appVersion(): AppVersion? {
+        val json = try {
+            request("GET", "/v1/app-version", null, null)
+        } catch (e: ApiException) {
+            if (e.httpCode == 404) return null
+            throw e
+        }
+        return AppVersion(
+            versionCode = json["versionCode"]?.jsonPrimitive?.asLong()?.toInt() ?: return null,
+            versionName = json["versionName"]?.jsonPrimitive?.content.orEmpty(),
+            notes = json["notes"]?.jsonPrimitive?.content.orEmpty(),
+            mandatory = json["mandatory"]?.jsonPrimitive?.asBool() ?: false,
+            apkUrl = json["apkUrl"]?.jsonPrimitive?.content ?: "/descargas/app.apk",
+        )
+    }
 
     suspend fun health(): Health {
         val json = request("GET", "/v1/health", null, null)

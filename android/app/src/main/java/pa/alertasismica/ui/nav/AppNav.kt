@@ -30,6 +30,7 @@ import pa.alertasismica.ui.health.HealthScreen
 import pa.alertasismica.ui.home.HomeScreen
 import pa.alertasismica.ui.onboarding.OnboardingScreen
 import pa.alertasismica.ui.settings.SettingsScreen
+import pa.alertasismica.ui.update.UpdateDialog
 import pa.alertasismica.ui.web.WebScreen
 
 private const val ROUTE_HOME = "home"
@@ -114,4 +115,7 @@ fun AppNav(startOnboarding: Boolean) {
             composable(ROUTE_HEALTH) { HealthScreen(onBack = { nav.popBackStack() }) }
         }
     }
+
+    // Diálogo de autoactualización: se superpone a cualquier pestaña.
+    UpdateDialog()
 }

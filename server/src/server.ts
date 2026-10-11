@@ -1,5 +1,6 @@
 import { createServer } from 'node:http';
 import type { IncomingMessage, ServerResponse } from 'node:http';
+import { createHash, timingSafeEqual } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -13,6 +14,7 @@ import { loadOrCreateVapid, WebPushSender } from './webpush.ts';
 import { startHttpPoller, startEmscSocket } from './pollers.ts';
 import { parseIgcHtml } from './sources/igc.ts';
 import { parseUsgsFeed } from './sources/usgs.ts';
+import { Releases, MAX_APK_BYTES } from './releases.ts';
 import { SOURCE_POLL_MS, HEARTBEAT_MS } from './config.ts';
 
 const env = process.env;
@@ -27,6 +29,7 @@ const guide: unknown = JSON.parse(readFileSync(new URL('../data/guide.json', imp
 const db = new Db(DB_PATH);
 const hub = new Hub(db);
 const live = new LiveFeed();
+const releases = new Releases(join(dirname(DB_PATH), 'releases'));
 
 // Llaves VAPID junto a la base de datos (se crean la primera vez, permisos 600).
 const vapid = loadOrCreateVapid(join(dirname(DB_PATH), 'vapid.json'));
@@ -83,6 +86,46 @@ function readBody(req: IncomingMessage): Promise<string | 'TOO_LARGE'> {
     req.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
     req.on('error', reject);
   });
+}
+
+/** Lee un cuerpo binario (subida de APK) con su propio límite. null si excede. */
+function readBinary(req: IncomingMessage, max: number): Promise<Buffer | null> {
+  return new Promise((resolve, reject) => {
+    let size = 0;
+    const chunks: Buffer[] = [];
+    req.on('data', (c: Buffer) => {
+      size += c.length;
+      if (size > max) {
+        resolve(null);
+        req.destroy();
+      } else {
+        chunks.push(c);
+      }
+    });
+    req.on('end', () => resolve(Buffer.concat(chunks)));
+    req.on('error', reject);
+  });
+}
+
+/** Comparación de token en tiempo constante (mismo esquema que las métricas de latencia). */
+function adminOk(header: string | undefined): boolean {
+  const m = /^Bearer\s+(.+)$/i.exec(header ?? '');
+  const token = m?.[1].trim();
+  if (!token || !env.ADMIN_TOKEN) return false;
+  const a = createHash('sha256').update(token).digest();
+  const b = createHash('sha256').update(env.ADMIN_TOKEN).digest();
+  return timingSafeEqual(a, b);
+}
+
+/** Encabezados con texto: llegan URL-encoded desde CI (solo permiten ASCII). */
+function headerText(v: string | string[] | undefined): string | undefined {
+  const s = Array.isArray(v) ? v[0] : v;
+  if (!s) return undefined;
+  try {
+    return decodeURIComponent(s).slice(0, 2000);
+  } catch {
+    return undefined;
+  }
 }
 
 function send(res: ServerResponse, status: number, body?: unknown): void {
@@ -155,6 +198,57 @@ const server = createServer(async (req, res) => {
         res.end(file.body);
         return;
       }
+    }
+
+    // Canal de distribución de la app: versión pública, descarga pública y publicación con ADMIN_TOKEN.
+    if (req.method === 'GET' && url.pathname === '/v1/app-version') {
+      const info = releases.current();
+      if (!info) {
+        send(res, 404, { error: { code: 'NO_ENCONTRADO', message: 'Aún no hay versión publicada.' } });
+        return;
+      }
+      send(res, 200, { ...info, apkUrl: '/descargas/app.apk' });
+      return;
+    }
+    if (req.method === 'GET' && url.pathname === '/descargas/app.apk') {
+      const info = releases.current();
+      const apk = info ? releases.apk() : null;
+      if (!info || !apk) {
+        send(res, 404, { error: { code: 'NO_ENCONTRADO', message: 'No hay APK disponible.' } });
+        return;
+      }
+      res.writeHead(200, {
+        'content-type': 'application/vnd.android.package-archive',
+        'content-length': String(apk.length),
+        'content-disposition': `attachment; filename="AlertaSismicaPA-${info.versionName}.apk"`,
+        'cache-control': 'no-store',
+        'x-content-type-options': 'nosniff',
+      });
+      res.end(apk);
+      return;
+    }
+    if (req.method === 'POST' && url.pathname === '/v1/admin/apk') {
+      if (!adminOk(req.headers.authorization)) {
+        send(res, 401, { error: { code: 'NO_AUTORIZADO', message: 'Se requiere el token de administración.' } });
+        return;
+      }
+      const body = await readBinary(req, MAX_APK_BYTES);
+      if (!body) {
+        send(res, 413, { error: { code: 'DEMASIADO_GRANDE', message: `La APK no puede superar ${Math.floor(MAX_APK_BYTES / 1024 / 1024)} MB.` } });
+        return;
+      }
+      try {
+        const info = releases.publish(body, {
+          versionCode: Number(req.headers['x-version-code']) || undefined,
+          versionName: headerText(req.headers['x-version-name']),
+          notes: headerText(req.headers['x-notes']),
+          mandatory: req.headers['x-mandatory'] === '1',
+        });
+        send(res, 200, info);
+      } catch (e) {
+        send(res, 400, { error: { code: 'APK_INVALIDA', message: e instanceof Error ? e.message : 'error' } });
+      }
+      return;
     }
 
     const hasBody = req.method === 'POST' || req.method === 'PUT';
