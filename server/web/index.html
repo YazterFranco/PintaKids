@@ -1,389 +1,57 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sismos en Panamá — en vivo</title>
-  <meta name="description" content="Sismos registrados en Panamá en vivo, en mapa, con avisos al teléfono, gráficos, clima, números de emergencia y qué hacer.">
-  <meta name="theme-color" content="#0f1e33">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#7c4dff">
+  <meta name="description" content="Pintakids: dibuja, colorea y cuenta historias. Gratis y sin anuncios.">
+  <title>Pintakids</title>
   <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/icon-192.png">
   <link rel="stylesheet" href="/style.css">
-  <script>
-    try {
-      const t = localStorage.getItem('tema');
-      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
-    } catch (e) { /* sin almacenamiento: se usa el del sistema */ }
-  </script>
+  <script type="module" src="/app.js"></script>
 </head>
 <body>
-  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <div id="offline" class="pill pill-offline" hidden data-i18n="offline.note"></div>
 
-  <header class="top">
-    <div class="top-in">
-      <div class="marca">
-        <span class="logo-sis" aria-hidden="true">
-          <svg viewBox="0 0 96 96"><rect width="96" height="96" rx="20" fill="none"/><path d="M12 56 L26 56 L34 40 L44 70 L54 30 L62 56 L84 56" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-        <div class="titulos">
-          <h1>Sismos en Panamá</h1>
-          <p class="lema">En vivo · IGC-UP, USGS y EMSC</p>
-        </div>
-        <span class="bandera" role="img" aria-label="Bandera de Panamá">
-          <svg viewBox="0 0 30 20">
-            <rect width="30" height="20" fill="#fff"/>
-            <rect x="15" width="15" height="6.67" fill="#DA121A"/>
-            <rect y="13.33" width="15" height="6.67" fill="#072357"/>
-            <path d="M12 2l2.7 6.3 6.8.5-5.2 4.4 1.6 6.6L12 16l-5.9 3.8 1.6-6.6L2.5 8.8l6.8-.5z" transform="translate(1.8,-1.4) scale(0.48)" fill="#072357"/>
-            <path d="M12 2l2.7 6.3 6.8.5-5.2 4.4 1.6 6.6L12 16l-5.9 3.8 1.6-6.6L2.5 8.8l6.8-.5z" transform="translate(16.8,12) scale(0.48)" fill="#DA121A"/>
-          </svg>
-        </span>
-      </div>
-      <div class="top-der">
-        <p id="status" class="status" role="status" data-kind="warn">Conectando…</p>
-        <button id="btn-tema" class="icono" type="button" aria-label="Cambiar entre modo claro y oscuro">
-          <svg class="i-luna" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-          <svg class="i-sol" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-        </button>
-      </div>
-    </div>
-    <div id="fuentes" class="fuentes" aria-label="Estado de las fuentes"></div>
+  <header class="topbar">
+    <span class="logo">🖍️</span>
+    <h1 data-i18n="app.name">Pintakids</h1>
+    <span id="starScore" class="stars" aria-live="polite">⭐ 0</span>
   </header>
 
-  <nav class="nav" aria-label="Secciones de la página">
-    <div class="nav-in">
-      <a href="#card-mapa">Mapa</a>
-      <a href="#card-lista">Sismos</a>
-      <a href="#card-graficos">Gráficos</a>
-      <a href="#card-clima">Clima</a>
-      <a href="#card-emergencias">Emergencias</a>
-      <a href="#card-radio">Radio</a>
-      <a href="#card-guia">Qué hacer</a>
-      <a href="#card-educacion">Aprender</a>
-      <a href="#card-enlaces">Fuentes</a>
-    </div>
-  </nav>
-
-  <main id="contenido">
-    <p id="nuevo" class="nuevo" hidden role="alert"></p>
-
-    <section class="card avisos" id="avisos">
-      <div class="card-head">
-        <span class="ic ic-aviso" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
-        </span>
-        <h2 id="avisos-titulo">Avisos en este teléfono</h2>
-      </div>
-      <p id="avisos-text">Reciba una notificación cada vez que haya un sismo importante, aunque tenga el navegador cerrado.</p>
-      <div class="acciones">
-        <button id="btn-avisos" type="button">Activar avisos</button>
-        <button id="btn-prueba" type="button" class="secondary" hidden>Probar aviso</button>
-        <button id="btn-desactivar" type="button" class="secondary" hidden>Desactivar avisos</button>
-      </div>
-      <p id="avisos-msg" class="msg" aria-live="polite"></p>
-    </section>
-
-    <section class="card heroSismo" id="hero-sismo">
-      <div id="ultimo-datos" hidden>
-        <div class="hero-fila">
-          <span id="ult-mag" class="mag">M—</span>
-          <div class="hero-info">
-            <p class="hero-label">Último sismo <span id="ult-replica" class="badge-replica" hidden>Réplica</span></p>
-            <p class="region" id="ult-region"></p>
-            <p class="muted" id="ult-cuando"></p>
-            <p class="muted" id="ult-det"></p>
-          </div>
-        </div>
-        <div class="sentido" id="sentido" hidden>
-          <span class="sentido-pregunta">¿Usted lo sintió?</span>
-          <button type="button" class="chip-b" data-int="1">Leve</button>
-          <button type="button" class="chip-b" data-int="2">Fuerte</button>
-          <button type="button" class="chip-b" data-int="3">Fuertísimo</button>
-          <span id="sentido-total" class="muted"></span>
-        </div>
-        <div class="acciones">
-          <button id="btn-ver-mapa" type="button" class="secondary">Ver en el mapa</button>
-          <button id="btn-whats-alerta" type="button" class="whats">Avisar por WhatsApp</button>
-          <a id="btn-sentido" class="secondary boton" href="https://www.emsc-csem.org/" target="_blank" rel="noopener">Reporte internacional (EMSC)</a>
-        </div>
-      </div>
-      <p id="ultimo-vacio" class="muted">Sin sismos recientes en la zona.</p>
-    </section>
-
-    <section class="card">
-      <div class="card-head">
-        <span class="ic ic-stats" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14v4m5-9v9m5-13v13"/></svg>
-        </span>
-        <h2>Últimas 24 horas</h2>
-      </div>
-      <div class="resumen">
-        <div class="stat"><span id="st-n" class="stat-num">0</span><span class="muted">sismos</span></div>
-        <div class="stat"><span id="st-max" class="stat-num">—</span><span class="muted">el mayor</span></div>
-        <div class="stat"><span id="st-ultimo" class="stat-num stat-txt">—</span><span class="muted">el último</span></div>
-      </div>
-    </section>
-
-    <section class="card" id="card-mapa">
-      <div class="card-head cabecera">
-        <div class="card-head">
-          <span class="ic ic-mapa" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14m6-12v14"/></svg>
-          </span>
-          <h2>Mapa en vivo</h2>
-        </div>
-        <label class="filtro">Ver
-          <select id="filtro-tiempo">
-            <option value="1">Última hora</option>
-            <option value="24" selected>Últimas 24 h</option>
-            <option value="72">Últimos 3 días</option>
-            <option value="168">Últimos 7 días</option>
-          </select>
-        </label>
-      </div>
-      <div class="vistitas" aria-label="Vistas rápidas del mapa">
-        <button type="button" class="chip-b" data-lat="8.6" data-lon="-80.2" data-zoom="7">Panamá</button>
-        <button type="button" class="chip-b" data-lat="9.01" data-lon="-79.48" data-zoom="9">Ciudad de Panamá</button>
-        <button type="button" class="chip-b" data-lat="8.45" data-lon="-80.6" data-zoom="8">Occidente</button>
-        <button type="button" class="chip-b" data-lat="8.9" data-lon="-79.9" data-zoom="8">Centro y Este</button>
-      </div>
-      <p id="mapa-estado" class="muted mapa-estado" role="status">Cargando mapa…</p>
-      <div id="mapa" class="mapa" aria-label="Mapa de sismos recientes"></div>
-      <ul class="leyenda" aria-label="Leyenda por magnitud">
-        <li><span class="punto alto"></span>M 6.0 o más</li>
-        <li><span class="punto medio"></span>M 4.5 a 5.9</li>
-        <li><span class="punto bajo"></span>Menos de M 4.5</li>
-      </ul>
-      <p class="muted">Cada punto es un sismo (más rojo = más fuerte). Toque un punto, o un sismo de la lista, para verlo con detalle en el mapa.</p>
-    </section>
-
-    <section class="card" id="card-lista">
-      <div class="card-head cabecera">
-        <div class="card-head">
-          <span class="ic ic-lista" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
-          </span>
-          <h2>Sismos recientes</h2>
-        </div>
-        <label class="filtro">Mostrar desde
-          <select id="filtro-mag">
-            <option value="0">Todos</option>
-            <option value="2.5">M 2.5 o más</option>
-            <option value="3">M 3.0 o más</option>
-            <option value="4">M 4.0 o más</option>
-            <option value="5">M 5.0 o más</option>
-          </select>
-        </label>
-      </div>
-      <ul id="lista" class="lista"></ul>
-      <p id="lista-vacia" class="muted" hidden>Todavía no hay sismos registrados.</p>
-      <div class="paginacion">
-        <button id="btn-prev" type="button" class="chip-b" disabled>Anterior</button>
-        <span id="pag-info" class="muted"></span>
-        <button id="btn-next" type="button" class="chip-b" disabled>Siguiente</button>
-      </div>
-    </section>
-
-    <section class="card" id="card-graficos">
-      <div class="card-head">
-        <span class="ic ic-grafico" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 18V10m4 8V6m4 12v-5M4 21h16"/></svg>
-        </span>
-        <h2>Totales por día · últimos 7 días</h2>
-      </div>
-      <div id="grafico-dias" class="grafico scroll-x"></div>
-      <h3 class="subtitulo">Distribución por magnitud</h3>
-      <div id="grafico-mag" class="hm"></div>
-      <p class="muted">Conteo total de sismos registrados por cada día (hora de Panamá).</p>
-    </section>
-
-    <section class="card" id="card-clima">
-      <div class="card-head cabecera">
-        <div class="card-head">
-          <span class="ic ic-clima" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 .5-9 6 6 0 0 0-11.6 1.6A4 4 0 0 0 7 19z"/></svg>
-          </span>
-          <h2>Clima en su área</h2>
-        </div>
-        <div class="clima-botones">
-          <button id="btn-clima-ubic" type="button" class="chip-b">Usar mi ubicación</button>
-          <button id="btn-clima-recargar" type="button" class="chip-b">Actualizar</button>
-        </div>
-      </div>
-      <p id="clima-lugar" class="muted">Sin activar la ubicación, se muestra Ciudad de Panamá. La ubicación solo se usa en su navegador, no se envía a este servidor.</p>
-      <p id="clima-estado" class="muted" role="status">Cargando clima…</p>
-      <div id="clima-hoy" class="clima-hoy" hidden>
-        <div class="clima-icono" id="clima-icon" aria-hidden="true"></div>
-        <div class="clima-temp"><span id="clima-t">—</span><small id="clima-app"></small></div>
-        <div class="clima-desc">
-          <p id="clima-desc" class="clima-desc-txt"></p>
-          <p class="muted" id="clima-viento"></p>
-        </div>
-      </div>
-      <ul id="clima-dias" class="clima-dias"></ul>
-      <p class="muted" id="clima-nota"></p>
-    </section>
-
-    <section class="card" id="card-emergencias">
-      <div class="card-head">
-        <span class="ic ic-tel" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .8 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.4 1.9.7 2.9.8a2 2 0 0 1 1.7 2z"/></svg>
-        </span>
-        <h2>Teléfonos de emergencia en Panamá</h2>
-      </div>
-      <div id="emergencias" class="emgrid"></div>
-      <p class="muted" id="emergencias-nota">Ante cualquier peligro inmediato, llame primero al 911. En emergencias nacionales, el 911 es el canal principal.</p>
-    </section>
-
-    <section class="card" id="card-radio">
-      <div class="card-head">
-        <span class="ic ic-radio" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="14" r="8"/><circle cx="12" cy="14" r="3"/><path d="m5 3 11 8"/></svg>
-        </span>
-        <h2>Emisoras de noticias</h2>
-      </div>
-      <p class="muted">Si se cae el internet o la señal de celular, una radio a pilas o de manivela sintoniza estas emisoras. En emergencias, las autoridades usan cadena nacional.</p>
-      <ul id="radios" class="radios"></ul>
-      <p class="muted">Frecuencias de uso común en la ciudad de Panamá; pueden variar según la provincia.</p>
-    </section>
-
-    <section class="card" id="card-guia">
-      <div class="card-head">
-        <span class="ic ic-guia" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5zM4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg>
-        </span>
-        <h2>Qué hacer: guía rápida</h2>
-      </div>
-      <div id="guia"></div>
-    </section>
-
-    <section class="card" id="card-enlaces">
-      <div class="card-head">
-        <span class="ic ic-link" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>
-        </span>
-        <h2>Fuentes oficiales y reportes</h2>
-      </div>
-      <div id="enlaces" class="enlaces"></div>
-    </section>
-
-    <section class="card">
-      <div class="card-head">
-        <span class="ic ic-compartir" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>
-        </span>
-        <h2>Compartir</h2>
-      </div>
-      <p class="muted">Envíe esta página a su familia para que vean los sismos, los teléfonos de emergencia y activen sus avisos.</p>
-      <div class="acciones">
-        <button id="btn-compartir" type="button" class="secondary">Compartir esta página</button>
-        <button id="btn-whats" type="button" class="whats">Enviar por WhatsApp</button>
-      </div>
-      <p id="share-msg" class="msg" aria-live="polite"></p>
-    </section>
-
-    <section class="card educa" id="card-educacion">
-      <div class="card-head">
-        <span class="ic ic-educa" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 8l10 5 10-5-10-5z"/><path d="M6 10.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-5.5"/></svg>
-        </span>
-        <h2>¿Qué es un sismo? Guía rápida</h2>
-      </div>
-      <p class="muted">Explicación sencilla para entender lo que muestra esta página. Toca cada tema para abrirlo.</p>
-
-      <details class="educa-item" open>
-        <summary><span class="educa-num">1</span> Por qué tiembla la tierra</summary>
-        <div class="educa-cuerpo">
-          <p>La corteza terrestre está partida en placas que se mueven muy lento. En Panamá chocan la placa del Caribe con la placa de Nazca (y la de Norteamérica), y por eso hay tanta actividad. Cuando la roca en una falla se rompe de golpe por la presión acumulada, libera energía en forma de <strong>ondas sísmicas</strong>: eso es un sismo o terremoto.</p>
-          <div class="falla" aria-hidden="true">
-            <div class="falla-bloque izquierda"></div>
-            <div class="falla-linea"></div>
-            <div class="falla-bloque derecha"></div>
-            <div class="falla-onda o1"></div>
-            <div class="falla-onda o2"></div>
-            <div class="falla-onda o3"></div>
-          </div>
-          <p class="muted">Animación: la falla se rompe y las ondas salen del foco.</p>
-        </div>
-      </details>
-
-      <details class="educa-item">
-        <summary><span class="educa-num">2</span> Términos que verás aquí</summary>
-        <div class="educa-cuerpo">
-          <dl class="glosario">
-            <dt>Foco (o hipocentro)</dt><dd>El punto <em>debajo</em> de la tierra donde se rompe la roca.</dd>
-            <dt>Epicentro</dt><dd>El punto en la <em>superficie</em> justo sobre el foco. Es la ubicación que ves en el mapa.</dd>
-            <dt>Profundidad</dt><dd>Qué tan abajo está el foco. Los superficiales se sienten más fuerte.</dd>
-            <dt>Magnitud (M)</dt><dd>La energía liberada, en una escala que crece de 10 en 10: un M6 libera ~30 veces más energía que un M5.</dd>
-            <dt>Intensidad</dt><dd>Qué tanto se sintió y dañó en un lugar (depende de la distancia y el suelo).</dd>
-            <dt>Réplica</dt><dd>Un sismo menor que sigue al principal en la misma zona y días.</dd>
-          </dl>
-        </div>
-      </details>
-
-      <details class="educa-item">
-        <summary><span class="educa-num">3</span> Qué significa cada magnitud</summary>
-        <div class="educa-cuerpo escala">
-          <div class="escala-fila"><span class="escala-bar b1"></span><b>M &lt; 3</b> Micro: casi nadie lo siente.</div>
-          <div class="escala-fila"><span class="escala-bar b2"></span><b>M 3–4.9</b> Leve a moderado: se siente, rara vez daña.</div>
-          <div class="escala-fila"><span class="escala-bar b3"></span><b>M 5–5.9</b> Fuerte: sacudida notoria, daños leves posible.</div>
-          <div class="escala-fila"><span class="escala-bar b4"></span><b>M 6–6.9</b> Mayor: daños serios cerca del epicentro.</div>
-          <div class="escala-fila"><span class="escala-bar b5"></span><b>M ≥ 7</b> Grande: daño amplio; posible tsunami en la costa.</div>
-        </div>
-      </details>
-
-      <details class="educa-item">
-        <summary><span class="educa-num">4</span> Preliminar vs. revisado</summary>
-        <div class="educa-cuerpo">
-          <p>Los primeros minutos el dato es <strong>preliminar</strong>: la magnitud y la ubicación pueden cambiar unos minutos después cuando los sismólogos revisan. Aquí verás "Dato preliminar, puede cambiar" hasta que quede <strong>revisado</strong>. Si el dato cambia de forma importante, esta página lo actualiza sola y, si tienes avisos, te llega una corrección.</p>
-        </div>
-      </details>
-
-      <details class="educa-item">
-        <summary><span class="educa-num">5</span> Aprender más (video)</summary>
-        <div class="educa-cuerpo">
-          <p>Para verlo en movimiento, estos recursos son confiables y gratuitos:</p>
-          <ul class="educa-links">
-            <li><a href="https://www.youtube.com/watch?v=v7ePwcgZyPU" target="_blank" rel="noopener">Animación: cómo se generan los sismos (USGS, en español)</a></li>
-            <li><a href="https://earthquake.usgs.gov/learn/kids/" target="_blank" rel="noopener">USGS · Aprende sobre terremotos</a></li>
-            <li><a href="https://www.sinaproc.gob.pa/medidas-de-prevencion/" target="_blank" rel="noopener">Sinaproc · Medidas de prevención</a></li>
-          </ul>
-          <p class="muted">Ningún video está alojado aquí: son enlaces a fuentes oficiales para no ocupar espacio ni ancho de banda.</p>
-        </div>
-      </details>
-    </section>
-
-    <section class="card">
-      <details>
-        <summary><h2>Cómo funciona</h2></summary>
-        <p class="muted">Los datos vienen de IGC-UP, USGS y EMSC. El servidor consulta IGC-UP cada 20 segundos, USGS cada minuto y EMSC llega por conexión en vivo; unifica los reportes de una misma fuente de sismo. Un sismo nuevo aparece aquí y, si tiene avisos activados, llega a su teléfono. Si ninguna fuente responde durante 10 minutos, la página lo indica. El clima usa Open-Meteo desde su navegador: la ubicación no se envía a este servidor.</p>
-      </details>
-    </section>
+  <main id="views">
+    <section id="view-draw" class="view" aria-label="Dibujar"></section>
+    <section id="view-color" class="view" hidden aria-label="Colorear"></section>
+    <section id="view-learn" class="view" hidden aria-label="Aprender"></section>
+    <section id="view-photo" class="view" hidden aria-label="Foto"></section>
+    <section id="view-story" class="view" hidden aria-label="Cuentos"></section>
+    <section id="view-gallery" class="view" hidden aria-label="Galería"></section>
+    <section id="view-parents" class="view" hidden aria-label="Padres"></section>
   </main>
 
-  <footer class="pie">
-    <div class="pie-in">
-      <div class="pie-col pie-marca">
-        <p class="pie-titulo">Sismos en Panamá</p>
-        <p class="muted">Datos en vivo del IGC-UP, USGS y EMSC en un solo lugar, con avisos al teléfono. Página comunitaria: no reemplaza a Sinaproc ni al IGC-UP; los datos pueden ser preliminares y cambiar.</p>
-      </div>
-      <div class="pie-col">
-        <p class="pie-titulo">Emergencias</p>
-        <p><a href="tel:911"><strong>911</strong> · Emergencias 24/7</a></p>
-        <p><a href="tel:+5075204426">SINAPROC · 520-4426</a></p>
-        <p><a href="https://wa.me/50769984809" target="_blank" rel="noopener">WhatsApp SINAPROC · 6998-4809</a></p>
-      </div>
-      <div class="pie-col">
-        <p class="pie-titulo">Fuentes</p>
-        <p><a href="https://sismosgeociencias.up.ac.pa/" target="_blank" rel="noopener">IGC-UP</a></p>
-        <p><a href="https://www.sinaproc.gob.pa/" target="_blank" rel="noopener">Sinaproc</a></p>
-        <p><a href="https://earthquake.usgs.gov/" target="_blank" rel="noopener">USGS</a> · <a href="https://www.emsc-csem.org/" target="_blank" rel="noopener">EMSC</a></p>
-      </div>
-    </div>
-    <p class="pie-legal">Mapa © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · Clima <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a></p>
-  </footer>
+  <nav class="tabbar" role="tablist" aria-label="secciones">
+    <button class="tab" data-view="draw" role="tab"><span>✏️</span><b data-i18n="tab.draw">Dibujar</b></button>
+    <button class="tab" data-view="color" role="tab"><span>🎨</span><b data-i18n="tab.color">Colorear</b></button>
+    <button class="tab" data-view="learn" role="tab"><span>🧠</span><b data-i18n="tab.learn">Aprender</b></button>
+    <button class="tab" data-view="photo" role="tab"><span>📷</span><b data-i18n="tab.photo">Foto</b></button>
+    <button class="tab" data-view="story" role="tab"><span>📖</span><b data-i18n="tab.story">Cuentos</b></button>
+    <button class="tab" data-view="gallery" role="tab"><span>🖼️</span><b data-i18n="tab.gallery">Galería</b></button>
+    <button class="tab" data-view="parents" role="tab"><span>🔒</span><b data-i18n="tab.parents">Padres</b></button>
+  </nav>
 
-  <script src="/creds.js"></script>
-  <script src="/app.js" defer></script>
+  <div id="timeUp" class="overlay" hidden>
+    <div class="overlay-card">
+      <div class="overlay-emoji">⏰</div>
+      <p data-i18n="parents.timeUp"></p>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script>
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(() => {});
+  </script>
 </body>
 </html>

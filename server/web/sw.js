@@ -1,79 +1,88 @@
-// Service worker: al llegar un "toque" de Web Push, pide los avisos pendientes al servidor,
-// los muestra como notificaciones y los confirma (ack) para que no vuelvan a llegar.
-importScripts('/creds.js');
+/**
+ * Service worker de Pintakids: la app funciona SIN INTERNET.
+ * - Precachea el paquete completo (shell + core + modes + i18n + assets).
+ * - Caché de primera respuesta para catálogo y APIs (los paquetes descargados siguen vivos offline).
+ */
 
-self.addEventListener('install', () => self.skipWaiting());
-self.addEventListener('activate', (e) => e.waitUntil(self.clients.claim()));
+const VERSION = 'pintakids-v1';
 
-self.addEventListener('push', (e) => e.waitUntil(atenderAvisos()));
+const PRECACHE = [
+  '/',
+  '/index.html',
+  '/style.css',
+  '/app.js',
+  '/manifest.webmanifest',
+  '/assets/icon.svg',
+  '/assets/icon-192.png',
+  '/assets/icon-512.png',
+  '/i18n/es.json',
+  '/i18n/en.json',
+  '/core/store.js',
+  '/core/strokes.js',
+  '/core/history.js',
+  '/core/colorfill.js',
+  '/core/lineart.js',
+  '/core/paint.js',
+  '/core/story.js',
+  '/core/i18n.js',
+  '/core/tts.js',
+  '/ui/surface.js',
+  '/ui/parts.js',
+  '/modes/draw.js',
+  '/modes/color.js',
+  '/modes/learn.js',
+  '/modes/photo.js',
+  '/modes/story.js',
+  '/modes/gallery.js',
+  '/modes/parents.js',
+];
 
-self.addEventListener('notificationclick', (e) => {
-  e.notification.close();
+self.addEventListener('install', (e) => {
   e.waitUntil(
-    (async () => {
-      const abiertas = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
-      for (const c of abiertas) if ('focus' in c) return c.focus();
-      return self.clients.openWindow('/');
-    })(),
+    caches
+      .open(VERSION)
+      .then((c) => c.addAll(PRECACHE))
+      .then(() => self.skipWaiting()),
   );
 });
 
-async function atenderAvisos() {
-  const cred = await kvGet('cred').catch(() => null);
-  if (!cred) {
-    return mostrar('Sismo registrado', 'Abra la página para ver los detalles.', 'aviso-generico', {});
+self.addEventListener('activate', (e) => {
+  e.waitUntil(
+    caches
+      .keys()
+      .then((keys) => Promise.all(keys.filter((k) => k !== VERSION).map((k) => caches.delete(k))))
+      .then(() => self.clients.claim()),
+  );
+});
+
+self.addEventListener('fetch', (e) => {
+  const url = new URL(e.request.url);
+  if (e.request.method !== 'GET' || url.origin !== self.location.origin) return;
+
+  // API y catálogo: red primero (los paquetes nuevos llegan), caché como rescate.
+  if (url.pathname.startsWith('/v1/')) {
+    e.respondWith(
+      fetch(e.request)
+        .then((r) => {
+          const copy = r.clone();
+          caches.open(VERSION).then((c) => c.put(e.request, copy));
+          return r;
+        })
+        .catch(() => caches.match(e.request)),
+    );
+    return;
   }
 
-  let items = [];
-  try {
-    const r = await fetch(`${cred.base}/v1/devices/${cred.id}/pending`, {
-      headers: { authorization: `Bearer ${cred.secret}` },
-    });
-    if (r.ok) items = (await r.json()).items;
-  } catch {
-    // Sin red: el siguiente toque volverá a pedir los pendientes.
-  }
-
-  // Chrome exige mostrar algo en cada push. Si no hay nada nuevo, un aviso discreto que se reemplaza solo.
-  if (items.length === 0) {
-    return mostrar('Actualización sísmica', 'Abra la página para ver los sismos recientes.', 'aviso-generico', {});
-  }
-
-  for (const it of items) {
-    if (it.action !== 'silent') {
-      const titulo = it.drill === '1' ? `SIMULACRO: ${it.title}` : it.title;
-      await mostrar(titulo, it.body, it.eventId, {
-        alarma: it.action === 'alarm',
-        reemplazar: it.action === 'update',
-        silencioso: it.action === 'info',
-      });
-    }
-    await confirmar(cred, it);
-  }
-}
-
-function mostrar(titulo, cuerpo, etiqueta, { alarma = false, reemplazar = false, silencioso = false }) {
-  return self.registration.showNotification(titulo, {
-    body: cuerpo,
-    tag: etiqueta,
-    renotify: reemplazar,
-    requireInteraction: alarma,
-    silent: silencioso,
-    vibrate: alarma ? [600, 200, 600, 200, 800] : [200, 100, 200],
-    icon: '/icon.svg',
-    badge: '/icon.svg',
-    data: { url: '/' },
-  });
-}
-
-async function confirmar(cred, it) {
-  try {
-    await fetch(`${cred.base}/v1/devices/${cred.id}/ack`, {
-      method: 'POST',
-      headers: { authorization: `Bearer ${cred.secret}`, 'content-type': 'application/json' },
-      body: JSON.stringify({ eventId: it.eventId, action: it.action, receivedAt: Date.now() }),
-    });
-  } catch {
-    // Si falla, el aviso sigue pendiente y se reenviará.
-  }
-}
+  // App: cache-first (ya se actualiza con el install del nuevo SW).
+  e.respondWith(
+    caches.match(e.request).then(
+      (hit) =>
+        hit ||
+        fetch(e.request).then((r) => {
+          const copy = r.clone();
+          if (r.ok) caches.open(VERSION).then((c) => c.put(e.request, copy));
+          return r;
+        }),
+    ),
+  );
+});
