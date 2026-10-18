@@ -14,6 +14,7 @@ const TYPES: Record<string, string> = {
   '.webp': 'image/webp',
   '.mp3': 'audio/mpeg',
   '.woff2': 'font/woff2',
+  '.ttf': 'font/ttf',
   '.txt': 'text/plain; charset=utf-8',
   '.worker.js': 'text/javascript; charset=utf-8',
 };
@@ -55,6 +56,9 @@ export function staticFile(urlPath: string, dir: string): StaticFile | null {
   const type = TYPES[extname(full)];
   if (!type) return null;
   const name = full.slice(dir.length);
-  const cache = name.endsWith('sw.js') || extname(full) === '.html' ? 'no-cache' : 'public, max-age=300';
+  const ext = extname(full);
+  // HTML, CSS, JS y SW: no-cache para que las actualizaciones lleguen siempre.
+  const cache =
+    name.endsWith('sw.js') || ext === '.html' || ext === '.css' || ext === '.js' ? 'no-cache' : 'public, max-age=300';
   return { body: readFileSync(full), type, cache };
 }

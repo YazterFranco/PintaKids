@@ -1,7 +1,8 @@
 /** Modo Cuentos: libro de páginas dibujadas por el niño, con su voz y exportación PDF. */
 
 import { createSurface } from '../ui/surface.js';
-import { btn, toolbar } from '../ui/parts.js';
+import { btn, toolbar, iconBtn, ACTION_ICONS } from '../ui/parts.js';
+import { tabStory } from '../ui/icons.js';
 import { buildPdf, newStory, addPage, setCaption, validateStory } from '../core/story.js';
 import { deserializeStrokes } from '../core/strokes.js';
 import { renderToCanvas } from '../core/paint.js';
@@ -18,7 +19,7 @@ export async function mount(ctx) {
 
   const head = document.createElement('h2');
   head.textContent = app.t('story.title');
-  const newBtn = btn('➕ ' + app.t('story.new'), startNew, 'toolbtn big'); newBtn.dataset.testid='story-new';
+  const newBtn = iconBtn(ACTION_ICONS.next + '<small>' + app.t('story.new') + '</small>', app.t('story.new'), startNew, 'toolbtn big'); newBtn.dataset.testid='story-new';
   root.appendChild(head);
   root.appendChild(toolbar(newBtn));
 
@@ -28,10 +29,10 @@ export async function mount(ctx) {
     for (const it of items) {
       const card = document.createElement('button');
       card.className = 'card';
-      card.innerHTML = `<span style="font-size:46px">📖</span><small>${escapeHtml(it.name || app.t('story.title'))}</small>`;
+      card.innerHTML = `<span style="width:48px;height:48px;display:grid;place-items:center">${tabStory}</span><small>${escapeHtml(it.name || app.t('story.title'))}</small>`;
       card.addEventListener('click', () => openStory(it));
       grid.appendChild(card);
-      const del = btn('🗑️', async (e) => {
+      const del = iconBtn(ACTION_ICONS.clear, 'Borrar', async (e) => {
         e?.stopPropagation?.();
         await store.deleteItem(it.id);
         mount(ctx);
@@ -76,7 +77,7 @@ export async function mount(ctx) {
     root.replaceChildren();
     const head2 = document.createElement('h2');
     head2.textContent = editing.story.title;
-    const back = btn('↩', () => {
+    const back = iconBtn(ACTION_ICONS.back, 'Volver', () => {
       editing = null;
       mount(ctx);
     });
@@ -94,7 +95,7 @@ export async function mount(ctx) {
       mini.className = 'mini-canvas';
       card.append(lbl, mini);
       if (items.length) {
-        const del = btn('🗑️', async () => {
+        const del = iconBtn(ACTION_ICONS.clear, 'Borrar página', async () => {
           await store.deleteItem(it.id);
           editing = null;
           mount(ctx);
@@ -112,13 +113,13 @@ export async function mount(ctx) {
       });
       card.appendChild(caption);
 
-      const openBtn = btn('✏️ ' + app.t('story.drawHere'), () => openPageEditor(pi), 'toolbtn big'); openBtn.dataset.testid='story-draw';
+      const openBtn = iconBtn(ACTION_ICONS.export + '<small>' + app.t('story.drawHere') + '</small>', app.t('story.drawHere'), () => openPageEditor(pi), 'toolbtn big'); openBtn.dataset.testid='story-draw';
       card.appendChild(openBtn);
 
       // voz grabada (si el dispositivo la permite)
       const voiceRow = document.createElement('div');
       voiceRow.className = 'btn-row';
-      const recBtn = btn('🎙️', () => recordVoice(pi, voiceRow));
+      const recBtn = iconBtn(ACTION_ICONS.brush, 'Grabar voz', () => recordVoice(pi, voiceRow));
       voiceRow.appendChild(recBtn);
       if (page.voice) {
         const play = document.createElement('audio');
@@ -143,13 +144,13 @@ export async function mount(ctx) {
     }
 
     const bottom = toolbar(
-      (()=>{const ab=btn('➕ ' + app.t('story.addPage'), async () => {
+      (()=>{const ab=iconBtn(ACTION_ICONS.next + '<small>' + app.t('story.addPage') + '</small>', app.t('story.addPage'), async () => {
         editing.story = addPage(editing.story, { drawing: '[]', caption: '' });
         await persist();
         renderEditor();
       }); ab.dataset.testid='story-addpage'; return ab})(),
-      btn('🔊 ' + app.t('story.read'), readAloud),
-      (()=>{const xb=btn('📄 ' + app.t('story.export'), exportPdf); xb.dataset.testid='story-pdf'; return xb})(),
+      iconBtn(ACTION_ICONS.brush + '<small>' + app.t('story.read') + '</small>', app.t('story.read'), readAloud),
+      (()=>{const xb=iconBtn(ACTION_ICONS.export + '<small>' + app.t('story.export') + '</small>', app.t('story.export'), exportPdf); xb.dataset.testid='story-pdf'; return xb})(),
     );
     root.appendChild(bottom);
     applyI18n(root);
@@ -158,7 +159,7 @@ export async function mount(ctx) {
   function openPageEditor(pi) {
     root.replaceChildren();
     const bar = toolbar(
-      (()=>{const bb=btn('↩', async () => {
+      (()=>{const bb=iconBtn(ACTION_ICONS.back, 'Volver', async () => {
         const strokes = surface.strokes;
         editing.story.pages[pi] = { ...editing.story.pages[pi], drawing: JSON.stringify(strokes.map(serializeOne)) };
         await persist();

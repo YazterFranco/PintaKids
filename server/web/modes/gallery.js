@@ -1,10 +1,11 @@
 /** Galería: todo lo que el niño ha creado, con abrir/compartir/borrar. */
 
-import { btn, toolbar } from '../ui/parts.js';
+import { btn, toolbar, iconBtn, ACTION_ICONS } from '../ui/parts.js';
 import { deserializeStrokes } from '../core/strokes.js';
 import { renderToCanvas } from '../core/paint.js';
+import { tabColor, tabDraw, tabPhoto, tabStory } from '../ui/icons.js';
 
-const KIND_EMOJI = { drawing: '🎨', colored: '🖍️', lineart: '📷', story: '📖' };
+const KIND_ICON = { drawing: tabDraw, colored: tabColor, lineart: tabPhoto, story: tabStory };
 
 export async function mount(ctx) {
   const { app, toast, applyI18n, store } = ctx;
@@ -41,22 +42,21 @@ export async function mount(ctx) {
       img.src = st.ok ? renderToCanvas(st.strokes, 220, 220).toDataURL() : '';
     }
     const label = document.createElement('small');
-    label.textContent = (KIND_EMOJI[it.kind] ?? '🎨') + ' ' + (it.name ?? '');
+    label.innerHTML = `<span style="display:inline-flex;vertical-align:middle;width:16px;height:16px">${KIND_ICON[it.kind] ?? tabDraw}</span> ${(it.name ?? '')}`;
     const actions = document.createElement('div');
     actions.className = 'btn-row';
 
     if (it.kind === 'story') {
-      actions.appendChild(btn('📖', () => app.go('story')));
+      actions.appendChild(iconBtn(tabStory, 'Abrir cuento', () => app.go('story')));
     }
-    actions.appendChild(btn('📤', () => share(it), 'toolbtn'));
-    const del = btn('🗑️', async () => {
+    actions.appendChild(iconBtn(ACTION_ICONS.export, 'Compartir', () => share(it), 'toolbtn'));
+    const del = iconBtn(ACTION_ICONS.clear, 'Borrar', async () => {
       if (!confirm(app.t('gallery.delete') + '?')) return;
       await store.deleteItem(it.id);
-      toast('🗑️');
       mount(ctx);
     });
     del.classList.add('del');
-    del.textContent = '×';
+    del.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>';
     actions.appendChild(del);
 
     card.append(img, label, actions);

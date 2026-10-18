@@ -1,10 +1,12 @@
 /**
  * Service worker de Pintakids: la app funciona SIN INTERNET.
- * - Precachea el paquete completo (shell + core + modes + i18n + assets).
- * - Caché de primera respuesta para catálogo y APIs (los paquetes descargados siguen vivos offline).
+ * - Shell (HTML/CSS/JS): red primero, caché como rescate → las actualizaciones llegan siempre.
+ * - APIs y catálogo: red primero, caché como rescate.
+ * - Assets estáticos (iconos, fuentes): cache-first.
+ * - skipWaiting + clients.claim: el SW nuevo toma control inmediato.
  */
 
-const VERSION = 'pintakids-v1';
+const VERSION = 'pintakids-v3';
 
 const PRECACHE = [
   '/',
@@ -28,6 +30,9 @@ const PRECACHE = [
   '/core/tts.js',
   '/ui/surface.js',
   '/ui/parts.js',
+  '/ui/icons.js',
+  '/assets/fonts/Baloo2-Variable.ttf',
+  '/assets/fonts/OFL.txt',
   '/modes/draw.js',
   '/modes/color.js',
   '/modes/learn.js',
@@ -55,12 +60,15 @@ self.addEventListener('activate', (e) => {
   );
 });
 
+/** Shell: network-first → caché solo si no hay red (offline). */
+const SHELL = new Set(['/', '/index.html', '/style.css', '/app.js', '/sw.js']);
+
 self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
   if (e.request.method !== 'GET' || url.origin !== self.location.origin) return;
 
-  // API y catálogo: red primero (los paquetes nuevos llegan), caché como rescate.
-  if (url.pathname.startsWith('/v1/')) {
+  // Shell y API: red primero (las actualizaciones llegan siempre), caché como rescate offline.
+  if (SHELL.has(url.pathname) || url.pathname.startsWith('/v1/')) {
     e.respondWith(
       fetch(e.request)
         .then((r) => {
@@ -73,7 +81,7 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
-  // App: cache-first (ya se actualiza con el install del nuevo SW).
+  // Resto (módulos JS, i18n, assets): cache-first (cambian con el install del nuevo SW).
   e.respondWith(
     caches.match(e.request).then(
       (hit) =>

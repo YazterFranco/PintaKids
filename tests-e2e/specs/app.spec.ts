@@ -44,7 +44,7 @@ test('dibujar deja trazo en el lienzo y deshacer lo quita', async ({ page }) => 
     });
 
   expect(await painted()).toBeGreaterThan(50);
-  await page.click('#view-draw .toolbtn:has-text("↩️")');
+  await page.click('#view-draw [data-testid="undo"]');
   expect(await painted()).toBe(0);
 });
 
@@ -56,7 +56,7 @@ test('guardar dibujo sube estrellas y aparece en galería', async ({ page }) => 
   await page.mouse.move(box.x + 160, box.y + 120, { steps: 10 });
   await page.mouse.up();
   await page.click('#view-draw .toolbtn.big');
-  await expect(page.locator('#starScore')).toHaveText(/⭐ 1/, { timeout: 5_000 });
+  await expect(page.locator('#starScore')).toContainText('1', { timeout: 5_000 });
   await page.click('.tab[data-view="gallery"]');
   await expect(page.locator('#view-gallery .card img')).toHaveCount(1, { timeout: 5_000 });
 });

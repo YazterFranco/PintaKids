@@ -1,6 +1,6 @@
 /** Zona de padres: puerta matemática, idioma, sonido, tiempo, respaldo, créditos y borrado. */
 
-import { btn, toolbar } from '../ui/parts.js';
+import { btn, toolbar, iconBtn, ACTION_ICONS } from '../ui/parts.js';
 
 export async function mount(ctx) {
   const { app, toast, applyI18n, store } = ctx;
@@ -78,7 +78,7 @@ export async function mount(ctx) {
   p2.className = 'panel';
   const bLbl = document.createElement('b');
   bLbl.textContent = app.t('parents.backup');
-  const exportBtn = btn('⬇️', async () => {
+  const exportBtn = iconBtn(ACTION_ICONS.download, 'Exportar respaldo', async () => {
     const json = await store.exportBackup();
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([json], { type: 'application/json' }));
@@ -89,7 +89,7 @@ export async function mount(ctx) {
   importInput.type = 'file';
   importInput.accept = 'application/json';
   importInput.hidden = true;
-  const importBtn = btn('⬆️', () => importInput.click());
+  const importBtn = iconBtn(ACTION_ICONS.export, 'Importar respaldo', () => importInput.click());
   importInput.addEventListener('change', async () => {
     const f = importInput.files?.[0];
     if (!f) return;
@@ -116,7 +116,7 @@ export async function mount(ctx) {
   p4.className = 'panel';
   const dLbl = document.createElement('b');
   dLbl.textContent = app.t('parents.data');
-  const wipe = btn('🗑️ ' + app.t('parents.wipe'), async () => {
+  const wipe = iconBtn(ACTION_ICONS.clear + '<small>' + app.t('parents.wipe') + '</small>', app.t('parents.wipe'), async () => {
     if (!confirm(app.t('parents.wipeConfirm'))) return;
     await store.wipe();
     sessionStorage.removeItem('pk-parents');

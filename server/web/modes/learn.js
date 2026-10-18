@@ -1,7 +1,8 @@
 /** Modo Aprender: lecciones de trazo a trazo + repaso de letras y números con voz. */
 
 import { createSurface } from '../ui/surface.js';
-import { btn, toolbar } from '../ui/parts.js';
+import { btn, toolbar, iconBtn, ACTION_ICONS } from '../ui/parts.js';
+import { tabLearn } from '../ui/icons.js';
 import { speak } from '../core/tts.js';
 
 // Guías: puntos normalizados de trazos punteados que el niño repasa (originales del proyecto).
@@ -123,7 +124,7 @@ export async function mount(ctx) {
 
   const head = document.createElement('h2');
   head.textContent = app.t('learn.title');
-  const letterBtn = btn('🔤', openLetters, 'toolbtn big');
+  const letterBtn = iconBtn(tabLearn + '<small>' + app.t('learn.letters') + '</small>', app.t('learn.letters'), openLetters, 'toolbtn big');
   root.appendChild(head);
   root.appendChild(letterBtn);
 
@@ -153,10 +154,10 @@ export async function mount(ctx) {
     stepsRow = document.createElement('div');
     stepsRow.className = 'steps';
     lessonBar = toolbar(
-      btn('↩️', () => surface.undo()),
-      btn('🧽', () => surface.clear()),
-      (()=>{const b=btn('✅ '+app.t('learn.tapNext'), nextStep, 'toolbtn big'); b.dataset.testid='learn-next'; return b})(),
-      btn('↩', () => backToGrid()),
+      iconBtn(ACTION_ICONS.undo, 'Deshacer', () => surface.undo()),
+      iconBtn(ACTION_ICONS.clear, 'Borrar', () => surface.clear()),
+      (()=>{const b=iconBtn(ACTION_ICONS.next + '<small>' + app.t('learn.tapNext') + '</small>', app.t('learn.tapNext'), nextStep, 'toolbtn big'); b.dataset.testid='learn-next'; return b})(),
+      iconBtn(ACTION_ICONS.back, 'Volver', () => backToGrid()),
     );
     root.appendChild(stepsRow);
     root.appendChild(lessonBar);

@@ -1,6 +1,6 @@
 /** Modo Colorear: biblioteca gratuita + rellenar tocando sin salirse de la línea. */
 
-import { PALETTE, btn, paletteRow, sizesRow, toolbar } from '../ui/parts.js';
+import { PALETTE, btn, paletteRow, sizesRow, toolbar, iconBtn, ACTION_ICONS } from '../ui/parts.js';
 import { dilateMask, fillRegion, labelRegions, lineMaskFromRGBA } from '../core/colorfill.js';
 
 const RENDER = 900; // lienzo lógico para detectar regiones (rápido y suficiente en pantalla)
@@ -318,19 +318,19 @@ export async function mount(ctx) {
       title.id = 'color-title';
       head.append(title);
 
-      const back = btn('↩️ ' + app.t('color.pick'), openPicker);
+      const back = iconBtn(ACTION_ICONS.back, app.t('color.pick'), openPicker);
       const brushBtn = document.createElement('button');
       brushBtn.className = 'toolbtn';
-      brushBtn.textContent = '🖌️';
+      brushBtn.innerHTML = ACTION_ICONS.brush;
       brushBtn.title = app.t('color.brush');
       brushBtn.setAttribute('aria-pressed', 'false');
       brushBtn.addEventListener('click', () => {
         brush = !brush;
         brushBtn.setAttribute('aria-pressed', String(brush));
       });
-      const undoBtn = btn('↩️', undo);
-      const dl = btn('⬇️', download);
-      const save = btn('⭐', () => saveItem('colored', current.title), 'toolbtn big');
+      const undoBtn = iconBtn(ACTION_ICONS.undo, 'Deshacer', undo);
+      const dl = iconBtn(ACTION_ICONS.download, 'Descargar', download);
+      const save = iconBtn(ACTION_ICONS.save, 'Guardar', () => saveItem('colored', current.title), 'toolbtn big');
       root.appendChild(canvasWrap);
       canvasWrap.hidden = false;
       head.appendChild(toolbar(back, brushBtn, undoBtn, colorRow, sizesRow((s) => (brushSize = s), 30), dl, save));

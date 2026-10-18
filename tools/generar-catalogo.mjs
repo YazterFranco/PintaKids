@@ -48,7 +48,7 @@ const star5 = (x, y, R, k = 0.45) => {
 
 const svg = (body) =>
   `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${S} ${S}">` +
-  `<g fill="none" stroke="#2b2d42" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">${body}</g></svg>\n`;
+  `<g fill="none" stroke="#2b2d42" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round">${body}</g></svg>\n`;
 
 const dibujos = {
   animales: [

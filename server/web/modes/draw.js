@@ -1,7 +1,7 @@
 /** Modo Dibujar: lienzo libre con pinceles, formas, balde, cuentagotas, espejo y guardado. */
 
 import { createSurface } from '../ui/surface.js';
-import { btn, paletteRow, sizesRow, toolbar, pressedButton, STAMPS } from '../ui/parts.js';
+import { paletteRow, sizesRow, toolbar, TOOL_ICONS, ACTION_ICONS, iconBtn, toolIconBtn } from '../ui/parts.js';
 import { serializeStrokes } from '../core/strokes.js';
 import { thumbnail } from '../core/paint.js';
 
@@ -21,29 +21,13 @@ export async function mount(ctx) {
   });
   surface.state.tool = 'crayon';
 
-  const TOOLS = [
-    ['crayon', '🖍️'],
-    ['marker', '🖊️'],
-    ['pencil', '✏️'],
-    ['watercolor', '💧'],
-    ['glitter', '✨'],
-    ['spray', '🫧'],
-    ['rainbow', '🌈'],
-    ['rect', '⬜'],
-    ['ellipse', '⭕'],
-    ['line', '📏'],
-    ['star', '🌟'],
-    ['fill', '🪣'],
-    ['picker', '🎯'],
-    ['eraser', '🧽'],
-    ['stamp', '⭐'],
-  ];
+  const TOOLS = ['crayon', 'marker', 'pencil', 'watercolor', 'glitter', 'spray', 'rainbow', 'rect', 'ellipse', 'line', 'star', 'fill', 'picker', 'eraser', 'stamp'];
 
   const toolBtns = [];
   const toolRow = toolbar();
   toolRow.classList.add('toolstrip');
-  for (const [tool, emoji] of TOOLS) {
-    const b = pressedButton(`<span>${emoji}</span><small data-i18n="draw.tool.${tool}">${tool}</small>`, tool, (el) => {
+  for (const tool of TOOLS) {
+    const b = toolIconBtn(TOOL_ICONS[tool], app.t(`draw.tool.${tool}`), tool, (el) => {
       surface.state.tool = tool;
       toolBtns.forEach((x) => x.setAttribute('aria-pressed', String(x === el)));
       if (tool === 'stamp') chooseStamp();
@@ -58,28 +42,33 @@ export async function mount(ctx) {
 
   let stampIdx = 0;
   function chooseStamp() {
-    stampIdx = (stampIdx + 1) % STAMPS.length;
-    surface.state.stamp = STAMPS[stampIdx];
+    const stamps = ['⭐', '❤️', '🌸', '🦋', '😊', '🍎', '🚗', '🐟'];
+    stampIdx = (stampIdx + 1) % stamps.length;
+    surface.state.stamp = stamps[stampIdx];
     toast(surface.state.stamp);
   }
 
   const swatches = paletteRow((c) => (surface.state.color = c));
   root.appendChild(toolbar(swatches, sizesRow((s) => (surface.state.size = s))));
 
-  // Fondo del lienzo (blanco / crema / pizarra), como en apps de dibujo clásicas.
-  const BGS = [['#ffffff', '⬜'], ['#fff8ec', '🟨'], ['#22303f', '⬛']];
+  // Fondo del lienzo (blanco / crema / pizarra).
+  const BGS = [['#ffffff', 'Blanco'], ['#fff8ec', 'Crema'], ['#22303f', 'Pizarra']];
   const bgBtns = [];
   const bgRow = toolbar();
   bgRow.classList.add('bgrow');
-  for (const [hex, emoji] of BGS) {
-    const b = pressedButton(emoji, hex, (el) => {
+  for (const [hex, label] of BGS) {
+    const swatch = document.createElement('button');
+    swatch.className = 'toolbtn bg-swatch';
+    swatch.innerHTML = `<span class="bg-dot" style="background:${hex}"></span><small>${label}</small>`;
+    swatch.title = label;
+    swatch.setAttribute('aria-pressed', String(hex === '#ffffff'));
+    swatch.addEventListener('click', () => {
       bg = hex;
       wrap.style.background = hex;
-      bgBtns.forEach((x) => x.setAttribute('aria-pressed', String(x === el)));
+      bgBtns.forEach((x) => x.setAttribute('aria-pressed', String(x === swatch)));
     });
-    b.setAttribute('aria-pressed', String(hex === '#ffffff'));
-    bgBtns.push(b);
-    bgRow.appendChild(b);
+    bgBtns.push(swatch);
+    bgRow.appendChild(swatch);
   }
   const label = document.createElement('small');
   label.className = 'bg-label';
@@ -91,18 +80,20 @@ export async function mount(ctx) {
     redoBtn.disabled = !surface.canRedo();
   }
 
-  const undoBtn = btn('↩️', () => surface.undo());
-  const redoBtn = btn('↪️', () => surface.redo());
-  const mirrorBtn = pressedButton('🪞', 'espejo', (el) => {
+  const undoBtn = iconBtn(ACTION_ICONS.undo, 'Deshacer', () => surface.undo());
+  undoBtn.setAttribute('data-testid', 'undo');
+  const redoBtn = iconBtn(ACTION_ICONS.redo, 'Rehacer', () => surface.redo());
+  const mirrorBtn = iconBtn(ACTION_ICONS.mirror, 'Espejo', () => {
     surface.mirror = !surface.mirror;
-    el.setAttribute('aria-pressed', String(surface.mirror));
+    mirrorBtn.setAttribute('aria-pressed', String(surface.mirror));
   });
-  const exportBtn = btn('📤', exportPng);
-  const clearBtn = btn('🗑️', () => {
+  mirrorBtn.setAttribute('aria-pressed', 'false');
+  const exportBtn = iconBtn(ACTION_ICONS.export, 'Exportar PNG', exportPng);
+  const clearBtn = iconBtn(ACTION_ICONS.clear, 'Borrar todo', () => {
     if (surface.strokes.length && !confirm(app.t('draw.confirmClear'))) return;
     surface.clear();
   });
-  const saveBtn = btn('💾', save, 'toolbtn big');
+  const saveBtn = iconBtn(ACTION_ICONS.save, 'Guardar', save, 'toolbtn big');
 
   function exportPng() {
     if (!surface.strokes.length) return;

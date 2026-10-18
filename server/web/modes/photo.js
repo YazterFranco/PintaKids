@@ -1,7 +1,8 @@
 /** Modo Foto: foto o dibujo propio → máscara de líneas → se abre en Colorear. Todo local. */
 
-import { btn, toolbar } from '../ui/parts.js';
+import { btn, toolbar, iconBtn, ACTION_ICONS } from '../ui/parts.js';
 import { photoToLineart } from '../core/lineart.js';
+import { tabColor } from '../ui/icons.js';
 
 const RENDER = 900;
 
@@ -130,8 +131,8 @@ export async function mount(ctx) {
 
   slider.addEventListener('input', render);
 
-  const take = btn('📷 ' + app.t('photo.take'), () => file.click(), 'toolbtn big'); take.dataset.testid='photo-take';
-  const use = btn('🎨 ' + app.t('photo.use'), toColorView); use.dataset.testid='photo-use';
+  const take = iconBtn(ACTION_ICONS.export + '<small>' + app.t('photo.take') + '</small>', app.t('photo.take'), () => file.click(), 'toolbtn big'); take.dataset.testid='photo-take';
+  const use = iconBtn(tabColor + '<small>' + app.t('photo.use') + '</small>', app.t('photo.use'), toColorView); use.dataset.testid='photo-use';
   panel.append(
     (() => {
       const h = document.createElement('h2');

@@ -1,5 +1,7 @@
 /** Mini kit de componentes para los modos (sin framework: botones grandes y paletas). */
 
+import { brushIcon, clearIcon, downloadIcon, eraserIcon, exportIcon, fillIcon, glitterIcon, lineIcon, markerIcon, mirrorIcon, pencilIcon, pickerIcon, rainbowIcon, rectIcon, redoIcon, saveIcon, stampIcon, starToolIcon, ellipseIcon, undoIcon, watercolorIcon, crayonIcon, sprayIcon, backIcon, nextIcon } from './icons.js';
+
 export const PALETTE = [
   '#2b2d42', '#e63946', '#ff6b35', '#ff9f1c', '#ffd166', '#f4d35e',
   '#8ac926', '#06d6a0', '#2a9d8f', '#4cc9f0', '#a2d2ff', '#118ab2',
@@ -87,3 +89,56 @@ export function toolbar(...children) {
   for (const c of children) if (c) t.appendChild(c);
   return t;
 }
+
+// ── Botones con icono SVG ─────────────────────────────────────
+/** Botón con solo icono SVG (para toolstrip, acciones). */
+export function iconBtn(svgStr, title, onClick, cls = 'toolbtn') {
+  const b = document.createElement('button');
+  b.className = cls;
+  b.innerHTML = svgStr;
+  b.title = title;
+  b.addEventListener('click', onClick);
+  return b;
+}
+
+/** Botón icono + label pequeña con pressed state. */
+export function toolIconBtn(svgStr, label, title, onPress) {
+  const b = document.createElement('button');
+  b.className = 'toolbtn';
+  b.innerHTML = `${svgStr}<small>${label}</small>`;
+  b.title = title;
+  b.setAttribute('aria-pressed', 'false');
+  b.addEventListener('click', () => onPress(b));
+  return b;
+}
+
+export const TOOL_ICONS = {
+  crayon: crayonIcon,
+  marker: markerIcon,
+  pencil: pencilIcon,
+  watercolor: watercolorIcon,
+  glitter: glitterIcon,
+  spray: sprayIcon,
+  rainbow: rainbowIcon,
+  rect: rectIcon,
+  ellipse: ellipseIcon,
+  line: lineIcon,
+  star: starToolIcon,
+  fill: fillIcon,
+  picker: pickerIcon,
+  eraser: eraserIcon,
+  stamp: stampIcon,
+};
+
+export const ACTION_ICONS = {
+  undo: undoIcon,
+  redo: redoIcon,
+  mirror: mirrorIcon,
+  export: exportIcon,
+  clear: clearIcon,
+  save: saveIcon,
+  brush: brushIcon,
+  download: downloadIcon,
+  back: backIcon,
+  next: nextIcon,
+};

@@ -27,7 +27,7 @@ test('sirve la app con cache correcto', () => {
 
   equal(staticFile('/index.html', web).cache, 'no-cache');
   equal(staticFile('/sw.js', web).cache, 'no-cache');
-  equal(staticFile('/app.js', web).cache, 'public, max-age=300');
+  equal(staticFile('/app.js', web).cache, 'no-cache');
   equal(staticFile('/assets/sol.svg', web).type, 'image/svg+xml');
   equal(staticFile('/assets/datos.json', web).type, 'application/json; charset=utf-8');
 });

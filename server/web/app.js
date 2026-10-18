@@ -2,6 +2,7 @@
 
 import { store } from './core/store.js';
 import { DEFAULT_LANG, normalizeLang, t } from './core/i18n.js';
+import { starIcon, crayonLogo, tabColor, tabDraw, tabGallery, tabLearn, tabParents, tabPhoto, tabStory, clockIcon } from './ui/icons.js';
 
 const app = {
   lang: DEFAULT_LANG,
@@ -40,7 +41,7 @@ export function toast(msg) {
 
 export function addStar() {
   app.stars++;
-  document.getElementById('starScore').textContent = '⭐ ' + app.stars;
+  document.getElementById('starScore').innerHTML = starIcon + ' ' + app.stars;
   store.setSetting('stars', app.stars);
 }
 
@@ -100,12 +101,34 @@ window.addEventListener('offline', () => (document.getElementById('offline').hid
 window.addEventListener('online', () => (document.getElementById('offline').hidden = true));
 
 /* ---------- boot ---------- */
+function injectTabIcons() {
+  const icons = { draw: tabDraw, color: tabColor, learn: tabLearn, photo: tabPhoto, story: tabStory, gallery: tabGallery, parents: tabParents };
+  document.querySelectorAll('.tab').forEach((b) => {
+    const span = b.querySelector('.tab-icon');
+    if (span) span.innerHTML = icons[b.dataset.view] || '';
+  });
+  const logo = document.getElementById('logo-icon');
+  if (logo) logo.innerHTML = crayonLogo;
+  const clock = document.getElementById('clock-icon');
+  if (clock) clock.innerHTML = clockIcon;
+}
+
 async function boot() {
-  if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(() => {});
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+    // Cuando el SW nuevo toma control → recargar para ver los cambios.
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (!window.__swReloading) {
+        window.__swReloading = true;
+        location.reload();
+      }
+    });
+  }
   app.settings = await store.getSettings();
   app.lang = normalizeLang(app.settings.lang ?? (navigator.language.startsWith('en') ? 'en' : 'es'));
   app.stars = Number(app.settings.stars ?? 0);
-  document.getElementById('starScore').textContent = '⭐ ' + app.stars;
+  document.getElementById('starScore').innerHTML = starIcon + ' ' + app.stars;
+  injectTabIcons();
   await loadDicts();
   applyI18n();
   if (navigator.onLine === false) document.getElementById('offline').hidden = false;
@@ -115,7 +138,7 @@ async function boot() {
 
 boot().catch((e) => {
   console.error('boot:', e);
-  document.body.insertAdjacentHTML('beforeend', '<div class="toast">Ups… recarga la página 🙏</div>');
+  document.body.insertAdjacentHTML('beforeend', '<div class="toast">Ups… recarga la página</div>');
 });
 
 export { app };
