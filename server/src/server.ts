@@ -192,8 +192,9 @@ const server = createServer(async (req, res) => {
       return;
     }
 
-    // Página y recursos de la app.
-    if (req.method === 'GET' || req.method === 'HEAD') {
+    // Página y recursos de la app (las rutas de API desconocidas SIEMPRE devuelven JSON 404,
+    // nunca el HTML de la SPA: clientes viejos no deben recibir una página como si fuera datos).
+    if ((req.method === 'GET' || req.method === 'HEAD') && !p.startsWith('/v1/') && !p.startsWith('/descargas')) {
       const file = staticFile(p, WEB_DIR);
       if (file) {
         const isHtml = file.type.startsWith('text/html');

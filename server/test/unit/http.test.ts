@@ -68,13 +68,17 @@ test('catálogo: índice, paquete y SVG con licencia validada', async () => {
   equal((await get('/v1/catalog/dinos/files/pagado.svg')).status, 404);
 });
 
-test('app y recursos: CSP en HTML, sin path traversal', async () => {
+test('app y recursos: CSP en HTML, sin path traversal, API rota responde JSON', async () => {
   const home = await get('/');
   equal(home.status, 200);
   ok(home.csp.includes("default-src 'self'"));
   ok(home.body.includes('pintakids'));
   equal((await get('/../server/src/server.ts')).status, 404);
   equal((await get('/no-existe.js')).status, 404);
+  // Rutas de API ajenas a este servidor (p. ej. clientes de la app de sismos): JSON 404, jamás HTML.
+  const viejo = await get('/v1/events');
+  equal(viejo.status, 404);
+  ok(viejo.body.includes('NO_ENCONTRADO'));
 });
 
 test('canal de versiones: vacío, publicación con token y protección', async () => {
