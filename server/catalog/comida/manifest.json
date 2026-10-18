@@ -1,0 +1,32 @@
+{
+  "name": "Comida",
+  "version": 1,
+  "license": "Pintakids-Original",
+  "files": [
+    {
+      "file": "helado.svg",
+      "title": "Cono de helado",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "manzana.svg",
+      "title": "Manzana",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "pizza.svg",
+      "title": "Rebanada de pizza",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "sandia.svg",
+      "title": "Rebanada de sandía",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "taza-caliente.svg",
+      "title": "Taza con nubes",
+      "license": "Pintakids-Original"
+    }
+  ]
+}

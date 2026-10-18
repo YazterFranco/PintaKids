@@ -1,0 +1,37 @@
+{
+  "name": "Granja",
+  "version": 1,
+  "license": "Pintakids-Original",
+  "files": [
+    {
+      "file": "vaca.svg",
+      "title": "Vaca",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "cerdito.svg",
+      "title": "Cerdito",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "pollito.svg",
+      "title": "Pollito",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "gallo.svg",
+      "title": "Gallo",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "oveja.svg",
+      "title": "Oveja",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "caballito.svg",
+      "title": "Caballito",
+      "license": "Pintakids-Original"
+    }
+  ]
+}

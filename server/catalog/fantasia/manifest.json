@@ -1,0 +1,37 @@
+{
+  "name": "Fantasia",
+  "version": 1,
+  "license": "Pintakids-Original",
+  "files": [
+    {
+      "file": "castillo.svg",
+      "title": "Castillo",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "dragon.svg",
+      "title": "Dragón",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "princesa.svg",
+      "title": "Corona de princesa",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "robot.svg",
+      "title": "Robot",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "unicornio-cabeza.svg",
+      "title": "Unicornio",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "estrella-feliz.svg",
+      "title": "Estrella feliz",
+      "license": "Pintakids-Original"
+    }
+  ]
+}

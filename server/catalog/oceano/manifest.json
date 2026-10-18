@@ -1,0 +1,37 @@
+{
+  "name": "Oceano",
+  "version": 1,
+  "license": "Pintakids-Original",
+  "files": [
+    {
+      "file": "ballena.svg",
+      "title": "Ballena",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "pulpo.svg",
+      "title": "Pulpo",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "estrella-mar.svg",
+      "title": "Estrella de mar",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "submarino.svg",
+      "title": "Submarino",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "caballito-mar.svg",
+      "title": "Caballito de mar",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "ancla.svg",
+      "title": "Ancla",
+      "license": "Pintakids-Original"
+    }
+  ]
+}

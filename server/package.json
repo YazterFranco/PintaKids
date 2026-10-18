@@ -1,15 +1,14 @@
 {
-  "name": "alerta-sismica-pa-server",
+  "name": "pintakids-server",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Servidor de alertas sísmicas para Panamá (IGC-UP, USGS, EMSC). Sin dependencias externas: TypeScript nativo y node:sqlite de Node 22.",
+  "description": "Pintakids: servidor de la app de dibujo infantil (Node 22, sin dependencias: TypeScript nativo). Sirve la PWA, el catálogo de dibujos gratuitos y el canal de autoactualización del APK.",
   "engines": {
     "node": ">=22.18"
   },
   "scripts": {
     "start": "node --disable-warning=ExperimentalWarning src/server.ts",
-    "test": "node --disable-warning=ExperimentalWarning --test \"test/unit/*.test.ts\"",
-    "probe": "node --disable-warning=ExperimentalWarning scripts/probe.ts"
+    "test": "node --disable-warning=ExperimentalWarning --test \"test/unit/*.test.ts\""
   }
 }

@@ -1,0 +1,47 @@
+{
+  "name": "Animales",
+  "version": 1,
+  "license": "Pintakids-Original",
+  "files": [
+    {
+      "file": "gato.svg",
+      "title": "Gato",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "pajarito.svg",
+      "title": "Pajarito",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "peixe.svg",
+      "title": "Pez",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "mariposa.svg",
+      "title": "Mariposa",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "elefante.svg",
+      "title": "Elefante",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "tortuga.svg",
+      "title": "Tortuga",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "caracol.svg",
+      "title": "Caracol",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "conejo.svg",
+      "title": "Conejo",
+      "license": "Pintakids-Original"
+    }
+  ]
+}

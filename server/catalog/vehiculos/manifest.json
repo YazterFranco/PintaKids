@@ -1,0 +1,37 @@
+{
+  "name": "Vehiculos",
+  "version": 1,
+  "license": "Pintakids-Original",
+  "files": [
+    {
+      "file": "carro.svg",
+      "title": "Carro",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "avion.svg",
+      "title": "Avión",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "barco.svg",
+      "title": "Barco",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "bicicleta.svg",
+      "title": "Bicicleta",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "tren.svg",
+      "title": "Tren",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "cohete.svg",
+      "title": "Cohete",
+      "license": "Pintakids-Original"
+    }
+  ]
+}

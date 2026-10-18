@@ -1,0 +1,37 @@
+{
+  "name": "Naturaleza",
+  "version": 1,
+  "license": "Pintakids-Original",
+  "files": [
+    {
+      "file": "sol.svg",
+      "title": "Sol",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "casa.svg",
+      "title": "Mi casa",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "arbol.svg",
+      "title": "Árbol",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "flor.svg",
+      "title": "Flor",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "arbol-navidad.svg",
+      "title": "Árbol de Navidad",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "nube-lluvia.svg",
+      "title": "Nube con lluvia",
+      "license": "Pintakids-Original"
+    }
+  ]
+}

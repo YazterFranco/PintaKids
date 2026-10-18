@@ -2,11 +2,15 @@ import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from '
 import { join } from 'node:path';
 
 /**
- * Canal de distribución de la app: el servidor guarda la última APK y su metadatos
- * en /data/releases (volumen persistente). CI sube versiones nuevas con ADMIN_TOKEN.
+ * Canal de distribución de la app (heredado de SismoPA, adaptado): el servidor guarda la última APK
+ * y su metadatos en /data/releases (volumen persistente). CI sube versiones con ADMIN_TOKEN.
+ *
+ * La marca `app` (p. ej. "pintakids") AÍSLA el canal: si el volumen conserva una versión de otra app
+ * (Alerta Sísmica), current() la ignora y jamás se sirve a clientes equivocados.
  */
 
 export interface ReleaseInfo {
+  app: string;
   versionCode: number;
   versionName: string;
   notes: string;
@@ -14,13 +18,15 @@ export interface ReleaseInfo {
   publishedAt: number;
 }
 
-export const MAX_APK_BYTES = 30 * 1024 * 1024;
+export const MAX_APK_BYTES = 40 * 1024 * 1024;
 
 export class Releases {
   readonly dir: string;
+  readonly channel: string;
 
-  constructor(dir: string) {
+  constructor(dir: string, channel: string) {
     this.dir = dir;
+    this.channel = channel;
   }
 
   private get infoPath(): string { return join(this.dir, 'version.json'); }
@@ -30,6 +36,8 @@ export class Releases {
     try {
       if (!existsSync(this.infoPath)) return null;
       const o = JSON.parse(readFileSync(this.infoPath, 'utf8')) as ReleaseInfo;
+      // Canal incorrecto (p. ej. restos de la app de sismos) → tratar como "sin versión".
+      if (o.app !== this.channel) return null;
       return typeof o.versionCode === 'number' ? o : null;
     } catch {
       return null;
@@ -45,6 +53,7 @@ export class Releases {
     const versionCode = meta.versionCode ?? (prev ? prev.versionCode + 1 : 1);
     if (prev && versionCode <= prev.versionCode) throw new Error('version-no-mayor');
     const info: ReleaseInfo = {
+      app: this.channel,
       versionCode,
       versionName: meta.versionName ?? String(versionCode),
       notes: meta.notes ?? '',

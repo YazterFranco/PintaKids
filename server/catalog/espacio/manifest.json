@@ -1,0 +1,32 @@
+{
+  "name": "Espacio",
+  "version": 1,
+  "license": "Pintakids-Original",
+  "files": [
+    {
+      "file": "luna.svg",
+      "title": "Luna",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "ovni.svg",
+      "title": "OVNI",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "planeta-anillos.svg",
+      "title": "Planeta con anillos",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "satelite.svg",
+      "title": "Satélite",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "astronauta.svg",
+      "title": "Astronauta",
+      "license": "Pintakids-Original"
+    }
+  ]
+}

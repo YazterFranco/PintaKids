@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><g fill="none" stroke="#234" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M130 35 A75 75 0 1 0 130 165 A60 60 0 1 1 130 35"/><circle cx="70" cy="80" r="8"/><circle cx="58" cy="120" r="6"/><circle cx="85" cy="145" r="5"/><path d="M150 50 L156 62 L168 66 L156 70 L150 82 L144 70 L132 66 L144 62 Z"/><path d="M172 120 L176 128 L184 132 L176 136 L172 144 L168 136 L160 132 L168 128 Z"/></g></svg>
