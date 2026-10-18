@@ -1,6 +1,6 @@
 /** Superficie de dibujo reutilizable (lienzo + punteros + deshacer). Usada por Dibujar, Cuentos y Aprender. */
 
-import { addPoint, cloneStroke, makeStroke } from '../core/strokes.js';
+import { addPoint, cloneStroke, makeStroke, SHAPE_TOOLS } from '../core/strokes.js';
 import { createHistory } from '../core/history.js';
 import { paintAll, paintStroke, renderToCanvas } from '../core/paint.js';
 
@@ -64,7 +64,26 @@ export function createSurface(wrap, opts = {}) {
     e.preventDefault();
     canvas.setPointerCapture(e.pointerId);
     const [x, y] = pos(e);
+    if (state.tool === 'picker') {
+      const px = ctx.getImageData(Math.round(x * (canvas.width - 1)), Math.round(y * (canvas.height - 1)), 1, 1).data;
+      if (px[3] > 8) {
+        const hex = '#' + [px[0], px[1], px[2]].map((v) => v.toString(16).padStart(2, '0')).join('');
+        state.color = hex;
+        opts.onPickColor?.(hex);
+      }
+      return;
+    }
+    if (state.tool === 'fill') {
+      commit(makeStroke('fill', state.color, state.size, [x, y], mirror));
+      opts.onStroke?.();
+      return;
+    }
     live = makeStroke(state.tool, state.color, state.size * (canvas.width / 400), [x, y], mirror);
+    if (SHAPE_TOOLS.includes(state.tool)) {
+      live.p = [x, y, x, y];
+      redraw();
+      return;
+    }
     if (state.tool === 'stamp') {
       live.ch = state.stamp;
       commit(live);
@@ -81,6 +100,12 @@ export function createSurface(wrap, opts = {}) {
   canvas.addEventListener('pointermove', (e) => {
     if (!live) return;
     const [x, y] = pos(e);
+    if (SHAPE_TOOLS.includes(live.t)) {
+      live.p[2] = x;
+      live.p[3] = y;
+      redraw();
+      return;
+    }
     const last = [live.p[live.p.length - 2], live.p[live.p.length - 1]];
     if (Math.hypot(x - last[0], y - last[1]) < 0.003) return;
     addPoint(live, x, y);
@@ -91,7 +116,10 @@ export function createSurface(wrap, opts = {}) {
     if (!live) return;
     const s = live;
     live = null;
-    if (s.p.length >= 4 || s.t === 'spray' || s.t === 'glitter') commit(s);
+    if (SHAPE_TOOLS.includes(s.t)) {
+      if (Math.hypot(s.p[2] - s.p[0], s.p[3] - s.p[1]) > 0.01) commit(s);
+      else redraw();
+    } else if (s.p.length >= 4 || s.t === 'spray' || s.t === 'glitter') commit(s);
     else redraw();
     opts.onStroke?.();
   };

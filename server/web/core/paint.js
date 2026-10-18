@@ -39,6 +39,34 @@ export function paintStroke(ctx, stroke, w, h) {
   ctx.save();
   const base = { lineWidth: size, lineCap: 'round', lineJoin: 'round', strokeStyle: color, fillStyle: color };
 
+  if (tool === 'fill') {
+    floodFill(ctx, w, h, Math.round(pts[0] * (w - 1)), Math.round(pts[1] * (h - 1)), color);
+    ctx.restore();
+    return;
+  }
+
+  if (tool === 'rect' || tool === 'ellipse' || tool === 'line' || tool === 'star') {
+    Object.assign(ctx, base);
+    const x0 = pts[0] * w;
+    const y0 = pts[1] * h;
+    const x1 = (pts[2] ?? pts[0]) * w;
+    const y1 = (pts[3] ?? pts[1]) * h;
+    ctx.beginPath();
+    if (tool === 'rect') {
+      ctx.rect(Math.min(x0, x1), Math.min(y0, y1), Math.abs(x1 - x0), Math.abs(y1 - y0));
+    } else if (tool === 'ellipse') {
+      ctx.ellipse((x0 + x1) / 2, (y0 + y1) / 2, Math.max(1, Math.abs(x1 - x0) / 2), Math.max(1, Math.abs(y1 - y0) / 2), 0, 0, Math.PI * 2);
+    } else if (tool === 'line') {
+      ctx.moveTo(x0, y0);
+      ctx.lineTo(x1, y1);
+    } else {
+      starPath(ctx, x0, y0, x1, y1);
+    }
+    ctx.stroke();
+    ctx.restore();
+    return;
+  }
+
   if (tool === 'eraser') {
     ctx.globalCompositeOperation = 'destination-out';
     Object.assign(ctx, { lineWidth: size * 2, strokeStyle: '#000' });
@@ -166,4 +194,79 @@ export function renderToCanvas(strokes, w, h, background = '#ffffff') {
 /** Miniatura barata para galería. */
 export function thumbnail(strokes, size = 220, background = '#ffffff') {
   return renderToCanvas(strokes, size, size, background).toDataURL('image/png');
+}
+
+/** Estrella de 5 puntas inscrita en la caja definida por dos esquinas opuestas. */
+function starPath(ctx, x0, y0, x1, y1) {
+  const cx = (x0 + x1) / 2;
+  const cy = (y0 + y1) / 2;
+  const rx = Math.max(2, Math.abs(x1 - x0) / 2);
+  const ry = Math.max(2, Math.abs(y1 - y0) / 2);
+  for (let i = 0; i < 10; i++) {
+    const ang = (Math.PI / 5) * i - Math.PI / 2;
+    const k = i % 2 === 0 ? 1 : 0.45;
+    const x = cx + Math.cos(ang) * rx * k;
+    const y = cy + Math.sin(ang) * ry * k;
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+}
+
+function hexToRgb(hex) {
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex);
+  if (!m) return [0, 0, 0];
+  const n = parseInt(m[1], 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+}
+
+/**
+ * Balde de pintura: relleno por inundación (scanline) con tolerancia.
+ * Determinista: se repite igual al re-pintar la lista de trazos en orden.
+ */
+export function floodFill(ctx, w, h, sx, sy, color) {
+  if (sx < 0 || sy < 0 || sx >= w || sy >= h) return;
+  const img = ctx.getImageData(0, 0, w, h);
+  const d = img.data;
+  const at = (x, y) => (y * w + x) * 4;
+  const si = at(sx, sy);
+  const tr = d[si];
+  const tg = d[si + 1];
+  const tb = d[si + 2];
+  const ta = d[si + 3];
+  const [fr, fg, fb] = hexToRgb(color);
+  const TOL = 36;
+  const match = (i) =>
+    Math.abs(d[i] - tr) <= TOL && Math.abs(d[i + 1] - tg) <= TOL &&
+    Math.abs(d[i + 2] - tb) <= TOL && Math.abs(d[i + 3] - ta) <= TOL;
+  if (Math.abs(fr - tr) + Math.abs(fg - tg) + Math.abs(fb - tb) + Math.abs(255 - ta) < 12) return; // mismo color: nada que hacer
+  const painted = new Uint8Array(w * h);
+  const stack = [[sx, sy]];
+  while (stack.length) {
+    const [x0, y] = stack.pop();
+    let x = x0;
+    while (x > 0 && match(at(x - 1, y)) && !painted[y * w + x - 1]) x--;
+    let spanUp = false;
+    let spanDown = false;
+    while (x < w && match(at(x, y)) && !painted[y * w + x]) {
+      const i = at(x, y);
+      d[i] = fr;
+      d[i + 1] = fg;
+      d[i + 2] = fb;
+      d[i + 3] = 255;
+      painted[y * w + x] = 1;
+      if (y > 0) {
+        const up = match(at(x, y - 1)) && !painted[(y - 1) * w + x];
+        if (up && !spanUp) { stack.push([x, y - 1]); spanUp = true; }
+        if (!up) spanUp = false;
+      }
+      if (y < h - 1) {
+        const dn = match(at(x, y + 1)) && !painted[(y + 1) * w + x];
+        if (dn && !spanDown) { stack.push([x, y + 1]); spanDown = true; }
+        if (!dn) spanDown = false;
+      }
+      x++;
+    }
+  }
+  ctx.putImageData(img, 0, 0);
 }

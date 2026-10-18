@@ -33,8 +33,8 @@ android {
         applicationId = "com.pintakids.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = (project.findProperty("versionCodeOverride") as? String)?.toIntOrNull() ?: 1
-        versionName = (project.findProperty("versionNameOverride") as? String) ?: "1.0.0"
+        versionCode = (project.findProperty("versionCodeOverride") as? String)?.toIntOrNull() ?: 2
+        versionName = (project.findProperty("versionNameOverride") as? String) ?: "1.0.1"
         buildConfigField("String", "API_BASE_URL", "\"https://alerta-sismica-pa-production.up.railway.app\"")
     }
 

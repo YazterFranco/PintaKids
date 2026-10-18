@@ -101,7 +101,7 @@ export async function mount(ctx) {
     }
     const st = deserializeStrokes(it.strokes ?? '[]');
     if (!st.ok) return null;
-    const canvas = renderToCanvas(st.strokes, 1024, 1024);
+    const canvas = renderToCanvas(st.strokes, 1024, 1024, it.bg || "#ffffff");
     return new Promise((res) => canvas.toBlob(res, 'image/png'));
   }
 

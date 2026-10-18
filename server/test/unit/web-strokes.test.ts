@@ -70,3 +70,15 @@ test('history: pila acotada (memoria del teléfono del niño)', () => {
   }
   ok(undoCount <= 60, 'máximo 60 pasos de undo, tenía ' + undoCount);
 });
+
+test('v2: formas y balde entran en el modelo y sobreviven el roundtrip', () => {
+  const rect = makeStroke('rect', '#118ab2', 10, [0.1, 0.1, 0.5, 0.4]);
+  const fill = makeStroke('fill', '#06d6a0', 10, [0.3, 0.3]);
+  const star = makeStroke('star', '#ef476f', 12, [0.2, 0.2, 0.8, 0.9], true);
+  const rt = deserializeStrokes(serializeStrokes([rect, fill, star]));
+  ok(rt.ok);
+  equal(rt.strokes.length, 3);
+  equal(rt.strokes[0].t, 'rect');
+  equal(rt.strokes[2].m, true);
+  ok(strokesEqual([rect, fill, star], rt.strokes));
+});

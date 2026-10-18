@@ -3,7 +3,13 @@
  * deshacer/rehacer, guardar, re-explicar y convertir en plantilla son trivialmente posibles.
  */
 
-export const TOOLS = ['crayon', 'marker', 'pencil', 'watercolor', 'glitter', 'spray', 'rainbow', 'eraser', 'stamp'];
+export const TOOLS = [
+  'crayon', 'marker', 'pencil', 'watercolor', 'glitter', 'spray', 'rainbow', 'eraser', 'stamp',
+  // Formas y utilidades (estilo Simple Draw): dos puntos definen la caja; 'fill' es un toque.
+  'rect', 'ellipse', 'line', 'star', 'fill',
+];
+
+export const SHAPE_TOOLS = ['rect', 'ellipse', 'line', 'star'];
 
 export function makeStroke(tool, color, size, pts = [], mirror = false) {
   if (!TOOLS.includes(tool)) throw new Error('herramienta-desconocida:' + tool);
