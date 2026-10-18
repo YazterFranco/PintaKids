@@ -130,8 +130,8 @@ export async function mount(ctx) {
 
   slider.addEventListener('input', render);
 
-  const take = btn('📷 ' + app.t('photo.take'), () => file.click(), 'toolbtn big');
-  const use = btn('🎨 ' + app.t('photo.use'), toColorView);
+  const take = btn('📷 ' + app.t('photo.take'), () => file.click(), 'toolbtn big'); take.dataset.testid='photo-take';
+  const use = btn('🎨 ' + app.t('photo.use'), toColorView); use.dataset.testid='photo-use';
   panel.append(
     (() => {
       const h = document.createElement('h2');
@@ -162,5 +162,6 @@ export async function mount(ctx) {
     toolbar(use),
   );
   root.appendChild(preview);
+  root.appendChild(file);
   applyI18n(root);
 }

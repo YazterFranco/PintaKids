@@ -1,0 +1,14 @@
+{
+  "name": "pintakids-e2e",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.0",
+    "@playwright/test": "^1.64.1",
+    "playwright": "^1.48.0"
+  }
+}

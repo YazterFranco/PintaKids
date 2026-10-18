@@ -133,7 +133,7 @@ export async function mount(ctx) {
     const card = document.createElement('button');
     card.className = 'card';
     card.innerHTML = `<span style="font-size:46px">${lesson.name}</span><small>${lesson.words[app.lang] ?? lesson.words.es}</small>`;
-    card.addEventListener('click', () => openLesson(lesson));
+    card.addEventListener('click', () => openLesson(lesson)); card.dataset.testid='learn-card';
     grid.appendChild(card);
   }
   root.appendChild(grid);
@@ -155,7 +155,7 @@ export async function mount(ctx) {
     lessonBar = toolbar(
       btn('↩️', () => surface.undo()),
       btn('🧽', () => surface.clear()),
-      btn('✅ ' + app.t('learn.tapNext'), nextStep, 'toolbtn big'),
+      (()=>{const b=btn('✅ '+app.t('learn.tapNext'), nextStep, 'toolbtn big'); b.dataset.testid='learn-next'; return b})(),
       btn('↩', () => backToGrid()),
     );
     root.appendChild(stepsRow);

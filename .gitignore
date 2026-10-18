@@ -1,20 +1,23 @@
 node_modules/
-*.sqlite
-*.sqlite-wal
-*.sqlite-shm
+*.sqlite*
 .env
-server/data/*.sqlite*
-firebase-sa*.json
+server/data/
 
-# Firma Android (nunca subir)
+# Android: artefactos, firma y assets generados (los trae Gradle desde server/web)
 android/keystore.properties
 android/*.keystore
 android/*.jks
-
-# Android: artefactos y máquina-local
 android/local.properties
 android/.gradle/
 android/app/build/
 android/build/
+android/app/src/main/assets/
+
+# Pruebas e2e
+tests-e2e/node_modules/
+tests-e2e/test-results/
+tests-e2e/playwright-report/
+tests-e2e/.tmp-releases/
+
 .DS_Store
 **/.DS_Store

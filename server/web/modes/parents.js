@@ -14,6 +14,9 @@ export async function mount(ctx) {
       return;
     }
     sessionStorage.setItem('pk-parents', '1');
+    root.replaceChildren();
+  } else {
+    root.replaceChildren();
   }
 
   const head = document.createElement('h2');

@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "AlertaSismicaPA"
+rootProject.name = "Pintakids"
 include(":app")

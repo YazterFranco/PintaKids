@@ -13,8 +13,6 @@
   <script type="module" src="/app.js"></script>
 </head>
 <body>
-  <div id="offline" class="pill pill-offline" hidden data-i18n="offline.note"></div>
-
   <header class="topbar">
     <span class="logo">🖍️</span>
     <h1 data-i18n="app.name">Pintakids</h1>
@@ -41,17 +39,15 @@
     <button class="tab" data-view="parents" role="tab"><span>🔒</span><b data-i18n="tab.parents">Padres</b></button>
   </nav>
 
-  <div id="timeUp" class="overlay" hidden>
-    <div class="overlay-card">
-      <div class="overlay-emoji">⏰</div>
-      <p data-i18n="parents.timeUp"></p>
+  <footer>
+    <div id="timeUp" class="overlay" hidden>
+      <div class="overlay-card">
+        <div class="overlay-emoji">⏰</div>
+        <p data-i18n="parents.timeUp"></p>
+      </div>
     </div>
-  </div>
-
-  <div id="toast" class="toast" hidden></div>
-
-  <script>
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(() => {});
-  </script>
+    <div id="toast" class="toast" hidden></div>
+    <div id="offline" class="pill pill-offline" hidden data-i18n="offline.note"></div>
+  </footer>
 </body>
 </html>

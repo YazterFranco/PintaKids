@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Alerta Sísmica PA</string>
+    <string name="app_name">Pintakids</string>
+    <string name="cancel">Cancelar</string>
+    <string name="update_title">Hay un Pintakids nuevo</string>
+    <string name="update_download">Descargar</string>
+    <string name="update_allow_unknown">Activa "instalar apps desconocidas" para actualizar y vuelve a abrir la app</string>
 </resources>

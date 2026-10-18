@@ -18,7 +18,7 @@ export async function mount(ctx) {
 
   const head = document.createElement('h2');
   head.textContent = app.t('story.title');
-  const newBtn = btn('➕ ' + app.t('story.new'), startNew, 'toolbtn big');
+  const newBtn = btn('➕ ' + app.t('story.new'), startNew, 'toolbtn big'); newBtn.dataset.testid='story-new';
   root.appendChild(head);
   root.appendChild(toolbar(newBtn));
 
@@ -112,7 +112,7 @@ export async function mount(ctx) {
       });
       card.appendChild(caption);
 
-      const openBtn = btn('✏️ ' + app.t('story.drawHere'), () => openPageEditor(pi), 'toolbtn big');
+      const openBtn = btn('✏️ ' + app.t('story.drawHere'), () => openPageEditor(pi), 'toolbtn big'); openBtn.dataset.testid='story-draw';
       card.appendChild(openBtn);
 
       // voz grabada (si el dispositivo la permite)
@@ -143,13 +143,13 @@ export async function mount(ctx) {
     }
 
     const bottom = toolbar(
-      btn('➕ ' + app.t('story.addPage'), async () => {
+      (()=>{const ab=btn('➕ ' + app.t('story.addPage'), async () => {
         editing.story = addPage(editing.story, { drawing: '[]', caption: '' });
         await persist();
         renderEditor();
-      }),
+      }); ab.dataset.testid='story-addpage'; return ab})(),
       btn('🔊 ' + app.t('story.read'), readAloud),
-      btn('📄 ' + app.t('story.export'), exportPdf),
+      (()=>{const xb=btn('📄 ' + app.t('story.export'), exportPdf); xb.dataset.testid='story-pdf'; return xb})(),
     );
     root.appendChild(bottom);
     applyI18n(root);
@@ -158,12 +158,12 @@ export async function mount(ctx) {
   function openPageEditor(pi) {
     root.replaceChildren();
     const bar = toolbar(
-      btn('↩', async () => {
+      (()=>{const bb=btn('↩', async () => {
         const strokes = surface.strokes;
         editing.story.pages[pi] = { ...editing.story.pages[pi], drawing: JSON.stringify(strokes.map(serializeOne)) };
         await persist();
         renderEditor();
-      }, 'toolbtn big'),
+      }, 'toolbtn big'); bb.dataset.testid='story-back'; return bb})(),
     );
     root.appendChild(bar);
     const wrap = document.createElement('div');

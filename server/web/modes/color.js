@@ -74,7 +74,8 @@ export async function mount(ctx) {
       undoFills = [];
       current = { pack, file, title };
       paint();
-      document.getElementById('color-title').textContent = title;
+      const titleEl = document.getElementById('color-title');
+      if (titleEl) titleEl.textContent = title;
     }
 
     function paint() {

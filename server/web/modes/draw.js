@@ -1,7 +1,7 @@
 /** Modo Dibujar: lienzo libre con pinceles infantiles, espejo, undo/redo y guardado a galería. */
 
 import { createSurface } from '../ui/surface.js';
-import { paletteRow, sizesRow, toolbar, pressedButton, STAMPS } from '../ui/parts.js';
+import { btn, paletteRow, sizesRow, toolbar, pressedButton, STAMPS } from '../ui/parts.js';
 import { serializeStrokes } from '../core/strokes.js';
 import { thumbnail } from '../core/paint.js';
 

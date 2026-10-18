@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.AlertaSismica" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.Pintakids" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/pintakids_violeta</item>
+        <item name="android:navigationBarColor">@color/pintakids_crema</item>
+        <item name="colorPrimary">@color/pintakids_violeta</item>
+    </style>
 </resources>

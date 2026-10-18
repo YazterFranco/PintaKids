@@ -1,69 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- La app funciona offline desde assets; la red solo se usa para el catálogo nuevo y las actualizaciones. -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- Todo lo necesario vive en la web empaquetada: sin servicios en segundo plano ni receivers de arranque. -->
 
     <application
-        android:name=".AlertaApp"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:theme="@style/Theme.AlertaSismica"
-        tools:targetApi="35">
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Pintakids">
 
         <activity
             android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|uiMode"
             android:exported="true"
+            android:screenOrientation="fullSensor"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".ui.alert.AlertActivity"
-            android:exported="false"
-            android:excludeFromRecents="true"
-            android:launchMode="singleTop"
-            android:showWhenLocked="true"
-            android:turnScreenOn="true"
-            android:theme="@style/Theme.AlertaSismica" />
-
-        <!-- Canal en vivo: servicio en primer plano (tipo dataSync, obligatorio desde Android 14). -->
-        <service
-            android:name=".live.AlertStreamService"
-            android:exported="false"
-            android:foregroundServiceType="dataSync" />
-
-        <!-- Vuelve a arrancar el canal en vivo tras reiniciar el teléfono. -->
-        <receiver
-            android:name=".live.BootReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
-        <receiver
-            android:name=".notify.DismissReceiver"
-            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -75,4 +40,15 @@
                 android:resource="@xml/file_paths" />
         </provider>
     </application>
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:mimeType="application/vnd.android.package-archive" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+            <data android:mimeType="image/png" />
+        </intent>
+    </queries>
 </manifest>

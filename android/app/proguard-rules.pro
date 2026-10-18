@@ -1,16 +1,5 @@
-# kotlinx-serialization: conservar serializadores generados de los modelos de la app.
--keepattributes *Annotation*, InnerClasses
--dontnote kotlinx.serialization.AnnotationsKt
--keepclassmembers class kotlinx.serialization.json.** {
-    *** Companion;
+# Pintakids: el puente JS↔nativo se invoca por reflexión desde el WebView.
+-keepclassmembers class com.pintakids.app.Bridge {
+    @android.webkit.JavascriptInterface <methods>;
 }
--keepclasseswithmembers class kotlinx.serialization.json.** {
-    kotlinx.serialization.KSerializer serializer(...);
-}
--keep,includedescriptorclasses class pa.alertasismica.**$$serializer { *; }
--keepclassmembers class pa.alertasismica.** {
-    *** Companion;
-}
--keepclasseswithmembers class pa.alertasismica.** {
-    kotlinx.serialization.KSerializer serializer(...);
-}
+-keepattributes JavascriptInterface

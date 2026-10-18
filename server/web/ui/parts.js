@@ -28,12 +28,15 @@ export function pressedButton(inner, title, onPress) {
 export function paletteRow(onPick, initial = PALETTE[0]) {
   const row = document.createElement('div');
   row.className = 'palette';
+  row.setAttribute('role', 'group');
+  row.setAttribute('aria-label', 'colores');
   let current = initial;
   const dots = [];
   for (const hex of PALETTE) {
     const d = document.createElement('button');
     d.className = 'swatch';
     d.style.background = hex;
+    d.setAttribute('aria-label', 'color ' + hex);
     d.setAttribute('aria-pressed', String(hex === current));
     d.addEventListener('click', () => {
       current = hex;
@@ -49,6 +52,8 @@ export function paletteRow(onPick, initial = PALETTE[0]) {
 export function sizesRow(onPick, initial = 14) {
   const row = document.createElement('div');
   row.className = 'sizes';
+  row.setAttribute('role', 'group');
+  row.setAttribute('aria-label', 'grosor');
   const specs = [
     [8, 'thin', 18],
     [14, 'mid', 26],
@@ -59,6 +64,7 @@ export function sizesRow(onPick, initial = 14) {
     const d = document.createElement('button');
     d.className = 'size-dot';
     d.style.width = d.style.height = px + 'px';
+    d.setAttribute('aria-label', key);
     d.setAttribute('aria-pressed', String(size === initial));
     d.title = key;
     d.addEventListener('click', () => {

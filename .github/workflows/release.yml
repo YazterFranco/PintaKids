@@ -1,6 +1,6 @@
 name: Compilar y publicar APK
 
-# Al crear y subir una etiqueta (p. ej. v1.2.1), GitHub compila el APK firmado
+# Al crear y subir una etiqueta (p. ej. v1.0.1), GitHub compila el APK firmado
 # y lo publica en el servidor; los teléfonos avisan solos de la nueva versión.
 on:
   push:
@@ -22,10 +22,10 @@ jobs:
 
       - name: Restaurar keystore
         run: |
-          mkdir -p ../keystore-android
-          printf '%s' "${{ secrets.KEYSTORE_B64 }}" | base64 -d > ../keystore-android/alerta-release.keystore
-          printf 'storePassword=%s\nkeyPassword=%s\nalias=alerta-sismica-pa\nkeystore=alerta-release.keystore\n' \
-            "${{ secrets.KEYSTORE_PASSWORD }}" "${{ secrets.KEYSTORE_PASSWORD }}" > ../keystore-android/keystore.properties
+          mkdir -p ../keystore-pintakids
+          printf '%s' "${{ secrets.KEYSTORE_B64 }}" | base64 -d > ../keystore-pintakids/pintakids-release.keystore
+          printf 'storePassword=%s\nkeyPassword=%s\nalias=pintakids\nkeystore=pintakids-release.keystore\n' \
+            "${{ secrets.KEYSTORE_PASSWORD }}" "${{ secrets.KEYSTORE_PASSWORD }}" > ../keystore-pintakids/keystore.properties
 
       - name: Siguiente número de versión (pregunta al servidor)
         id: ver

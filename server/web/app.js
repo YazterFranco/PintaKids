@@ -70,8 +70,6 @@ export function armTimeLimit() {
     }
   }, 5000);
 }
-  }, 5000);
-}
 
 /* ---------- navegación ---------- */
 const VIEWS = ['draw', 'color', 'learn', 'photo', 'story', 'gallery', 'parents'];
@@ -97,11 +95,13 @@ function currentView() {
 }
 
 window.addEventListener('hashchange', () => showView(currentView()));
+document.querySelectorAll('.tab').forEach((b) => b.addEventListener('click', () => app.go(b.dataset.view)));
 window.addEventListener('offline', () => (document.getElementById('offline').hidden = false));
 window.addEventListener('online', () => (document.getElementById('offline').hidden = true));
 
 /* ---------- boot ---------- */
 async function boot() {
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(() => {});
   app.settings = await store.getSettings();
   app.lang = normalizeLang(app.settings.lang ?? (navigator.language.startsWith('en') ? 'en' : 'es'));
   app.stars = Number(app.settings.stars ?? 0);
