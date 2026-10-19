@@ -35,7 +35,7 @@ android {
         targetSdk = 35
         versionCode = (project.findProperty("versionCodeOverride") as? String)?.toIntOrNull() ?: 3
         versionName = (project.findProperty("versionNameOverride") as? String) ?: "1.0.2"
-        buildConfigField("String", "API_BASE_URL", "\"https://alerta-sismica-pa-production.up.railway.app\"")
+        buildConfigField("String", "API_BASE_URL", "\"https://pintakids-production.up.railway.app\"")
     }
 
     buildTypes {

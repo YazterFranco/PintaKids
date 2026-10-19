@@ -275,7 +275,7 @@ export async function mount(ctx) {
         chips.style.display = 'none';
       }
 
-      const idx = await fetch('/v1/catalog').then((r) => r.json());
+      const idx = await fetch('/v1/catalog?v=3').then((r) => r.json());
       let first = true;
       for (const pack of idx.packs) {
         const chip = document.createElement('button');
@@ -292,12 +292,12 @@ export async function mount(ctx) {
       async function loadPack(id, chipActive) {
         chips.querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-pressed', String(c === chipActive)));
         grid.replaceChildren();
-        const pack = await fetch('/v1/catalog/' + id).then((r) => r.json());
+        const pack = await fetch('/v1/catalog/' + id + '?v=3').then((r) => r.json());
         for (const f of pack.files) {
           const card = document.createElement('button');
           card.className = 'card';
           const img = new Image();
-          img.src = `/v1/catalog/${id}/files/${f.file}`;
+          img.src = `/v1/catalog/${id}/files/${f.file}?v=3`;
           img.alt = f.title;
           const lab = document.createElement('small');
           lab.textContent = f.title;

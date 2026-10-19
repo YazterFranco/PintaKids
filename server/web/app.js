@@ -19,8 +19,8 @@ const app = {
 
 async function loadDicts() {
   const [es, en] = await Promise.all([
-    fetch('/i18n/es.json').then((r) => r.json()),
-    fetch('/i18n/en.json').then((r) => r.json()),
+    fetch('/i18n/es.json?v=3').then((r) => r.json()),
+    fetch('/i18n/en.json?v=3').then((r) => r.json()),
   ]);
   app.base = { es, en };
 }
@@ -86,7 +86,7 @@ async function showView(name) {
   }
   document.querySelectorAll('.tab').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.view === name)));
   document.getElementById('timeUp').hidden = true;
-  if (!modules[name]) modules[name] = await import('./modes/' + name + '.js');
+  if (!modules[name]) modules[name] = await import('./modes/' + name + '.js?v=3');
   await modules[name].mount(ctx);
   applyI18n(document.getElementById('view-' + name));
 }
