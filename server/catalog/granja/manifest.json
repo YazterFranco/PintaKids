@@ -1,16 +1,21 @@
 {
   "name": "Granja",
-  "version": 2,
+  "version": 3,
   "license": "Pintakids-Original",
   "files": [
     {
-      "file": "vaca.svg",
-      "title": "Vaca",
+      "file": "vaca-granja.svg",
+      "title": "Vaca de la granja",
       "license": "Pintakids-Original"
     },
     {
-      "file": "cerdito.svg",
-      "title": "Cerdito",
+      "file": "cerdito-granja.svg",
+      "title": "Cerdito feliz",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "gallina.svg",
+      "title": "Gallina",
       "license": "Pintakids-Original"
     },
     {
@@ -19,18 +24,38 @@
       "license": "Pintakids-Original"
     },
     {
+      "file": "oveja.svg",
+      "title": "Oveja lanuda",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "caballo.svg",
+      "title": "Caballito",
+      "license": "Pintakids-Original"
+    },
+    {
       "file": "gallo.svg",
       "title": "Gallo",
       "license": "Pintakids-Original"
     },
     {
-      "file": "oveja.svg",
-      "title": "Oveja",
+      "file": "pato-granja.svg",
+      "title": "Pato del estanque",
       "license": "Pintakids-Original"
     },
     {
-      "file": "caballito.svg",
-      "title": "Caballito",
+      "file": "perro-granja.svg",
+      "title": "Perro guardián",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "conejo-granja.svg",
+      "title": "Conejo del campo",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "rancho.svg",
+      "title": "Granja feliz",
       "license": "Pintakids-Original"
     }
   ]

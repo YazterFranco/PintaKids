@@ -1,36 +1,76 @@
 {
-  "name": "Fantasia",
-  "version": 2,
+  "name": "Fantasía",
+  "version": 3,
   "license": "Pintakids-Original",
   "files": [
     {
       "file": "castillo.svg",
-      "title": "Castillo",
+      "title": "Castillo mágico",
       "license": "Pintakids-Original"
     },
     {
       "file": "dragon.svg",
-      "title": "Dragón",
+      "title": "Dragón amistoso",
       "license": "Pintakids-Original"
     },
     {
-      "file": "princesa.svg",
-      "title": "Corona de princesa",
+      "file": "princesa-corona.svg",
+      "title": "Corona real",
       "license": "Pintakids-Original"
     },
     {
       "file": "robot.svg",
-      "title": "Robot",
+      "title": "Robot amigable",
       "license": "Pintakids-Original"
     },
     {
-      "file": "unicornio-cabeza.svg",
+      "file": "unicornio.svg",
       "title": "Unicornio",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "sirena.svg",
+      "title": "Sirena",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "hada.svg",
+      "title": "Hada con varita",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "mago.svg",
+      "title": "Mago",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "fenix.svg",
+      "title": "Fénix",
       "license": "Pintakids-Original"
     },
     {
       "file": "estrella-feliz.svg",
       "title": "Estrella feliz",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "arcoiris-magico.svg",
+      "title": "Arcoíris mágico",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "genio.svg",
+      "title": "Genio de la lámpara",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "caballero.svg",
+      "title": "Caballero valiente",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "diente-de-leon.svg",
+      "title": "Diente de león",
       "license": "Pintakids-Original"
     }
   ]

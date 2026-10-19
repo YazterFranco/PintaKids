@@ -1,21 +1,41 @@
 {
-  "name": "Vehiculos",
-  "version": 2,
+  "name": "Vehículos",
+  "version": 3,
   "license": "Pintakids-Original",
   "files": [
     {
       "file": "carro.svg",
-      "title": "Carro",
+      "title": "Carro divertido",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "autobus.svg",
+      "title": "Autobús escolar",
       "license": "Pintakids-Original"
     },
     {
       "file": "avion.svg",
-      "title": "Avión",
+      "title": "Avión de papel",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "helicoptero.svg",
+      "title": "Helicóptero",
       "license": "Pintakids-Original"
     },
     {
       "file": "barco.svg",
-      "title": "Barco",
+      "title": "Barco en el mar",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "tren.svg",
+      "title": "Tren de juguete",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "tractor.svg",
+      "title": "Tractor",
       "license": "Pintakids-Original"
     },
     {
@@ -24,13 +44,43 @@
       "license": "Pintakids-Original"
     },
     {
-      "file": "tren.svg",
-      "title": "Tren",
+      "file": "patineta.svg",
+      "title": "Patineta",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "globo.svg",
+      "title": "Globo aerostático",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "ambulancia.svg",
+      "title": "Ambulancia",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "policia.svg",
+      "title": "Carro de policía",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "camion-bomberos.svg",
+      "title": "Camión de bomberos",
       "license": "Pintakids-Original"
     },
     {
       "file": "cohete.svg",
-      "title": "Cohete",
+      "title": "Cohete espacial",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "submarino.svg",
+      "title": "Submarino",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "globo-espacial.svg",
+      "title": "Globo espacial",
       "license": "Pintakids-Original"
     }
   ]

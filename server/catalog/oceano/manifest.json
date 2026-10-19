@@ -1,16 +1,16 @@
 {
-  "name": "Oceano",
-  "version": 2,
+  "name": "Océano",
+  "version": 3,
   "license": "Pintakids-Original",
   "files": [
     {
       "file": "ballena.svg",
-      "title": "Ballena",
+      "title": "Ballena amigable",
       "license": "Pintakids-Original"
     },
     {
       "file": "pulpo.svg",
-      "title": "Pulpo",
+      "title": "Pulpo sonriente",
       "license": "Pintakids-Original"
     },
     {
@@ -19,18 +19,48 @@
       "license": "Pintakids-Original"
     },
     {
-      "file": "submarino.svg",
-      "title": "Submarino",
-      "license": "Pintakids-Original"
-    },
-    {
       "file": "caballito-mar.svg",
       "title": "Caballito de mar",
       "license": "Pintakids-Original"
     },
     {
-      "file": "ancla.svg",
-      "title": "Ancla",
+      "file": "delfin.svg",
+      "title": "Delfín saltando",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "tiburon.svg",
+      "title": "Tiburón amistoso",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "medusa.svg",
+      "title": "Medusa",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "cangrejo.svg",
+      "title": "Cangrejo",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "ostra.svg",
+      "title": "Ostra con perla",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "coral.svg",
+      "title": "Arrecife de coral",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "langosta.svg",
+      "title": "Langosta",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "tortuga-marina.svg",
+      "title": "Tortuga marina",
       "license": "Pintakids-Original"
     }
   ]

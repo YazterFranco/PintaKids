@@ -1,134 +1,71 @@
 #!/usr/bin/env node
 /**
- * Genera los paquetes de dibujos para colorear del catálogo de Pintakids (v2 "kawaii").
+ * Genera los paquetes de dibujos para colorear del catálogo de Pintakids (v3 "detallado").
  * Todos los SVG son ORIGINALES del proyecto (licencia Pintakids-Original, costo $0).
- * Estilo: siluetas cerradas (zonas grandes para el balde), caras simpáticas, trazo grueso
- * y redondeado, detalles con encanto (corazones, destellos, burbujas).
+ *
+ * Estilo v3: siluetas cerradas con MÚLTIPLES regiones de color (barriga, patas, aletas),
+ * texturas (rayas, escamas, manchas, pelaje), caras expresivas (cejas, bocas abiertas),
+ * escenas con contexto (suelo, hierba, agua, nubes, estrellas) y trazo grueso 6.5.
+ *
  * Uso: node tools/generar-catalogo.mjs   (desde la raíz del repo)
+ * Los dibujos viven en tools/catalog-*.mjs; este runner solo empaqueta y escribe.
  */
 import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
+import { LICENSE } from './catalog-lib.mjs';
+
+import { animales } from './catalog-animales.mjs';
+import { naturaleza } from './catalog-naturaleza.mjs';
+import { comida } from './catalog-comida.mjs';
+import { vehiculos } from './catalog-vehiculos.mjs';
+import { fantasia } from './catalog-fantasia.mjs';
+import { espacio } from './catalog-espacio.mjs';
+import { granja } from './catalog-granja.mjs';
+import { oceano } from './catalog-oceano.mjs';
+import { flores, deportes, instrumentos } from './catalog-varios.mjs';
 
 const OUT = join(import.meta.dirname, '..', 'server', 'catalog');
-const LICENSE = 'Pintakids-Original';
-const S = 200; // viewBox 200x200
 
-// ── Primitivas ───────────────────────────────────────────────
-const c = (x, y, r) => `<circle cx="${x}" cy="${y}" r="${r}"/>`;
-const e = (x, y, rx, ry, rot = 0) => `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}"${rot ? ` transform="rotate(${rot} ${x} ${y})"` : ''}/>`;
-const r = (x, y, w, h, rx = 0) => `<rect x="${x}" y="${y}" width="${w}" height="${h}"${rx ? ` rx="${rx}"` : ''}/>`;
-const p = (d) => `<path d="${d}"/>`;
-const l = (x1, y1, x2, y2) => p(`M${x1} ${y1}L${x2} ${y2}`);
-const poly = (...args) => {
-  const f = args.flat(Infinity).map(Number);
-  let pts = '';
-  for (let i = 0; i < f.length - 1; i += 2) pts += `${f[i]},${f[i + 1]} `;
-  return `<polygon points="${pts.trim()}"/>`;
+/** Mapa pack-id → { name, items }. El id debe cumplir /^[a-z0-9][a-z0-9-]{0,38}$/ */
+const packs = {
+  animales: { name: 'Animales', items: animales },
+  naturaleza: { name: 'Naturaleza', items: naturaleza },
+  comida: { name: 'Comida', items: comida },
+  vehiculos: { name: 'Vehículos', items: vehiculos },
+  fantasia: { name: 'Fantasía', items: fantasia },
+  espacio: { name: 'Espacio', items: espacio },
+  granja: { name: 'Granja', items: granja },
+  oceano: { name: 'Océano', items: oceano },
+  flores: { name: 'Flores', items: flores },
+  deportes: { name: 'Deportes', items: deportes },
+  instrumentos: { name: 'Instrumentos', items: instrumentos },
 };
 
-// ── Caritas y detalles con encanto ───────────────────────────
-const eyes = (x, y, d = 26, rr = 3.5) => c(x - d / 2, y, rr) + c(x + d / 2, y, rr);
-const smile = (x, y, s = 9) => p(`M${x - s} ${y} Q${x} ${y + s * 0.95} ${x + s} ${y}`);
-const cheeks = (x, y, d = 42) => c(x - d / 2, y, 4.5) + c(x + d / 2, y, 4.5);
-/** Cara kawaii completa: ojos redondos, sonrisa y cachetes. */
-const face = (x, y, d = 26, s = 9) => eyes(x, y, d) + smile(x, y + d * 0.7, s) + cheeks(x, y + d * 0.5, d + 16);
-const sparkle = (x, y, s = 7) =>
-  poly([x, y - s], [x + s * 0.3, y - s * 0.3], [x + s, y], [x + s * 0.3, y + s * 0.3], [x, y + s], [x - s * 0.3, y + s * 0.3], [x - s, y], [x - s * 0.3, y - s * 0.3]);
-const heart = (x, y, s = 10) =>
-  p(`M${x} ${y + s * 0.95} C${x - s} ${y - s * 0.15} ${x - s * 0.52} ${y - s} ${x} ${y - s * 0.35} C${x + s * 0.52} ${y - s} ${x + s} ${y - s * 0.15} ${x} ${y + s * 0.95} Z`);
-const star5 = (x, y, R, k = 0.45) => {
-  const pts = [];
-  for (let i = 0; i < 10; i++) {
-    const a = (Math.PI / 5) * i - Math.PI / 2;
-    const rr = i % 2 === 0 ? R : R * k;
-    pts.push([Math.round(x + Math.cos(a) * rr), Math.round(y + Math.sin(a) * rr)]);
-  }
-  return poly(...pts);
-};
-
-const svg = (body) =>
-  `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${S} ${S}">` +
-  `<g fill="none" stroke="#2b2d42" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round">${body}</g></svg>\n`;
-
-const dibujos = {
-  animales: [
-    ['gato', 'Gato', c(100, 92, 46) + poly(64, 62, 56, 20, 94, 50) + poly(136, 62, 144, 20, 106, 50) + poly(68, 56, 63, 32, 86, 50) + poly(132, 56, 137, 32, 114, 50) + face(100, 96, 28, 10) + poly(94, 108, 106, 108, 100, 115) + l(52, 92, 26, 84) + l(52, 104, 26, 108) + l(148, 92, 174, 84) + l(148, 104, 174, 108) + e(100, 164, 44, 26) + e(80, 182, 13, 9) + e(120, 182, 13, 9) + p('M144 152 Q172 158 166 182 Q164 190 156 186') + heart(100, 164, 9)],
-    ['pajarito', 'Pajarito', c(98, 102, 46) + poly(136, 84, 172, 62, 162, 96) + poly(54, 98, 26, 106, 54, 116) + e(112, 108, 21, 13, 18) + c(80, 90, 3.5) + c(68, 104, 4.5) + smile(82, 104, 7) + p('M96 56 Q92 38 106 32 Q100 46 110 52') + l(84, 148, 80, 168) + l(110, 148, 114, 168) + p('M80 168 L70 174 M80 168 L88 174') + p('M114 168 L104 174 M114 168 L122 174') + sparkle(168, 140, 7) + sparkle(34, 52, 6)],
-    ['peixe', 'Pez', e(94, 102, 52, 37) + poly(142, 102, 180, 72, 180, 132) + poly(92, 66, 108, 42, 122, 68) + poly(88, 138, 104, 158, 118, 136) + c(62, 92, 3.5) + c(52, 106, 4.5) + smile(64, 108, 7) + p('M112 82 Q128 100 112 122') + c(38, 58, 6) + c(26, 42, 4) + c(46, 32, 3) + sparkle(164, 48, 6)],
-    ['mariposa', 'Mariposa', e(100, 116, 10, 36) + c(100, 74, 11) + eyes(100, 72, 10, 2.5) + smile(100, 80, 5) + p('M94 64 Q84 48 76 44') + p('M106 64 Q116 48 124 44') + c(74, 42, 4) + c(126, 42, 4) + e(62, 94, 30, 24, -28) + e(138, 94, 30, 24, 28) + e(66, 138, 22, 17, 26) + e(134, 138, 22, 17, -26) + c(58, 90, 8) + c(142, 90, 8) + heart(66, 138, 7) + heart(134, 138, 7) + sparkle(100, 178, 6)],
-    ['elefante', 'Elefante', e(122, 122, 48, 38) + c(70, 92, 36) + e(96, 78, 18, 24, 12) + c(56, 86, 3.5) + smile(62, 102, 8) + c(48, 100, 4.5) + p('M48 118 Q38 148 54 164 Q64 172 72 160') + r(96, 152, 17, 30, 8) + r(132, 152, 17, 30, 8) + p('M168 116 Q184 122 180 142 Q176 150 170 144') + poly(64, 122, 56, 138, 72, 132) + sparkle(172, 66, 7)],
-    ['tortuga', 'Tortuga', e(100, 102, 56, 38) + p('M46 98 Q100 46 154 98') + poly(100, 66, 122, 84, 114, 108, 86, 108, 78, 84) + p('M78 84 L52 92 M122 84 L148 92 M86 108 L70 132 M114 108 L130 132 M100 108 L100 138') + c(170, 112, 17) + c(176, 108, 3) + smile(172, 118, 6) + e(64, 142, 14, 9) + e(124, 142, 14, 9) + poly(44, 112, 24, 104, 28, 122) + sparkle(40, 60, 6)],
-    ['caracol', 'Caracol', p('M32 158 Q26 132 56 126 L148 126 Q172 130 170 150 Q168 162 150 160 L40 160 Q32 160 32 158 Z') + c(112, 86, 40) + p('M112 86 Q134 76 130 98 Q124 116 102 108 Q88 100 96 86 Q102 76 112 82') + l(152, 126, 158, 100) + l(166, 128, 178, 108) + c(158, 94, 5) + c(180, 102, 5) + c(160, 140, 3) + smile(158, 148, 6) + p('M28 176 Q60 168 92 176 Q124 184 156 176 Q172 172 184 176') + sparkle(52, 84, 6)],
-    ['conejo', 'Conejo', c(100, 122, 46) + e(78, 58, 14, 36, -8) + e(122, 58, 14, 36, 8) + e(78, 60, 6.5, 22, -8) + e(122, 60, 6.5, 22, 8) + face(100, 118, 28, 9) + poly(94, 132, 106, 132, 100, 139) + r(94, 142, 12, 12, 3) + l(100, 142, 100, 154) + e(100, 182, 26, 12) + sparkle(40, 70, 7) + sparkle(162, 82, 6)],
-  ],
-  vehiculos: [
-    ['carro', 'Carro', p('M24 132 Q24 110 48 106 L62 82 Q70 70 84 70 L122 70 Q138 70 146 84 L158 106 Q182 110 182 132 L182 140 Q182 148 172 148 L34 148 Q24 148 24 140 Z') + r(72, 82, 26, 22, 7) + r(106, 82, 28, 22, 7) + c(60, 152, 19) + c(60, 152, 7) + c(146, 152, 19) + c(146, 152, 7) + c(36, 124, 5) + c(170, 124, 5) + l(24, 136, 182, 136) + heart(100, 122, 9) + sparkle(170, 62, 7)],
-    ['avion', 'Avión', p('M28 108 Q28 94 52 92 L142 88 Q174 88 182 102 Q174 116 142 118 L52 122 Q28 122 28 108 Z') + poly(86, 92, 62, 48, 100, 50, 112, 90) + poly(90, 118, 70, 154, 104, 152, 114, 116) + poly(150, 90, 162, 66, 174, 90) + c(58, 104, 4) + c(78, 103, 4) + c(98, 102, 4) + c(118, 101, 4) + p('M170 96 L182 102 L170 110') + e(38, 58, 20, 9) + e(160, 150, 18, 8) + sparkle(120, 44, 6)],
-    ['barco', 'Barco', p('M26 126 L174 126 L150 160 Q146 166 138 166 L62 166 Q54 166 50 160 Z') + l(100, 126, 100, 40) + poly(94, 46, 94, 114, 46, 114) + poly(106, 52, 106, 114, 154, 114) + poly(100, 40, 124, 47, 100, 55) + c(70, 143, 6) + c(100, 143, 6) + c(130, 143, 6) + p('M14 178 Q34 168 54 178 Q74 188 94 178 Q114 168 134 178 Q154 188 174 178') + sparkle(170, 66, 7) + sparkle(30, 62, 5)],
-    ['bicicleta', 'Bicicleta', c(55, 140, 29) + c(55, 140, 6) + c(145, 140, 29) + c(145, 140, 6) + p('M55 140 L88 92 L145 140 L112 92 Z') + l(112, 92, 88, 92) + p('M88 92 L80 68 L96 66') + p('M112 92 L120 66 L104 62') + l(100, 60, 126, 60) + c(104, 62, 4) + p('M80 68 L68 62 L84 58') + l(88, 92, 88, 116) + e(88, 120, 8, 4) + heart(145, 84, 8) + sparkle(36, 88, 6)],
-    ['tren', 'Tren', r(40, 92, 120, 58, 10) + r(56, 62, 46, 34, 8) + r(64, 40, 18, 24, 4) + c(74, 28, 8) + c(90, 18, 10) + c(66, 156, 15) + c(66, 156, 5) + c(134, 156, 15) + c(134, 156, 5) + r(64, 106, 20, 18, 5) + r(94, 106, 20, 18, 5) + r(124, 106, 20, 18, 5) + c(74, 115, 3) + c(104, 115, 3) + c(134, 115, 3) + smile(100, 134, 10) + poly(40, 150, 20, 168, 40, 168) + l(40, 150, 160, 150) + sparkle(176, 84, 7)],
-    ['cohete', 'Cohete', p('M100 16 Q138 54 138 102 L138 134 L62 134 L62 102 Q62 54 100 16 Z') + c(100, 78, 18) + c(100, 78, 8) + poly(62, 104, 30, 144, 62, 140) + poly(138, 104, 170, 144, 138, 140) + p('M82 134 Q88 162 100 180 Q112 162 118 134 Z') + l(62, 112, 138, 112) + sparkle(32, 60, 8) + sparkle(168, 52, 7) + sparkle(158, 96, 5) + star5(36, 110, 8)],
-  ],
-  naturaleza: [
-    ['sol', 'Sol', c(100, 100, 42) + face(100, 104, 28, 11) + l(100, 42, 100, 20) + l(100, 158, 100, 180) + l(42, 100, 20, 100) + l(158, 100, 180, 100) + l(59, 59, 43, 43) + l(141, 59, 157, 43) + l(59, 141, 43, 157) + l(141, 141, 157, 157) + sparkle(168, 168, 6) + sparkle(32, 32, 6)],
-    ['casa', 'Mi casa', r(48, 98, 104, 78) + poly(36, 100, 100, 40, 164, 100) + r(86, 128, 28, 48, 12) + c(108, 152, 3) + r(58, 112, 22, 22, 5) + l(69, 112, 69, 134) + l(58, 123, 80, 123) + r(120, 112, 22, 22, 5) + l(131, 112, 131, 134) + l(120, 123, 142, 123) + r(132, 46, 16, 26, 3) + c(140, 32, 7) + c(154, 22, 9) + p('M20 176 L180 176') + heart(100, 66, 8) + c(34, 168, 7) + c(34, 168, 2.5) + c(166, 168, 7) + c(166, 168, 2.5)],
-    ['arbol', 'Árbol', p('M90 182 L90 130 Q90 118 100 118 Q110 118 110 130 L110 182 Z') + c(100, 76, 42) + c(60, 98, 26) + c(140, 98, 26) + c(74, 52, 22) + c(126, 52, 22) + c(86, 90, 7) + c(118, 84, 7) + c(100, 108, 7) + c(70, 68, 5) + c(130, 66, 5) + e(100, 186, 52, 8) + sparkle(28, 66, 7) + sparkle(172, 58, 6)],
-    ['flor', 'Flor', e(100, 46, 17, 26) + e(100, 130, 17, 26) + e(58, 88, 26, 17) + e(142, 88, 26, 17) + e(70, 58, 16, 24, 45) + e(130, 58, 16, 24, -45) + e(70, 118, 16, 24, -45) + e(130, 118, 16, 24, 45) + c(100, 88, 19) + face(100, 90, 14, 6) + p('M100 148 Q98 170 100 188') + p('M100 166 Q76 152 66 166 Q86 180 100 172 Z') + p('M100 158 Q124 146 134 158 Q114 172 100 164 Z') + sparkle(36, 44, 6) + sparkle(166, 148, 6)],
-    ['arbol-navidad', 'Árbol de Navidad', poly(100, 30, 144, 88, 56, 88) + poly(100, 68, 156, 128, 44, 128) + poly(100, 110, 168, 170, 32, 170) + r(88, 170, 24, 18, 4) + star5(100, 18, 14) + c(84, 78, 5) + c(120, 112, 5) + c(70, 146, 5) + c(130, 152, 5) + c(100, 134, 5) + p('M70 100 Q100 114 130 100') + p('M56 142 Q100 158 144 142') + heart(100, 92, 7) + sparkle(30, 48, 6) + sparkle(172, 60, 6)],
-    ['nube-lluvia', 'Nube con lluvia', p('M52 122 Q24 122 24 96 Q24 72 50 72 Q58 46 86 46 Q112 46 118 66 Q152 60 158 88 Q180 92 178 112 Q176 128 152 128 L60 128 Q52 128 52 122 Z') + eyes(84, 92, 26) + smile(84, 104, 9) + cheeks(84, 102, 44) + p('M62 146 Q54 162 62 168 Q70 162 62 146 Z') + p('M98 150 Q90 166 98 172 Q106 166 98 150 Z') + p('M134 146 Q126 162 134 168 Q142 162 134 146 Z') + e(100, 186, 48, 8) + sparkle(172, 40, 7) + sparkle(26, 46, 5)],
-  ],
-  fantasia: [
-    ['castillo', 'Castillo', r(62, 88, 76, 92) + r(38, 56, 26, 124, 6) + r(136, 56, 26, 124, 6) + p('M38 56 L38 40 M51 56 L51 40 M64 56 L64 40') + p('M136 56 L136 40 M149 56 L149 40 M162 56 L162 40') + poly(62, 88, 100, 50, 138, 88) + p('M88 180 L88 136 Q100 120 112 136 L112 180 Z') + r(70, 108, 14, 20, 7) + r(116, 108, 14, 20, 7) + l(51, 40, 51, 22) + poly(51, 22, 72, 28, 51, 36) + l(149, 40, 149, 22) + poly(149, 22, 170, 28, 149, 36) + p('M62 120 L138 120 M62 150 L84 150 M116 150 L138 150') + heart(100, 70, 8) + sparkle(24, 90, 6) + sparkle(178, 100, 6)],
-    ['dragon', 'Dragón', p('M38 152 Q36 106 84 98 Q120 92 132 68 Q142 48 164 56 Q178 64 170 80 Q164 92 152 96 Q158 110 146 120 Q136 128 126 122 Q122 150 92 160 Q60 168 50 172 Q38 170 38 152 Z') + e(84, 134, 26, 17) + c(156, 68, 3.5) + smile(150, 82, 6) + poly(146, 50, 152, 34, 162, 48) + p('M92 96 Q110 60 140 64 Q122 84 116 100 Z') + poly(60, 106, 50, 88, 72, 96) + poly(80, 100, 76, 80, 94, 94) + p('M50 168 Q44 178 34 178') + p('M176 84 Q192 88 190 100 Q198 106 186 114 Q180 100 176 84 Z') + c(58, 122, 8) + c(74, 148, 6) + sparkle(24, 62, 7)],
-    ['princesa', 'Corona de princesa', p('M44 152 L44 86 L74 114 L100 64 L126 114 L156 86 L156 152 Z') + r(42, 152, 116, 18, 6) + c(44, 78, 7) + c(100, 54, 8) + c(156, 78, 7) + c(75, 124, 6) + c(100, 132, 7) + c(125, 124, 6) + heart(100, 161, 7) + c(62, 161, 3) + c(138, 161, 3) + sparkle(30, 108, 7) + sparkle(172, 104, 7) + sparkle(100, 26, 8)],
-    ['robot', 'Robot', r(68, 72, 64, 58, 12) + c(86, 98, 8) + c(86, 98, 3) + c(114, 98, 8) + c(114, 98, 3) + r(88, 116, 24, 9, 4) + l(88, 120, 112, 120) + l(100, 72, 100, 54) + c(100, 48, 7) + r(52, 88, 14, 28, 6) + r(134, 88, 14, 28, 6) + r(74, 136, 52, 42, 10) + r(56, 140, 14, 36, 7) + r(130, 140, 14, 36, 7) + r(82, 178, 14, 14, 5) + r(104, 178, 14, 14, 5) + r(86, 148, 28, 16, 5) + heart(100, 156, 7) + c(76, 130, 2.5) + c(124, 130, 2.5) + sparkle(40, 60, 6) + sparkle(164, 66, 6)],
-    ['unicornio-cabeza', 'Unicornio', c(102, 118, 46) + poly(122, 80, 140, 24, 150, 86) + p('M126 74 L144 40 M132 82 L148 54') + poly(66, 86, 56, 56, 88, 72) + c(88, 112, 3.5) + p('M88 104 L82 98 M92 102 L92 94') + smile(92, 132, 8) + c(78, 130, 5) + e(116, 142, 18, 12, -8) + p('M62 96 Q34 100 30 128 Q52 122 64 110') + p('M58 122 Q30 134 28 162 Q52 154 66 138') + p('M66 146 Q48 164 52 184 Q70 172 78 158') + sparkle(168, 52, 8) + sparkle(160, 120, 6) + sparkle(40, 44, 6) + heart(150, 158, 8)],
-    ['estrella-feliz', 'Estrella feliz', star5(100, 100, 76, 0.5) + face(100, 104, 28, 11) + sparkle(28, 34, 7) + sparkle(172, 40, 6) + sparkle(164, 160, 7) + sparkle(32, 152, 5)],
-  ],
-  espacio: [
-    ['luna', 'Luna', p('M128 28 A76 76 0 1 0 128 172 A62 62 0 1 1 128 28 Z') + c(66, 84, 3.5) + p('M58 76 L52 70') + smile(70, 100, 8) + c(56, 104, 4.5) + c(62, 128, 8) + c(84, 152, 6) + c(48, 148, 4) + c(168, 52, 11) + e(168, 52, 20, 6, -20) + star5(160, 130, 10) + sparkle(180, 96, 6) + sparkle(140, 166, 6)],
-    ['ovni', 'OVNI', p('M56 92 Q100 36 144 92 Z') + e(100, 104, 74, 24) + c(58, 104, 6) + c(100, 112, 6) + c(142, 104, 6) + c(100, 70, 13) + c(95, 67, 2.5) + c(105, 67, 2.5) + smile(100, 76, 5) + p('M80 126 L62 176 M120 126 L138 176 M70 150 L130 150') + star5(30, 56, 9) + star5(172, 48, 8) + sparkle(176, 130, 6) + sparkle(22, 120, 6)],
-    ['planeta-anillos', 'Planeta con anillos', c(100, 96, 43) + e(100, 96, 85, 26, -18) + p('M22 116 A85 26 -18 0 0 100 122') + c(84, 84, 9) + c(116, 106, 11) + c(104, 72, 5) + c(78, 112, 4) + star5(36, 44, 9) + star5(168, 150, 8) + sparkle(172, 60, 6) + sparkle(28, 150, 6)],
-    ['satelite', 'Satélite', r(84, 84, 32, 32, 6) + c(100, 100, 8) + l(84, 84, 64, 62) + l(116, 116, 136, 138) + r(38, 34, 32, 26, 4) + l(46, 34, 46, 60) + l(54, 34, 54, 60) + l(62, 34, 62, 60) + l(38, 47, 70, 47) + r(130, 140, 32, 26, 4) + l(138, 140, 138, 166) + l(146, 140, 146, 166) + l(154, 140, 154, 166) + l(130, 153, 162, 153) + p('M104 78 Q120 62 134 68') + p('M112 88 Q124 76 134 80') + star5(160, 40, 9) + star5(40, 150, 8) + sparkle(172, 96, 6)],
-    ['astronauta', 'Astronauta', c(100, 70, 34) + p('M74 64 Q100 44 126 64 Q130 92 100 98 Q70 92 74 64 Z') + p('M82 60 Q92 52 104 56') + r(76, 108, 48, 56, 14) + r(58, 116, 16, 40, 7) + r(126, 116, 16, 40, 7) + p('M76 122 Q52 130 54 154 Q56 166 66 164') + p('M124 122 Q148 130 146 154 Q144 166 134 164') + r(80, 164, 17, 26, 7) + r(103, 164, 17, 26, 7) + r(86, 124, 28, 18, 5) + heart(100, 133, 7) + l(90, 148, 110, 148) + l(100, 36, 100, 24) + c(100, 20, 5) + star5(36, 60, 9) + star5(168, 76, 8) + sparkle(160, 160, 6) + sparkle(40, 150, 6)],
-  ],
-  comida: [
-    ['helado', 'Cono de helado', c(78, 78, 25) + c(122, 78, 25) + c(100, 56, 26) + eyes(100, 54, 14, 2.5) + smile(100, 62, 5) + p('M64 98 L136 98 L100 182 Z') + p('M64 98 Q74 110 84 98 Q94 110 104 98 Q114 110 124 98 Q130 106 136 98') + l(74, 122, 118, 158) + l(92, 116, 128, 144) + l(78, 142, 106, 166) + c(100, 26, 8) + p('M100 18 Q108 8 116 12') + l(70, 66, 78, 62) + l(124, 62, 132, 66) + l(96, 84, 104, 80) + sparkle(36, 60, 7) + sparkle(166, 70, 6)],
-    ['manzana', 'Manzana', p('M100 64 Q56 54 52 102 Q48 154 100 172 Q152 154 148 102 Q144 54 100 64 Z') + p('M100 64 Q96 44 108 34') + p('M108 44 Q134 34 140 54 Q116 62 108 44 Z') + p('M76 92 Q68 108 76 124') + eyes(100, 108, 26, 3.5) + smile(100, 124, 9) + cheeks(100, 120, 44) + heart(140, 148, 7) + sparkle(34, 60, 6)],
-    ['pizza', 'Rebanada de pizza', poly(100, 26, 174, 164, 26, 164) + p('M26 164 Q100 190 174 164') + p('M40 148 Q100 170 160 148') + c(85, 88, 9) + c(122, 106, 9) + c(95, 130, 9) + c(132, 140, 7) + c(66, 118, 7) + c(108, 66, 6) + p('M70 74 Q80 84 74 94') + p('M140 122 Q148 130 144 140') + heart(52, 152, 6) + sparkle(170, 44, 7) + sparkle(30, 48, 6)],
-    ['sandia', 'Rebanada de sandía', p('M20 96 Q100 26 180 96 Q100 198 20 96 Z') + p('M34 106 Q100 48 166 106') + e(78, 112, 4, 6.5, 12) + e(112, 106, 4, 6.5, -8) + e(138, 116, 4, 6.5, 15) + e(94, 134, 4, 6.5, -12) + e(122, 138, 4, 6.5, 8) + e(66, 126, 4, 6.5, -15) + e(104, 156, 4, 6.5, 5) + sparkle(24, 50, 7) + sparkle(176, 44, 6)],
-    ['taza-caliente', 'Taza con nubes', r(52, 92, 88, 76, 16) + e(160, 128, 17, 23) + e(96, 96, 41, 10) + c(70, 94, 9) + c(94, 99, 10) + c(118, 94, 9) + heart(96, 132, 12) + p('M78 64 Q70 52 78 40 Q86 30 80 18') + p('M112 62 Q104 50 112 38 Q120 28 114 16') + l(60, 168, 132, 168) + sparkle(172, 60, 7) + sparkle(28, 74, 6)],
-  ],
-  granja: [
-    ['vaca', 'Vaca', e(108, 126, 52, 36) + c(60, 84, 29) + e(36, 66, 11, 6, -28) + e(84, 64, 11, 6, 28) + p('M44 58 Q38 44 50 42 M76 56 Q82 42 70 40') + eyes(60, 80, 18, 3) + e(60, 98, 15, 10) + c(54, 98, 2.5) + c(66, 98, 2.5) + e(118, 112, 18, 13, 15) + c(88, 140, 10) + c(138, 132, 9) + r(80, 154, 13, 28, 6) + r(128, 154, 13, 28, 6) + l(80, 172, 93, 172) + l(128, 172, 141, 172) + p('M158 118 Q176 126 170 148') + e(170, 152, 7, 10, 20) + p('M48 112 L74 118') + c(60, 120, 7) + heart(150, 90, 7) + sparkle(24, 130, 6)],
-    ['cerdito', 'Cerdito', c(100, 106, 50) + poly(66, 70, 56, 42, 88, 60) + poly(134, 70, 144, 42, 112, 60) + eyes(100, 94, 32, 4) + e(100, 122, 21, 14) + c(93, 122, 3) + c(107, 122, 3) + smile(100, 104, 6) + cheeks(100, 108, 60) + r(76, 150, 14, 26, 6) + r(110, 150, 14, 26, 6) + l(76, 166, 90, 166) + l(110, 166, 124, 166) + p('M148 126 Q168 120 164 138 Q160 150 172 146') + heart(100, 62, 8) + sparkle(26, 76, 6) + sparkle(174, 90, 6)],
-    ['pollito', 'Pollito', c(100, 108, 47) + p('M90 62 Q98 42 112 58 Q104 56 100 66') + eyes(100, 98, 28, 4) + poly(100, 110, 111, 119, 100, 129, 89, 119) + cheeks(100, 112, 52) + e(60, 114, 14, 21, 18) + e(140, 114, 14, 21, -18) + p('M88 152 L82 172 M82 172 L72 176 M82 172 L88 180') + p('M112 152 L118 172 M118 172 L128 176 M118 172 L112 180') + sparkle(32, 66, 7) + sparkle(170, 72, 6) + heart(164, 140, 7)],
-    ['gallo', 'Gallo', e(112, 120, 44, 34) + c(74, 70, 23) + p('M56 50 Q62 30 76 44 Q84 26 96 42 Q102 34 102 50 Z') + poly(52, 72, 30, 79, 52, 87) + c(68, 66, 3) + p('M60 90 Q66 104 78 96') + c(66, 100, 5) + e(110, 122, 22, 15, 10) + p('M140 96 Q172 74 184 42 Q166 66 150 76 Z') + p('M148 92 Q182 84 192 64 Q170 76 154 82 Z') + p('M144 108 Q176 108 184 92 Q166 100 148 98 Z') + p('M92 146 L88 172 M88 172 L78 177 M88 172 L96 178') + p('M128 146 L132 172 M132 172 L122 177 M132 172 L140 178') + poly(86, 96, 98, 88, 96, 102) + sparkle(28, 110, 6) + sparkle(166, 160, 6)],
-    ['oveja', 'Oveja', e(100, 104, 50, 36) + c(66, 84, 20) + c(134, 84, 20) + c(78, 62, 17) + c(122, 62, 17) + c(100, 56, 17) + c(56, 110, 17) + c(144, 110, 17) + c(72, 132, 16) + c(128, 132, 16) + c(100, 138, 16) + e(100, 100, 16, 18) + eyes(100, 96, 14, 2.5) + smile(100, 106, 6) + e(80, 92, 9, 5, -22) + e(120, 92, 9, 5, 22) + c(100, 78, 8) + r(82, 146, 10, 30, 4) + r(108, 146, 10, 30, 4) + l(82, 168, 92, 168) + l(108, 168, 118, 168) + p('M24 182 Q40 174 52 182 M148 182 Q162 174 176 182') + sparkle(30, 60, 6) + sparkle(172, 54, 6)],
-    ['caballito', 'Caballito', e(120, 114, 46, 28) + p('M82 98 Q62 76 66 50 Q70 32 88 40 Q98 46 96 62 L100 86 Z') + c(76, 44, 15) + poly(84, 30, 78, 12, 96, 24) + c(72, 42, 3) + smile(70, 52, 5) + p('M90 32 Q108 42 102 60 Q116 66 108 84 Q120 92 110 102') + e(74, 58, 11, 8, 20) + r(90, 134, 12, 36, 5) + r(110, 138, 12, 32, 5) + r(140, 134, 12, 36, 5) + r(154, 138, 12, 32, 5) + l(90, 158, 102, 158) + l(140, 158, 152, 158) + p('M164 106 Q188 100 190 122 Q180 134 166 120 Z') + e(120, 106, 17, 10) + heart(40, 84, 8) + sparkle(30, 140, 6) + sparkle(172, 66, 7)],
-  ],
-  oceano: [
-    ['ballena', 'Ballena', p('M26 118 Q26 72 88 68 Q150 64 170 92 Q182 108 170 122 Q148 144 88 144 Q40 142 26 118 Z') + p('M168 94 Q190 70 198 88 Q200 106 178 110 Z') + p('M92 68 Q96 42 106 34 Q116 42 112 66') + c(104, 28, 5) + c(93, 34, 4) + c(117, 38, 3) + c(64, 96, 4) + smile(56, 112, 9) + c(48, 106, 4.5) + p('M58 130 Q90 140 122 130') + p('M14 162 Q34 152 54 162 Q74 172 94 162 Q114 152 134 162 Q154 172 174 162') + sparkle(176, 46, 7) + sparkle(24, 44, 6)],
-    ['pulpo', 'Pulpo', c(100, 78, 43) + eyes(100, 72, 28, 4.5) + smile(100, 92, 10) + cheeks(100, 86, 56) + p('M66 110 Q46 128 50 150 Q54 164 66 156 Q72 148 66 134 Q62 122 74 116') + p('M86 120 Q78 144 86 162 Q92 174 100 162') + p('M114 120 Q122 144 114 162 Q108 174 100 164') + p('M134 110 Q154 128 150 150 Q146 164 134 156 Q128 148 134 134 Q138 122 126 116') + p('M142 96 Q168 98 176 118 Q180 132 164 126') + p('M58 96 Q32 98 24 118 Q20 132 36 126') + c(54, 140, 3) + c(62, 150, 3) + c(146, 140, 3) + c(138, 150, 3) + sparkle(176, 62, 7) + sparkle(24, 66, 6) + heart(100, 176, 6)],
-    ['estrella-mar', 'Estrella de mar', p('M100 20 Q110 62 124 74 Q164 80 180 98 Q146 108 136 118 Q144 156 132 180 Q110 152 100 142 Q90 152 68 180 Q56 156 64 118 Q54 108 20 98 Q36 80 76 74 Q90 62 100 20 Z') + eyes(100, 96, 26, 4) + smile(100, 112, 9) + cheeks(100, 106, 44) + c(100, 50, 4) + c(58, 92, 4) + c(142, 92, 4) + c(76, 142, 4) + c(124, 142, 4) + sparkle(24, 44, 6) + sparkle(178, 40, 6)],
-    ['submarino', 'Submarino', e(96, 112, 62, 34) + r(78, 72, 38, 18, 8) + p('M97 72 L97 50 Q90 42 98 34') + c(66, 110, 10) + c(66, 110, 4) + c(96, 110, 10) + c(96, 110, 4) + c(126, 110, 10) + c(126, 110, 4) + p('M156 96 Q182 112 156 128') + l(150, 112, 164, 112) + poly(112, 74, 124, 58, 132, 76) + c(150, 54, 6) + c(164, 40, 4) + c(140, 36, 3) + p('M18 164 Q38 154 58 164 Q78 174 98 164 Q118 154 138 164 Q158 174 178 164') + heart(96, 88, 5) + sparkle(30, 60, 6)],
-    ['caballito-mar', 'Caballito de mar', p('M112 24 Q140 34 136 60 Q132 78 114 86 Q130 96 132 116 Q134 138 118 148 Q136 154 140 172 Q142 190 124 190 Q108 190 106 174 Q104 158 112 150 Q94 146 88 130 Q84 116 94 106 Q84 98 82 82 Q80 52 96 38 Q102 30 112 24 Z') + l(94, 52, 72, 58) + c(104, 48, 3.5) + smile(106, 60, 5) + poly(102, 26, 92, 10, 114, 18) + p('M130 96 Q150 94 154 110 Q142 118 132 110') + p('M96 96 Q104 104 98 112 M102 120 Q110 128 104 136') + c(150, 44, 6) + c(164, 30, 4) + c(140, 24, 3) + p('M32 150 Q38 128 30 112 M44 158 Q52 134 44 116') + sparkle(60, 40, 6)],
-    ['ancla', 'Ancla', c(100, 38, 13) + r(94, 51, 12, 104, 4) + r(64, 74, 72, 12, 6) + p('M36 110 Q36 158 100 172 Q164 158 164 110') + poly(36, 110, 18, 96, 24, 124) + poly(164, 110, 182, 96, 176, 124) + p('M100 62 Q122 72 108 88 Q92 100 112 112') + star5(100, 150, 10) + c(150, 52, 6) + c(164, 38, 4) + c(48, 46, 5) + sparkle(26, 62, 6) + sparkle(176, 140, 6)],
-  ],
-};
-
+const VERSION = 3;
 const packTotals = {};
-for (const [pack, items] of Object.entries(dibujos)) {
+let grand = 0;
+
+for (const [pack, { name, items }] of Object.entries(packs)) {
   const dir = join(OUT, pack);
   rmSync(dir, { recursive: true, force: true });
   mkdirSync(dir, { recursive: true });
   const files = items.map(([file, title, body]) => {
-    writeFileSync(join(dir, file + '.svg'), svg(body));
+    const svg =
+      `<?xml version="1.0" encoding="UTF-8"?>\n` +
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">` +
+      `<g fill="none" stroke="#2b2d42" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round">${body}</g></svg>\n`;
+    writeFileSync(join(dir, file + '.svg'), svg);
     return { file: file + '.svg', title, license: LICENSE };
   });
-  writeFileSync(join(dir, 'manifest.json'), JSON.stringify({ name: pack.charAt(0).toUpperCase() + pack.slice(1), version: 2, license: LICENSE, files }, null, 2) + '\n');
+  writeFileSync(
+    join(dir, 'manifest.json'),
+    JSON.stringify({ name, version: VERSION, license: LICENSE, files }, null, 2) + '\n',
+  );
   packTotals[pack] = files.length;
+  grand += files.length;
 }
 
-const total = Object.values(packTotals).reduce((a, b) => a + b, 0);
-console.log(`Catálogo v2 generado: ${Object.keys(packTotals).length} paquetes, ${total} dibujos (todos ${LICENSE}, costo $0).`);
+console.log(
+  `Catálogo v${VERSION} generado: ${Object.keys(packTotals).length} paquetes, ${grand} dibujos (todos ${LICENSE}, costo $0).`,
+);
+for (const [pack, n] of Object.entries(packTotals)) console.log(`  ${pack}: ${n}`);

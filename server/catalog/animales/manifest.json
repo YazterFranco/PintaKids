@@ -1,6 +1,6 @@
 {
   "name": "Animales",
-  "version": 2,
+  "version": 3,
   "license": "Pintakids-Original",
   "files": [
     {
@@ -9,12 +9,27 @@
       "license": "Pintakids-Original"
     },
     {
+      "file": "perro.svg",
+      "title": "Perro",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "conejo.svg",
+      "title": "Conejo",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "pato.svg",
+      "title": "Pato",
+      "license": "Pintakids-Original"
+    },
+    {
       "file": "pajarito.svg",
       "title": "Pajarito",
       "license": "Pintakids-Original"
     },
     {
-      "file": "peixe.svg",
+      "file": "pez.svg",
       "title": "Pez",
       "license": "Pintakids-Original"
     },
@@ -39,8 +54,58 @@
       "license": "Pintakids-Original"
     },
     {
-      "file": "conejo.svg",
-      "title": "Conejo",
+      "file": "leon.svg",
+      "title": "León",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "vaca.svg",
+      "title": "Vaca",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "cerdito.svg",
+      "title": "Cerdito",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "rana.svg",
+      "title": "Rana",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "buho.svg",
+      "title": "Búho",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "zorro.svg",
+      "title": "Zorro",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "jirafa.svg",
+      "title": "Jirafa",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "rana-verde.svg",
+      "title": "Rana saltarina",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "pinguino.svg",
+      "title": "Pingüino",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "delfin.svg",
+      "title": "Delfín",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "ardilla.svg",
+      "title": "Ardilla",
       "license": "Pintakids-Original"
     }
   ]

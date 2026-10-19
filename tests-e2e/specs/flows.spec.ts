@@ -120,6 +120,7 @@ test('offline: la app y el catálogo siguen funcionando sin red', async ({ page,
   await expect(page.locator('#view-color .card').first()).toBeVisible({ timeout: 8_000 });
   // dibujar offline y comprobar persistencia IndexedDB
   await page.click('.tab[data-view="draw"]');
+  await expect(page.locator('#view-draw canvas')).toBeVisible({ timeout: 8_000 });
   const box2 = await page.locator('#view-draw canvas').boundingBox();
   await page.mouse.move(box2.x + 30, box2.y + 30);
   await page.mouse.down();

@@ -1,6 +1,6 @@
 {
   "name": "Comida",
-  "version": 2,
+  "version": 3,
   "license": "Pintakids-Original",
   "files": [
     {
@@ -10,7 +10,12 @@
     },
     {
       "file": "manzana.svg",
-      "title": "Manzana",
+      "title": "Manzana sonriente",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "fresa.svg",
+      "title": "Fresa dulce",
       "license": "Pintakids-Original"
     },
     {
@@ -24,8 +29,48 @@
       "license": "Pintakids-Original"
     },
     {
-      "file": "taza-caliente.svg",
-      "title": "Taza con nubes",
+      "file": "dona.svg",
+      "title": "Dona glaseada",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "galleta.svg",
+      "title": "Galleta",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "palomitas.svg",
+      "title": "Palomitas",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "zanahoria.svg",
+      "title": "Zanahoria",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "platano.svg",
+      "title": "Plátano",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "uvas.svg",
+      "title": "Uvas",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "taza.svg",
+      "title": "Taza con corazón",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "cupcake.svg",
+      "title": "Cupcake",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "cerezas.svg",
+      "title": "Cerezas",
       "license": "Pintakids-Original"
     }
   ]

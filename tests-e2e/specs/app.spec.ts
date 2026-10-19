@@ -63,7 +63,7 @@ test('guardar dibujo sube estrellas y aparece en galería', async ({ page }) => 
 
 test('colorear: catálogo carga y tocar rellena sin salirse', async ({ page }) => {
   await page.click('.tab[data-view="color"]');
-  await expect(page.locator('#view-color .card')).toHaveCount(8, { timeout: 8_000 });
+  await expect(page.locator('#view-color .card')).toHaveCount(21, { timeout: 8_000 });
   await page.locator('#view-color .card').first().click();
   const canvas = page.locator('#view-color canvas');
   await expect(canvas).toBeVisible({ timeout: 8_000 });

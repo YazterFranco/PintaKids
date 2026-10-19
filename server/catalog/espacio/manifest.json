@@ -1,21 +1,21 @@
 {
   "name": "Espacio",
-  "version": 2,
+  "version": 3,
   "license": "Pintakids-Original",
   "files": [
     {
-      "file": "luna.svg",
-      "title": "Luna",
-      "license": "Pintakids-Original"
-    },
-    {
       "file": "ovni.svg",
-      "title": "OVNI",
+      "title": "OVNI volador",
       "license": "Pintakids-Original"
     },
     {
       "file": "planeta-anillos.svg",
       "title": "Planeta con anillos",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "tierra.svg",
+      "title": "Planeta Tierra",
       "license": "Pintakids-Original"
     },
     {
@@ -26,6 +26,41 @@
     {
       "file": "astronauta.svg",
       "title": "Astronauta",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "cometa.svg",
+      "title": "Cometa brillante",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "estrella-mayor.svg",
+      "title": "Estrella guía",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "luna-estrellas.svg",
+      "title": "Noche estrellada",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "nave-espacial.svg",
+      "title": "Nave espacial",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "marte.svg",
+      "title": "Planeta Marte",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "planeta-luna.svg",
+      "title": "Planeta y luna",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "planeta-feliz.svg",
+      "title": "Planeta sonriente",
       "license": "Pintakids-Original"
     }
   ]

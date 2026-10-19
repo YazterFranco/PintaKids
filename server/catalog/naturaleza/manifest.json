@@ -1,36 +1,76 @@
 {
   "name": "Naturaleza",
-  "version": 2,
+  "version": 3,
   "license": "Pintakids-Original",
   "files": [
     {
       "file": "sol.svg",
-      "title": "Sol",
+      "title": "Sol brillante",
       "license": "Pintakids-Original"
     },
     {
-      "file": "casa.svg",
-      "title": "Mi casa",
+      "file": "luna.svg",
+      "title": "Luna llena",
       "license": "Pintakids-Original"
     },
     {
       "file": "arbol.svg",
-      "title": "Árbol",
+      "title": "Árbol frondoso",
       "license": "Pintakids-Original"
     },
     {
       "file": "flor.svg",
-      "title": "Flor",
+      "title": "Flor con hojas",
       "license": "Pintakids-Original"
     },
     {
-      "file": "arbol-navidad.svg",
-      "title": "Árbol de Navidad",
+      "file": "girasol.svg",
+      "title": "Girasol",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "tulipan.svg",
+      "title": "Tulipán",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "casa.svg",
+      "title": "Mi casita",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "montana.svg",
+      "title": "Montaña con nieve",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "arcoiris.svg",
+      "title": "Arcoíris",
       "license": "Pintakids-Original"
     },
     {
       "file": "nube-lluvia.svg",
-      "title": "Nube con lluvia",
+      "title": "Nube feliz",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "cactus.svg",
+      "title": "Cactus con flores",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "seta.svg",
+      "title": "Seta mágica",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "hoja.svg",
+      "title": "Hoja de otoño",
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "corazon-arbol.svg",
+      "title": "Corazón del bosque",
       "license": "Pintakids-Original"
     }
   ]
