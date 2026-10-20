@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><g fill="none" stroke="#2b2d42" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"><path d="M52 122 Q24 122 24 96 Q24 72 50 72 Q58 46 86 46 Q112 46 118 66 Q152 60 158 88 Q180 92 178 112 Q176 128 152 128 L60 128 Q52 128 52 122 Z"/><path d="M64 78 Q71 74 78 76"/><path d="M90 76 Q97 74 104 78"/><circle cx="71" cy="92" r="3.5"/><circle cx="97" cy="92" r="3.5"/><circle cx="72.225" cy="90.6" r="1.1900000000000002"/><circle cx="98.225" cy="90.6" r="1.1900000000000002"/><path d="M75 104 Q84 112.55 93 104"/><circle cx="61" cy="102" r="4.5"/><circle cx="107" cy="102" r="4.5"/><path d="M62 146 Q54 162 62 168 Q70 162 62 146 Z"/><path d="M98 150 Q90 166 98 172 Q106 166 98 150 Z"/><path d="M134 146 Q126 162 134 168 Q142 162 134 146 Z"/><ellipse cx="100" cy="186" rx="48" ry="8"/><polygon points="172,33 174.1,37.9 179,40 174.1,42.1 172,47 169.9,42.1 165,40 169.9,37.9"/><polygon points="26,41 27.5,44.5 31,46 27.5,47.5 26,51 24.5,47.5 21,46 24.5,44.5"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Cuerpo de la nube (cerrado) -->
+  <path d="M40 130 Q50 110 70 110 Q90 110 110 130 Q130 130 150 120 Q160 110 170 130 Q180 140 180 150 Q170 160 150 160 Q130 160 110 160 Q90 160 70 160 Q50 160 40 150 Z" fill="#fce7f3" stroke="#d9a3e8" stroke-width="5" stroke-linejoin="round"/>
+
+  <!-- Gotas de lluvia (cerradas) -->
+  <path d="M60 170 L60 190 Q60 200 70 200 L70 180 Q60 180 60 170 Z" fill="#a8e6ff" stroke="#4cc9f0" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M100 170 L100 190 Q100 200 110 200 L110 180 Q100 180 100 170 Z" fill="#a8e6ff" stroke="#4cc9f0" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M140 170 L140 190 Q140 200 150 200 L150 180 Q140 180 140 170 Z" fill="#a8e6ff" stroke="#4cc9f0" stroke-width="4" stroke-linejoin="round"/>
+
+  <!-- Ojos kawaii -->
+  <circle cx="90" cy="135" r="4" fill="#2b2d42"/>
+  <circle cx="110" cy="135" r="4" fill="#2b2d42"/>
+  <!-- Boca sonriente -->
+  <path d="M90 145 Q100 151 110 145" fill="none" stroke="#2b2d42" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
