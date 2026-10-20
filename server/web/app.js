@@ -80,15 +80,23 @@ const ctx = { app, toast, addStar, applyI18n, store };
 
 async function showView(name) {
   if (!VIEWS.includes(name)) name = 'draw';
+  const prev = currentView();
   for (const v of VIEWS) {
     const el = document.getElementById('view-' + v);
     el.hidden = v !== name;
+    if (v !== name) el.classList.remove('view-enter');
   }
   document.querySelectorAll('.tab').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.view === name)));
   document.getElementById('timeUp').hidden = true;
-  if (!modules[name]) modules[name] = await import('./modes/' + name + '.js?v=3');
+  const el = document.getElementById('view-' + name);
+  if (prev !== name) {
+    el.classList.remove('view-enter');
+    void el.offsetWidth; // force reflow
+    el.classList.add('view-enter');
+  }
+  if (!modules[name]) modules[name] = await import('./modes/' + name + '.js?v=4');
   await modules[name].mount(ctx);
-  applyI18n(document.getElementById('view-' + name));
+  applyI18n(el);
 }
 
 function currentView() {

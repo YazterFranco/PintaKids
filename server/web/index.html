@@ -3,16 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-  <meta name="theme-color" content="#2563EB">
+  <meta name="theme-color" content="#ff8fab">
   <meta name="description" content="Pintakids: dibuja, colorea y cuenta historias. Gratis y sin anuncios.">
   <title>Pintakids</title>
-  <link rel="manifest" href="/manifest.webmanifest?v=3">
-  <link rel="icon" href="/assets/icon.svg?v=3" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/assets/icon-192.png?v=3">
-  <link rel="stylesheet" href="/style.css?v=3">
-  <script type="module" src="/app.js?v=3"></script>
+  <link rel="manifest" href="/manifest.webmanifest?v=4">
+  <link rel="icon" href="/assets/icon.svg?v=4" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/icon-192.png?v=4">
+  <link rel="stylesheet" href="/style.css?v=4">
+  <script type="module" src="/app.js?v=4"></script>
 </head>
 <body>
+  <!-- Decoración washi tape superior -->
+  <div class="washi washi-top"></div>
+
   <header class="topbar">
     <span class="logo" id="logo-icon"></span>
     <h1 data-i18n="app.name">Pintakids</h1>
@@ -28,6 +31,9 @@
     <section id="view-gallery" class="view" hidden aria-label="Galería"></section>
     <section id="view-parents" class="view" hidden aria-label="Padres"></section>
   </main>
+
+  <!-- Decoración washi tape inferior -->
+  <div class="washi washi-bottom"></div>
 
   <nav class="tabbar" role="tablist" aria-label="secciones">
     <button class="tab" data-view="draw" role="tab"><span class="tab-icon"></span><b data-i18n="tab.draw">Dibujar</b></button>

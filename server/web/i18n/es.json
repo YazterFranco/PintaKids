@@ -9,6 +9,8 @@
   "tab.gallery": "Galería",
   "tab.parents": "Padres",
   "draw.title": "Lienzo mágico",
+  "draw.empty.title": "¡Dibuja lo que quieras!",
+  "draw.empty.hint": "Elige un pincel y empieza a crear en el lienzo.",
   "draw.undo": "Deshacer",
   "draw.redo": "Rehacer",
   "draw.clear": "Borrar todo",

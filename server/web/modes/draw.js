@@ -10,13 +10,26 @@ export async function mount(ctx) {
   const root = document.getElementById('view-draw');
   root.replaceChildren();
 
+  // Estado vacío kawaii si no hay trazos todavía
+  const emptyState = document.createElement('div');
+  emptyState.className = 'empty-state';
+  emptyState.innerHTML = `
+    <div class="empty-icon">✏️</div>
+    <h2 data-i18n="draw.empty.title">¡Dibuja lo que quieras!</h2>
+    <p data-i18n="draw.empty.hint">Elige un pincel y empieza a crear en el lienzo.</p>
+  `;
+  root.appendChild(emptyState);
+
   const wrap = document.createElement('div');
   wrap.className = 'canvas-wrap';
   root.appendChild(wrap);
 
   let bg = '#ffffff';
   const surface = createSurface(wrap, {
-    onStroke: () => refresh(),
+    onStroke: () => {
+      emptyState.hidden = true;
+      refresh();
+    },
     onPickColor: (hex) => toast(hex),
   });
   surface.state.tool = 'crayon';
@@ -92,6 +105,7 @@ export async function mount(ctx) {
   const clearBtn = iconBtn(ACTION_ICONS.clear, 'Borrar todo', () => {
     if (surface.strokes.length && !confirm(app.t('draw.confirmClear'))) return;
     surface.clear();
+    emptyState.hidden = false;
   });
   const saveBtn = iconBtn(ACTION_ICONS.save, 'Guardar', save, 'toolbtn big');
 

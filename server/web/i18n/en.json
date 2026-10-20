@@ -9,6 +9,8 @@
   "tab.gallery": "Gallery",
   "tab.parents": "Parents",
   "draw.title": "Magic canvas",
+  "draw.empty.title": "Draw whatever you want!",
+  "draw.empty.hint": "Pick a brush and start creating on the canvas.",
   "draw.undo": "Undo",
   "draw.redo": "Redo",
   "draw.clear": "Clear all",
