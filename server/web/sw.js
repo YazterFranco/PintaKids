@@ -6,7 +6,7 @@
  * - skipWaiting + clients.claim: el SW nuevo toma control inmediato.
  */
 
-const VERSION = 'pintakids-v3';
+const VERSION = 'pintakids-v4';
 
 const PRECACHE = [
   '/',
@@ -60,14 +60,24 @@ self.addEventListener('activate', (e) => {
   );
 });
 
-/** Shell: network-first → caché solo si no hay red (offline). */
-const SHELL = new Set(['/', '/index.html', '/style.css', '/app.js', '/sw.js']);
+/** Shell y módulos: siempre red primero. Caché solo como respaldo offline. */
+const SHELL = new Set([
+  '/', '/index.html', '/style.css', '/app.js', '/sw.js',
+  '/manifest.webmanifest',
+  '/core/store.js', '/core/strokes.js', '/core/history.js',
+  '/core/colorfill.js', '/core/lineart.js', '/core/paint.js',
+  '/core/story.js', '/core/i18n.js', '/core/tts.js',
+  '/ui/surface.js', '/ui/parts.js', '/ui/icons.js',
+  '/modes/draw.js', '/modes/color.js', '/modes/learn.js',
+  '/modes/photo.js', '/modes/story.js', '/modes/gallery.js',
+  '/modes/parents.js',
+]);
 
 self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
   if (e.request.method !== 'GET' || url.origin !== self.location.origin) return;
 
-  // Shell y API: red primero (las actualizaciones llegan siempre), caché como rescate offline.
+  // Shell, módulos y API: red primero (las actualizaciones llegan siempre), caché como rescate offline.
   if (SHELL.has(url.pathname) || url.pathname.startsWith('/v1/')) {
     e.respondWith(
       fetch(e.request)
@@ -81,7 +91,7 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
-  // Resto (módulos JS, i18n, assets): cache-first (cambian con el install del nuevo SW).
+  // Assets estáticos (iconos, fuentes): cache-first (cambian solo con nuevo SW).
   e.respondWith(
     caches.match(e.request).then(
       (hit) =>

@@ -19,8 +19,8 @@ const app = {
 
 async function loadDicts() {
   const [es, en] = await Promise.all([
-    fetch('/i18n/es.json?v=3').then((r) => r.json()),
-    fetch('/i18n/en.json?v=3').then((r) => r.json()),
+    fetch('/i18n/es.json?v=4').then((r) => r.json()),
+    fetch('/i18n/en.json?v=4').then((r) => r.json()),
   ]);
   app.base = { es, en };
 }
