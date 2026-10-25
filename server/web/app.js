@@ -19,8 +19,8 @@ const app = {
 
 async function loadDicts() {
   const [es, en] = await Promise.all([
-    fetch('/i18n/es.json?v=4').then((r) => r.json()),
-    fetch('/i18n/en.json?v=4').then((r) => r.json()),
+    fetch('/i18n/es.json?v=5').then((r) => r.json()),
+    fetch('/i18n/en.json?v=5').then((r) => r.json()),
   ]);
   app.base = { es, en };
 }
@@ -94,7 +94,7 @@ async function showView(name) {
     void el.offsetWidth; // force reflow
     el.classList.add('view-enter');
   }
-  if (!modules[name]) modules[name] = await import('./modes/' + name + '.js?v=4');
+  if (!modules[name]) modules[name] = await import('./modes/' + name + '.js?v=5');
   await modules[name].mount(ctx);
   applyI18n(el);
 }
@@ -136,6 +136,7 @@ async function boot() {
   if (navigator.onLine === false) document.getElementById('offline').hidden = false;
   await showView(currentView());
   armTimeLimit();
+  window.__pkReady = true;
 }
 
 boot().catch((e) => {

@@ -56,7 +56,7 @@
 /* ── Font ──────────────────────────────────────────────────── */
 @font-face {
   font-family: 'Baloo 2';
-  src: url('/assets/fonts/Baloo2-Variable.ttf?v=4') format('truetype-variations');
+  src: url('/assets/fonts/Baloo2-Variable.ttf?v=5') format('truetype-variations');
   font-weight: 400 800;
   font-style: normal;
   font-display: swap;

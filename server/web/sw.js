@@ -13,6 +13,7 @@ const PRECACHE = [
   '/style.css',
   '/app.js',
   '/manifest.webmanifest',
+  '/bootcheck.js',
   '/assets/icon.svg',
   '/assets/icon-192.png',
   '/assets/icon-512.png',
@@ -61,7 +62,7 @@ self.addEventListener('activate', (e) => {
 
 /** Shell y módulos: siempre red primero. Caché solo como respaldo offline. */
 const SHELL = new Set([
-  '/', '/index.html', '/style.css', '/app.js', '/sw.js',
+  '/', '/index.html', '/style.css', '/app.js', '/sw.js', '/bootcheck.js',
   '/manifest.webmanifest',
   '/core/store.js', '/core/strokes.js', '/core/history.js',
   '/core/colorfill.js', '/core/lineart.js', '/core/paint.js',
@@ -76,9 +77,11 @@ self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
   if (e.request.method !== 'GET' || url.origin !== self.location.origin) return;
 
-  // Shell, módulos y API: red primero (las actualizaciones llegan siempre), caché como rescate offline.
   const isNav = e.request.mode === 'navigate';
-  if (isNav || SHELL.has(url.pathname) || url.pathname.startsWith('/v1/')) {
+  const isShell = SHELL.has(url.pathname) || url.pathname.startsWith('/v1/');
+
+  // Shell, módulos y API: red primero (las actualizaciones llegan siempre), caché como rescate offline.
+  if (isNav || isShell) {
     e.respondWith(
       fetch(e.request)
         .then((r) => {
@@ -89,7 +92,12 @@ self.addEventListener('fetch', (e) => {
         .catch(async () => {
           // Navegación offline: servir '/' (respuesta limpia, no un redirect cacheado).
           if (isNav) return (await caches.match('/')) || Response.error();
-          return (await caches.match(e.request)) || Response.error();
+          // Los módulos se piden con ?v=N pero el precache guarda la ruta sin query.
+          return (
+            (await caches.match(e.request)) ||
+            (await caches.match(url.pathname)) ||
+            Response.error()
+          );
         }),
     );
     return;
@@ -97,14 +105,18 @@ self.addEventListener('fetch', (e) => {
 
   // Assets estáticos (iconos, fuentes): cache-first (cambian solo con nuevo SW).
   e.respondWith(
-    caches.match(e.request).then(
-      (hit) =>
-        hit ||
-        fetch(e.request).then((r) => {
+    caches.match(e.request).then(async (hit) => {
+      if (hit) return hit;
+      try {
+        const r = await fetch(e.request);
+        if (r.ok) {
           const copy = r.clone();
-          if (r.ok) caches.open(VERSION).then((c) => c.put(e.request, copy));
-          return r;
-        }),
-    ),
+          caches.open(VERSION).then((c) => c.put(e.request, copy));
+        }
+        return r;
+      } catch (err) {
+        return (await caches.match(url.pathname)) || Response.error();
+      }
+    }),
   );
 });
