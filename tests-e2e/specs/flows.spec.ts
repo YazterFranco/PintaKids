@@ -125,7 +125,7 @@ test('offline: la app y el catálogo siguen funcionando sin red', async ({ page,
   await page.mouse.down();
   await page.mouse.move(box2.x + 120, box2.y + 90, { steps: 6 });
   await page.mouse.up();
-  await page.click('#view-draw .toolbtn.big'); // guardar
+  await page.click('#view-draw [data-testid="save"]'); // guardar
   await expect(page.locator('#starScore')).toContainText('1', { timeout: 5_000 });
   await context.setOffline(false);
 });

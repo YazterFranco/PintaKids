@@ -61,7 +61,7 @@ test('guardar dibujo sube estrellas y aparece en galería', async ({ page }) => 
   await page.mouse.down();
   await page.mouse.move(box.x + 160, box.y + 120, { steps: 10 });
   await page.mouse.up();
-  await page.click('#view-draw .toolbtn.big');
+  await page.click('#view-draw [data-testid="save"]');
   await expect(page.locator('#starScore')).toContainText('1', { timeout: 5_000 });
   await page.evaluate(() => (location.hash = '#/gallery'));
   await expect(page.locator('#view-gallery .card img')).toHaveCount(1, { timeout: 5_000 });

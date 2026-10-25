@@ -285,10 +285,11 @@ const PAINTERS = {
     ctx.shadowBlur = s.s * 1.4;
     outlinePath(ctx, P, W, 0.8);
     ctx.fill();
+    ctx.fill();
     ctx.restore();
     ctx.fillStyle = '#ffffff';
-    ctx.globalAlpha *= 0.9;
-    outlinePath(ctx, P, W, 0.26);
+    ctx.globalAlpha *= 0.8;
+    outlinePath(ctx, P, W, 0.18);
     ctx.fill();
   },
   eraser(ctx, s, P, W) {

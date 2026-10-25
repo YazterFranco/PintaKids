@@ -125,7 +125,7 @@ export function createSurface(wrap, opts = {}) {
       commit(makeStroke('fill', state.color, state.size, [x, y], mirror));
       return;
     }
-    const scale = canvas.width / 400 / view.scale;
+    const scale = Math.min(canvas.width, canvas.height) / 400 / view.scale;
     live = makeStroke(state.tool, state.color, state.size * scale, [x, y], mirror);
     if (state.opacity < 1) live.o = state.opacity;
     if (SHAPE_TOOLS.includes(state.tool)) {

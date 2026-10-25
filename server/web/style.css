@@ -362,7 +362,8 @@ input.caption { width: 100%; }
 }
 @keyframes toast-in { from { transform: translate(-50%, 12px) scale(0.9); opacity: 0; } }
 .pill {
-  position: fixed; top: calc(70px + env(safe-area-inset-top)); right: 12px; z-index: 50;
+  position: fixed; bottom: calc(84px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%);
+  z-index: 50; pointer-events: none; white-space: nowrap;
   font-size: 13px; padding: 6px 14px; border-radius: var(--r-pill); font-weight: 700;
   border: 1px solid var(--border); box-shadow: var(--shadow-1);
 }
@@ -382,3 +383,84 @@ input.caption { width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
+
+/* ── Dibujar v2 ────────────────────────────────────────────── */
+#view-draw.draw-mode { padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); gap: 8px; overflow: hidden; }
+.draw-top { display: flex; align-items: center; gap: 6px; overflow-x: auto; scrollbar-width: none; flex: 0 0 auto; }
+.draw-top::-webkit-scrollbar { display: none; }
+.draw-top .spacer { flex: 1; }
+.toolbtn.slim { min-width: 44px; min-height: 44px; padding: 4px; border-radius: var(--r-sm); }
+.toolbtn.save { flex-direction: row; gap: 6px; min-height: 44px; padding: 4px 14px; border-radius: var(--r-pill); }
+.toolbtn.save small { color: #fff; font-size: 15px; font-weight: 800; }
+.draw-main { flex: 1; min-height: 0; display: flex; gap: 8px; }
+.draw-main .canvas-wrap { flex: 1; min-height: 0; min-width: 0; }
+.draw-rail {
+  display: flex; flex-direction: column; gap: 4px; padding: 4px; flex: 0 0 auto;
+  overflow-y: auto; scrollbar-width: none;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md);
+}
+.draw-rail::-webkit-scrollbar { display: none; }
+.draw-rail .toolbtn { min-width: 48px; min-height: 48px; padding: 4px; border: 0; box-shadow: none; background: transparent; border-radius: var(--r-sm); }
+.draw-rail .toolbtn[aria-pressed='true'] { background: var(--accent-soft); color: var(--accent-strong); box-shadow: inset 0 0 0 2px var(--accent); }
+.draw-rail .rail-gap { margin-top: 6px; position: relative; }
+.draw-rail .rail-gap::before { content: ''; position: absolute; top: -6px; left: 10px; right: 10px; height: 1px; background: var(--border); }
+.draw-bottom {
+  display: flex; align-items: center; gap: 10px; flex: 0 0 auto; padding: 6px 10px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md);
+}
+.color-btn {
+  width: 48px; height: 48px; flex: 0 0 auto; border-radius: 50%; cursor: pointer; padding: 0;
+  border: 3px solid var(--surface); box-shadow: 0 0 0 2px var(--border-strong), var(--shadow-1);
+  background: conic-gradient(#ff7675, #fdcb6e, #00b894, #0984e3, #6c5ce7, #ff7675);
+}
+.recent-colors { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; flex: 0 1 auto; min-width: 0; }
+.recent-colors .swatch { width: 32px; height: 32px; flex: 0 0 auto; }
+.draw-bottom .sizes { min-width: 110px; }
+@media (max-width: 420px) { .recent-colors .swatch:nth-child(n+4) { display: none; } }
+
+/* ── Hojas emergentes ──────────────────────────────────────── */
+.sheet-backdrop { position: fixed; inset: 0; z-index: 80; background: rgba(21, 20, 28, 0.35); animation: fade-in 0.2s ease; }
+.sheet {
+  position: fixed; z-index: 81; left: 50%; bottom: 0; transform: translateX(-50%);
+  width: min(560px, 100%); max-height: 82vh; overflow-y: auto;
+  background: var(--surface); border: 1px solid var(--border); border-bottom: 0;
+  border-radius: var(--r-lg) var(--r-lg) 0 0; box-shadow: var(--shadow-3), var(--edge);
+  padding: 8px 16px calc(18px + env(safe-area-inset-bottom));
+  animation: sheet-up 0.28s var(--ease-out);
+}
+.sheet::before { content: ''; display: block; width: 40px; height: 4px; border-radius: 4px; background: var(--border-strong); margin: 4px auto 6px; }
+@keyframes sheet-up { from { transform: translate(-50%, 40px); opacity: 0; } }
+@keyframes fade-in { from { opacity: 0; } }
+.sheet-title { margin: 10px 2px 8px; font-size: 16px; font-weight: 800; color: var(--ink-soft); }
+.sheet-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.option {
+  display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer;
+  min-width: 76px; padding: 8px; border-radius: var(--r-md);
+  background: var(--surface-2); border: 1px solid var(--border);
+}
+.option small { font-size: 12px; font-weight: 700; color: var(--ink-soft); }
+.option[aria-pressed='true'] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); color: var(--accent-strong); }
+.bg-preview { width: 48px; height: 48px; border-radius: 10px; border: 1px solid var(--border-strong); }
+.page-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 8px; }
+.page-card-btn { padding: 4px; border-radius: var(--r-sm); border: 1px solid var(--border); background: #fff; cursor: pointer; aspect-ratio: 1; }
+.page-card-btn img { width: 100%; height: 100%; object-fit: contain; }
+.sheet-slider { display: flex; align-items: center; gap: 12px; margin-top: 12px; font-weight: 700; }
+.sheet-slider input { flex: 1; }
+.cp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 8px; justify-items: center; }
+.cp-mixer { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; }
+.cp-sv { grid-column: 1 / -1; width: 100%; height: 140px; border-radius: var(--r-sm); touch-action: none; cursor: crosshair; }
+.cp-hue {
+  -webkit-appearance: none; appearance: none; height: 18px; border-radius: 9px;
+  background: linear-gradient(90deg, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+}
+.cp-hue::-webkit-slider-thumb { -webkit-appearance: none; width: 26px; height: 26px; border-radius: 50%; background: #fff; border: 2px solid var(--ink); }
+.cp-use { min-width: 88px; }
+.draw-rail .toolbtn svg { width: 30px; height: 30px; }
+.recent-colors { padding: 4px; }
+@media (max-width: 480px) {
+  .draw-top .toolbtn.slim { min-width: 40px; min-height: 40px; }
+  .draw-top .toolbtn.save small { display: none; }
+  .draw-top .toolbtn.save { padding: 4px 12px; }
+  .draw-top { gap: 4px; }
+}
+.draw-bottom .sizes { max-width: 320px; }

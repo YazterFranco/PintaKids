@@ -136,7 +136,13 @@ function currentView() {
 window.addEventListener('hashchange', () => showView(currentView()));
 document.querySelector('.appbar-home').addEventListener('click', () => app.go('home'));
 document.querySelector('.appbar-lock').addEventListener('click', () => app.go('parents'));
-window.addEventListener('offline', () => (document.getElementById('offline').hidden = false));
+function showOffline() {
+  const el = document.getElementById('offline');
+  el.hidden = false;
+  clearTimeout(showOffline._t);
+  showOffline._t = setTimeout(() => (el.hidden = true), 5000);
+}
+window.addEventListener('offline', showOffline);
 window.addEventListener('online', () => (document.getElementById('offline').hidden = true));
 
 /* ---------- boot ---------- */
@@ -163,7 +169,7 @@ async function boot() {
   injectIcons();
   await loadDicts();
   applyI18n();
-  if (navigator.onLine === false) document.getElementById('offline').hidden = false;
+  if (navigator.onLine === false) showOffline();
   window.__pkReady = true;
   await showView(currentView());
   // Si el peque tocó una pestaña mientras arrancaba, respetar su elección.

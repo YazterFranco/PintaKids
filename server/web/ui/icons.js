@@ -51,3 +51,34 @@ export const crayonLogo = svg('<path d="M2 22l1-4L16.5 4.5a2.121 2.121 0 0 1 3 3
 // ── v2: barra superior ────────────────────────────────────────
 export const homeIcon = svg('<path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/>', 26, 'none');
 export const lockIcon = svg('<rect x="4" y="11" width="16" height="10" rx="3"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>', 22, 'none');
+export const colorPencilIcon = svg('<path d="M15 4l5 5L9 20H4v-5z"/><path d="M4 15l5 5"/><path d="M13 6l5 5"/>', 28, 'none');
+export const chalkIcon = svg('<rect x="3" y="9" width="18" height="7" rx="2" transform="rotate(-25 12 12.5)"/><path d="M4 21h4M10 21h2M15 21h3" />', 28, 'none');
+export const neonIcon = svg('<path d="M4 16c3-8 6 4 9-4s5 0 7-2"/><circle cx="20" cy="10" r="1.5" fill="currentColor" stroke="none"/>', 28, 'none');
+export const shareIcon = svg('<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/>', 26, 'none');
+export const bgIcon = svg('<rect x="3" y="3" width="18" height="18" rx="4"/><path d="M3 15l5-5 4 4 3-3 6 6"/>', 26, 'none');
+export const zoomResetIcon = svg('<circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5M8 11h6"/>', 26, 'none');
+
+// ── v2: iconos ilustrados de la barra de pinceles (a color, 32×32) ─────────
+const art = (body) =>
+  `<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 32 32" stroke="#2d3436" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${body}</svg>`;
+
+export const RAIL_ART = {
+  crayon: art('<g transform="rotate(45 16 16)"><path d="M12 9h8v17h-8z" fill="#ff7675"/><path d="M12 9l4-6 4 6z" fill="#ff7675"/><path d="M12 13h8M12 22h8" stroke="#fff" stroke-width="1.6"/></g>'),
+  colorpencil: art('<g transform="rotate(45 16 16)"><path d="M12.5 8h7v19h-7z" fill="#74b9ff"/><path d="M12.5 8l3.5-6 3.5 6z" fill="#ffeaa7"/><path d="M15 4.3l1-1.7 1 1.7z" fill="#0984e3"/></g>'),
+  marker: art('<g transform="rotate(45 16 16)"><path d="M11 12h10v16H11z" fill="#00b894"/><path d="M13 12l1.2-6h3.6l1.2 6z" fill="#dfe6e9"/><path d="M14.2 6l.6-3h2.4l.6 3z" fill="#00b894"/></g>'),
+  watercolor: art('<path d="M7 25c3-1 4-4 6-6l3 3c-2 2-5 3-9 3z" fill="#a29bfe"/><path d="M13 19L24 6l2 2-11 13z" fill="#d4a373"/><path d="M24 22a3 3 0 1 1-6 0c0-2 3-5 3-5s3 3 3 5z" fill="#a29bfe" stroke="none" opacity=".7"/>'),
+  chalk: art('<rect x="3" y="6" width="26" height="20" rx="4" fill="#2f3e3a"/><path d="M8 20c3-5 5 2 8-3s4-1 6-3" stroke="#fff" stroke-dasharray="1.5 1.5"/><rect x="18" y="20" width="8" height="3" rx="1.2" fill="#fff" stroke="none"/>'),
+  neon: art('<path d="M5 20c4-10 7 4 11-4s7 2 11-6" stroke="#55efc4" stroke-width="5" opacity=".45"/><path d="M5 20c4-10 7 4 11-4s7 2 11-6" stroke="#00b894" stroke-width="2.4"/><path d="M5 20c4-10 7 4 11-4s7 2 11-6" stroke="#fff" stroke-width=".9"/>'),
+  glitter: art('<path d="M12 4l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="#fdcb6e"/><path d="M24 17l1 3 3 1-3 1-1 3-1-3-3-1 3-1z" fill="#fd79a8"/><circle cx="23" cy="8" r="1.6" fill="#a29bfe" stroke="none"/>'),
+  spray: art('<rect x="9" y="12" width="11" height="16" rx="3" fill="#0984e3"/><rect x="11" y="7" width="7" height="5" rx="1.5" fill="#dfe6e9"/><g fill="#0984e3" stroke="none"><circle cx="24" cy="6" r="1.2"/><circle cx="27" cy="9" r="1"/><circle cx="23" cy="10" r="1"/><circle cx="27" cy="4" r=".9"/></g>'),
+  rainbow: art('<path d="M4 24a12 12 0 0 1 24 0" stroke="#ff7675" stroke-width="3.2" fill="none"/><path d="M8 24a8 8 0 0 1 16 0" stroke="#fdcb6e" stroke-width="3.2" fill="none"/><path d="M12 24a4 4 0 0 1 8 0" stroke="#0984e3" stroke-width="3.2" fill="none"/>'),
+  stamp: art('<path d="M16 3l2.4 5 5.4.6-4 3.7 1.1 5.4L16 15l-4.9 2.7 1.1-5.4-4-3.7 5.4-.6z" fill="#fdcb6e"/><path d="M6 24h20v4H6z" fill="#e17055"/><path d="M12 18h8v6h-8z" fill="#fab1a0"/>'),
+  rect: art('<rect x="6" y="8" width="20" height="16" rx="3" fill="none" stroke-width="2.4"/>'),
+  ellipse: art('<ellipse cx="16" cy="16" rx="11" ry="8" fill="none" stroke-width="2.4"/>'),
+  line: art('<path d="M6 26L26 6" stroke-width="2.6"/>'),
+  star: art('<path d="M16 4l3.5 7.2 7.9 1.1-5.7 5.6 1.3 7.9L16 22l-7 3.8 1.3-7.9-5.7-5.6 7.9-1.1z" fill="none" stroke-width="2.2"/>'),
+  fill: art('<path d="M6 15l9-9 9 9-9 9z" fill="#dfe6e9"/><path d="M8 17h14l-7 7z" fill="#6c5ce7" stroke="none"/><path d="M27 22a2.5 2.5 0 1 1-5 0c0-1.8 2.5-4.5 2.5-4.5s2.5 2.7 2.5 4.5z" fill="#6c5ce7"/>'),
+  picker: art('<path d="M7 25l1-4 10-10 3 3-10 10z" fill="#dfe6e9"/><path d="M18 11l3-3a2.8 2.8 0 0 1 4 4l-3 3z" fill="#2d3436"/><path d="M7 25l1-4 4 4z" fill="#ff7675" stroke="none"/>'),
+  eraser: art('<g transform="rotate(-40 16 16)"><rect x="6" y="11" width="20" height="10" rx="2.5" fill="#fd79a8"/><path d="M15 11v10" /><rect x="15" y="11" width="11" height="10" rx="2.5" fill="#dfe6e9"/></g>'),
+};
+export const checkIcon = svg('<path d="M5 12.5l4.5 4.5L19 7.5"/>', 26, 'none');

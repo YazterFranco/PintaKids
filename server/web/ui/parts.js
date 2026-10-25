@@ -1,6 +1,6 @@
 /** Mini kit de componentes para los modos (sin framework: botones grandes y paletas). */
 
-import { brushIcon, clearIcon, downloadIcon, eraserIcon, exportIcon, fillIcon, glitterIcon, lineIcon, markerIcon, mirrorIcon, pencilIcon, pickerIcon, rainbowIcon, rectIcon, redoIcon, saveIcon, stampIcon, starToolIcon, ellipseIcon, undoIcon, watercolorIcon, crayonIcon, sprayIcon, backIcon, nextIcon } from './icons.js';
+import { brushIcon, clearIcon, downloadIcon, eraserIcon, exportIcon, fillIcon, glitterIcon, lineIcon, markerIcon, mirrorIcon, pencilIcon, pickerIcon, rainbowIcon, rectIcon, redoIcon, saveIcon, stampIcon, starToolIcon, ellipseIcon, undoIcon, watercolorIcon, crayonIcon, sprayIcon, backIcon, nextIcon, colorPencilIcon, chalkIcon, neonIcon } from './icons.js';
 
 export const PALETTE = [
   '#ff8fab', '#ffd166', '#4cc9f0', '#8ac926', '#e63946', '#ff9f1c',
@@ -116,6 +116,9 @@ export const TOOL_ICONS = {
   crayon: crayonIcon,
   marker: markerIcon,
   pencil: pencilIcon,
+  colorpencil: colorPencilIcon,
+  chalk: chalkIcon,
+  neon: neonIcon,
   watercolor: watercolorIcon,
   glitter: glitterIcon,
   spray: sprayIcon,
