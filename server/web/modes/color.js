@@ -1,7 +1,7 @@
 /** Modo Colorear: biblioteca por paquete y nivel + balde con estilos + pinceles que no se salen de la zona. */
 
 import { ACTION_ICONS, iconBtn } from '../ui/parts.js';
-import { RAIL_ART, zoomResetIcon } from '../ui/icons.js';
+import { RAIL_ART, zoomResetIcon, checkIcon, shareIcon } from '../ui/icons.js';
 import { KID_COLORS, openColorPicker, pushRecent } from '../ui/colorpicker.js';
 import { celebrate } from '../ui/celebrate.js';
 import { canvasBlob, shareBlob } from '../ui/share.js';
@@ -101,8 +101,8 @@ export async function mount(ctx) {
   redoBtn.dataset.testid = 'color-redo';
   const zoomBtn = iconBtn(zoomResetIcon, app.t('draw.zoomReset'), resetZoom);
   zoomBtn.hidden = true;
-  const shareBtn = iconBtn(ACTION_ICONS.export, app.t('draw.share'), share);
-  const saveBtn = iconBtn(ACTION_ICONS.save, app.t('draw.save'), save, 'toolbtn save');
+  const shareBtn = iconBtn(shareIcon, app.t('draw.share'), share);
+  const saveBtn = iconBtn(checkIcon, app.t('draw.save'), save, 'toolbtn save');
   saveBtn.dataset.testid = 'color-save';
   top.append(back, titleEl, zoomBtn, undoBtn, redoBtn, shareBtn, saveBtn);
 
@@ -605,9 +605,18 @@ export async function mount(ctx) {
     store.setSetting('recentColoring', list);
   }
 
+  /** Lo que llega de Foto o Dibuja conmigo puede tener otro tamaño: se reescala al lienzo de colorear. */
+  function fromCanvas(src) {
+    const off = document.createElement('canvas');
+    off.width = off.height = RENDER;
+    const c = off.getContext('2d', { willReadFrequently: true });
+    c.drawImage(src, 0, 0, RENDER, RENDER);
+    return { canvas: off, imageData: c.getImageData(0, 0, RENDER, RENDER) };
+  }
+
   root.__pkColor = {
     async incoming(data) {
-      prepare(data, { pack: 'mine', file: 'nuevo', title: data.title ?? app.t('photo.title') });
+      prepare(fromCanvas(data.canvas), { pack: 'mine', file: 'nuevo', title: data.title ?? app.t('photo.title') });
       openCanvas();
     },
     refreshMine() {
