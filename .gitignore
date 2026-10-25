@@ -26,3 +26,4 @@ dist/
 .DS_Store
 **/.DS_Store
 .superpowers/
+tests-e2e/.scratch/

@@ -4,16 +4,24 @@
  */
 
 export const TOOLS = [
-  'crayon', 'marker', 'pencil', 'watercolor', 'glitter', 'spray', 'rainbow', 'eraser', 'stamp',
+  'crayon', 'colorpencil', 'marker', 'watercolor', 'chalk', 'neon', 'glitter', 'spray', 'rainbow', 'eraser', 'stamp',
   // Formas y utilidades (estilo Simple Draw): dos puntos definen la caja; 'fill' es un toque.
   'rect', 'ellipse', 'line', 'star', 'fill',
 ];
 
 export const SHAPE_TOOLS = ['rect', 'ellipse', 'line', 'star'];
 
+/** Herramientas v1 renombradas en v2: los dibujos guardados siguen abriendo. */
+export const TOOL_ALIASES = { pencil: 'colorpencil' };
+const MIRRORS = ['v', 'h', 'quad', 'kaleido'];
+
+const toolOf = (t) => TOOL_ALIASES[t] ?? t;
+const mirrorOf = (m) => (MIRRORS.includes(m) ? m : Boolean(m));
+
 export function makeStroke(tool, color, size, pts = [], mirror = false) {
-  if (!TOOLS.includes(tool)) throw new Error('herramienta-desconocida:' + tool);
-  return { t: tool, c: color, s: size, p: pts.slice(), m: mirror };
+  const t = toolOf(tool);
+  if (!TOOLS.includes(t)) throw new Error('herramienta-desconocida:' + tool);
+  return { t, c: color, s: size, p: pts.slice(), m: mirrorOf(mirror) };
 }
 
 export function addPoint(stroke, x, y) {
@@ -24,7 +32,9 @@ export function addPoint(stroke, x, y) {
 
 /** Copia profunda ligera (JSON segura). */
 export function cloneStroke(stroke) {
-  return { t: stroke.t, c: stroke.c, s: stroke.s, p: stroke.p.slice(), m: Boolean(stroke.m), ch: stroke.ch };
+  const out = { t: stroke.t, c: stroke.c, s: stroke.s, p: stroke.p.slice(), m: mirrorOf(stroke.m), ch: stroke.ch };
+  if (stroke.o !== undefined) out.o = stroke.o;
+  return out;
 }
 
 export function serializeStrokes(strokes) {
@@ -41,12 +51,14 @@ export function deserializeStrokes(json) {
   if (!Array.isArray(arr)) return { ok: false, error: 'no-es-lista' };
   const out = [];
   for (const s of arr) {
-    if (!s || typeof s !== 'object' || !TOOLS.includes(s.t)) return { ok: false, error: 'trazo-invalido' };
+    if (!s || typeof s !== 'object' || !TOOLS.includes(toolOf(s.t))) return { ok: false, error: 'trazo-invalido' };
     if (typeof s.c !== 'string' || typeof s.s !== 'number' || !Array.isArray(s.p) || s.p.length % 2 !== 0) {
       return { ok: false, error: 'trazo-invalido' };
     }
     if (s.p.some((v) => typeof v !== 'number' || v < -0.5 || v > 1.5)) return { ok: false, error: 'punto-invalido' };
-    out.push({ t: s.t, c: s.c, s: s.s, p: s.p, m: Boolean(s.m), ch: typeof s.ch === 'string' ? s.ch : undefined });
+    const st = { t: toolOf(s.t), c: s.c, s: s.s, p: s.p, m: mirrorOf(s.m), ch: typeof s.ch === 'string' ? s.ch : undefined };
+    if (typeof s.o === 'number' && s.o > 0 && s.o <= 1) st.o = s.o;
+    out.push(st);
   }
   return { ok: true, strokes: out };
 }
@@ -56,7 +68,7 @@ export function strokesEqual(a, b) {
   if (a.length !== b.length) return false;
   return a.every((s, i) => {
     const o = b[i];
-    return s.t === o.t && s.c === o.c && s.s === o.s && Boolean(s.m) === Boolean(o.m) && s.p.length === o.p.length &&
+    return s.t === o.t && s.c === o.c && s.s === o.s && mirrorOf(s.m) === mirrorOf(o.m) && s.p.length === o.p.length &&
       s.p.every((v, j) => Math.abs(v - o.p[j]) < 1e-3);
   });
 }
