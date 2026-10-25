@@ -6,11 +6,10 @@
  * - skipWaiting + clients.claim: el SW nuevo toma control inmediato.
  */
 
-const VERSION = 'pintakids-v4';
+const VERSION = 'pintakids-v5';
 
 const PRECACHE = [
   '/',
-  '/index.html',
   '/style.css',
   '/app.js',
   '/manifest.webmanifest',
@@ -78,7 +77,8 @@ self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET' || url.origin !== self.location.origin) return;
 
   // Shell, módulos y API: red primero (las actualizaciones llegan siempre), caché como rescate offline.
-  if (SHELL.has(url.pathname) || url.pathname.startsWith('/v1/')) {
+  const isNav = e.request.mode === 'navigate';
+  if (isNav || SHELL.has(url.pathname) || url.pathname.startsWith('/v1/')) {
     e.respondWith(
       fetch(e.request)
         .then((r) => {
@@ -86,7 +86,11 @@ self.addEventListener('fetch', (e) => {
           caches.open(VERSION).then((c) => c.put(e.request, copy));
           return r;
         })
-        .catch(() => caches.match(e.request)),
+        .catch(async () => {
+          // Navegación offline: servir '/' (respuesta limpia, no un redirect cacheado).
+          if (isNav) return (await caches.match('/')) || Response.error();
+          return (await caches.match(e.request)) || Response.error();
+        }),
     );
     return;
   }

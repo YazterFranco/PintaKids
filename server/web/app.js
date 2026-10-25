@@ -123,14 +123,8 @@ function injectTabIcons() {
 
 async function boot() {
   if ('serviceWorker' in navigator) {
+    // Sin recarga forzada: el SW es network-first y la próxima visita ya trae lo nuevo.
     navigator.serviceWorker.register('/sw.js').catch(() => {});
-    // Cuando el SW nuevo toma control → recargar para ver los cambios.
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      if (!window.__swReloading) {
-        window.__swReloading = true;
-        location.reload();
-      }
-    });
   }
   app.settings = await store.getSettings();
   app.lang = normalizeLang(app.settings.lang ?? (navigator.language.startsWith('en') ? 'en' : 'es'));
