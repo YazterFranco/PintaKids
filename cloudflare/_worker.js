@@ -88,23 +88,33 @@ export default {
     // API desconocida → JSON (nunca el HTML de la SPA).
     if (p.startsWith('/v1/') || p.startsWith('/descargas')) return notFound('Recurso inexistente.');
 
-    // Assets estáticos + fallback SPA
-    let res = await env.ASSETS.fetch(request);
+    // Assets estáticos + fallback SPA.
+    // Se eliminan los validadores para que ASSETS nunca responda 304 (el 304 sin
+    // cuerpo rompe los módulos cuando lo entrega un service worker).
+    const cleanHeaders = new Headers(request.headers);
+    for (const h of ['if-none-match', 'if-modified-since', 'if-match', 'if-unmodified-since']) cleanHeaders.delete(h);
+    let res = await env.ASSETS.fetch(
+      new Request(request.url, { method: 'GET', headers: cleanHeaders, redirect: 'follow' }),
+    );
     if (res.status === 404 && !p.includes('.')) {
       res = await env.ASSETS.fetch(new URL('/', url));
-      if (res.status === 200) return secure(res, { 'content-security-policy': CSP, 'cache-control': 'no-cache' });
+      if (res.status === 200) return secure(res, { 'content-security-policy': CSP, 'cache-control': 'no-store' });
     }
 
     const type = res.headers.get('content-type') || '';
-    if (p === '/manifest.webmanifest') {
-      return secure(res, { 'content-type': 'application/manifest+json; charset=utf-8' });
-    }
+    const ext = (p.split('.').pop() || '').toLowerCase();
+    // El shell nunca se guarda en caché HTTP: evita 304 sin cuerpo que rompen los módulos.
+    const isShellFile = p === '/' || ['html', 'js', 'css', 'json', 'webmanifest'].includes(ext);
+
+    const extra = {};
+    if (isShellFile) extra['cache-control'] = 'no-store';
+    if (p === '/manifest.webmanifest') extra['content-type'] = 'application/manifest+json; charset=utf-8';
     if (p === '/sw.js') {
-      return secure(res, { 'content-type': 'text/javascript; charset=utf-8', 'cache-control': 'no-cache' });
+      extra['content-type'] = 'text/javascript; charset=utf-8';
+      extra['cache-control'] = 'no-store';
     }
-    if (type.startsWith('text/html')) {
-      return secure(res, { 'content-security-policy': CSP, 'cache-control': 'no-cache' });
-    }
+    if (p === '/' || type.startsWith('text/html')) extra['content-security-policy'] = CSP;
+    if (Object.keys(extra).length) return secure(res, extra);
     return res;
   },
 };

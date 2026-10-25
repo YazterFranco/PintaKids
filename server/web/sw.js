@@ -6,7 +6,7 @@
  * - skipWaiting + clients.claim: el SW nuevo toma control inmediato.
  */
 
-const VERSION = 'pintakids-v5';
+const VERSION = 'pintakids-v6';
 
 const PRECACHE = [
   '/',
@@ -73,32 +73,55 @@ const SHELL = new Set([
   '/modes/parents.js',
 ]);
 
+/** Pide a la red sin validación condicional: evita respuestas 304 sin cuerpo. */
+function freshFetch(request) {
+  const headers = new Headers(request.headers);
+  for (const h of ['if-none-match', 'if-modified-since', 'if-match', 'if-unmodified-since']) headers.delete(h);
+  return fetch(
+    new Request(request.url, {
+      method: 'GET',
+      headers,
+      cache: 'no-store',
+      credentials: request.credentials,
+      redirect: 'follow',
+    }),
+  );
+}
+
 self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
   if (e.request.method !== 'GET' || url.origin !== self.location.origin) return;
 
   const isNav = e.request.mode === 'navigate';
-  const isShell = SHELL.has(url.pathname) || url.pathname.startsWith('/v1/');
+  const isApi = url.pathname.startsWith('/v1/');
+  const isShell = SHELL.has(url.pathname) || isApi;
 
-  // Shell, módulos y API: red primero (las actualizaciones llegan siempre), caché como rescate offline.
   if (isNav || isShell) {
     e.respondWith(
-      fetch(e.request)
-        .then((r) => {
-          const copy = r.clone();
-          caches.open(VERSION).then((c) => c.put(e.request, copy));
-          return r;
-        })
-        .catch(async () => {
-          // Navegación offline: servir '/' (respuesta limpia, no un redirect cacheado).
-          if (isNav) return (await caches.match('/')) || Response.error();
-          // Los módulos se piden con ?v=N pero el precache guarda la ruta sin query.
-          return (
+      (async () => {
+        let res = null;
+        try {
+          res = await freshFetch(e.request);
+        } catch (err) {
+          res = null;
+        }
+        // 304 nunca se devuelve al navegador: usar la copia en caché.
+        if (!res || res.status === 304) {
+          const hit =
             (await caches.match(e.request)) ||
             (await caches.match(url.pathname)) ||
-            Response.error()
-          );
-        }),
+            (isNav ? await caches.match('/') : null);
+          if (hit) return hit;
+          if (res && res.status !== 304) return res;
+          return Response.error();
+        }
+        if (res.ok) {
+          const key = isApi ? e.request : url.pathname;
+          const copy = res.clone();
+          caches.open(VERSION).then((c) => c.put(key, copy)).catch(() => {});
+        }
+        return res;
+      })(),
     );
     return;
   }
@@ -108,10 +131,13 @@ self.addEventListener('fetch', (e) => {
     caches.match(e.request).then(async (hit) => {
       if (hit) return hit;
       try {
-        const r = await fetch(e.request);
+        const r = await freshFetch(e.request);
+        if (r.status === 304) {
+          return (await caches.match(url.pathname)) || r;
+        }
         if (r.ok) {
           const copy = r.clone();
-          caches.open(VERSION).then((c) => c.put(e.request, copy));
+          caches.open(VERSION).then((c) => c.put(e.request, copy)).catch(() => {});
         }
         return r;
       } catch (err) {

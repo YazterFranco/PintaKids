@@ -19,8 +19,8 @@ const app = {
 
 async function loadDicts() {
   const [es, en] = await Promise.all([
-    fetch('/i18n/es.json?v=5').then((r) => r.json()),
-    fetch('/i18n/en.json?v=5').then((r) => r.json()),
+    fetch('/i18n/es.json?v=6').then((r) => r.json()),
+    fetch('/i18n/en.json?v=6').then((r) => r.json()),
   ]);
   app.base = { es, en };
 }
@@ -77,10 +77,17 @@ const VIEWS = ['draw', 'color', 'learn', 'photo', 'story', 'gallery', 'parents']
 const modules = {};
 // Contexto compartido: los modos pueden pasarse datos (p. ej. foto→colorear) sin recargar.
 const ctx = { app, toast, addStar, applyI18n, store };
+let viewSeq = 0; // la última navegación pedida gana (evita que el boot pise un toque)
+let shownView = null; // se inicializa en la primera vista para aplicar .view-enter
 
 async function showView(name) {
   if (!VIEWS.includes(name)) name = 'draw';
-  const prev = currentView();
+  const seq = ++viewSeq;
+  const prev = shownView;
+  shownView = name;
+
+  // Mostrar la vista de inmediato: algunos modos (puerta de padres) esperan
+  // interacción del usuario antes de terminar su montaje.
   for (const v of VIEWS) {
     const el = document.getElementById('view-' + v);
     el.hidden = v !== name;
@@ -88,14 +95,26 @@ async function showView(name) {
   }
   document.querySelectorAll('.tab').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.view === name)));
   document.getElementById('timeUp').hidden = true;
+
   const el = document.getElementById('view-' + name);
   if (prev !== name) {
     el.classList.remove('view-enter');
     void el.offsetWidth; // force reflow
     el.classList.add('view-enter');
   }
-  if (!modules[name]) modules[name] = await import('./modes/' + name + '.js?v=5');
-  await modules[name].mount(ctx);
+
+  try {
+    if (!modules[name]) modules[name] = await import('./modes/' + name + '.js?v=6');
+    if (seq !== viewSeq) return;
+    await modules[name].mount(ctx);
+  } catch (err) {
+    console.error('mount ' + name, err);
+    if (typeof window.__pkShowRepair === 'function') {
+      window.__pkShowRepair('No se pudo abrir "' + name + '": ' + (err?.message || err));
+    }
+    return;
+  }
+  if (seq !== viewSeq) return;
   applyI18n(el);
 }
 
@@ -134,9 +153,11 @@ async function boot() {
   await loadDicts();
   applyI18n();
   if (navigator.onLine === false) document.getElementById('offline').hidden = false;
-  await showView(currentView());
-  armTimeLimit();
   window.__pkReady = true;
+  await showView(currentView());
+  // Si el peque tocó una pestaña mientras arrancaba, respetar su elección.
+  if (currentView() !== shownView) await showView(currentView());
+  armTimeLimit();
 }
 
 boot().catch((e) => {

@@ -2,7 +2,7 @@
    Si la app no inicia (JS bloqueado, versión vieja en caché, SW atascado),
    muestra un aviso con un botón "Reparar" que limpia SW + caché y recarga. */
 (function () {
-  var BUILD = 'v5';
+  var BUILD = 'v6';
   document.documentElement.dataset.build = BUILD;
   window.__pkBuild = BUILD;
 
@@ -46,6 +46,8 @@
     box.append(title, detail, btn);
     document.body.appendChild(box);
   }
+
+  window.__pkShowRepair = show;
 
   async function repair() {
     try {

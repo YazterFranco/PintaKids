@@ -145,3 +145,29 @@ test('zona de padres se abre con la multiplicación correcta', async ({ page }) 
   await page.waitForSelector('#view-draw canvas');
   await unlockParents(page);
 });
+
+test('recarga con caché: un 304 nunca deja la vista en blanco', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForSelector('#view-draw canvas');
+  await page.evaluate(() => navigator.serviceWorker.ready);
+  await page.reload();
+  await page.waitForSelector('#view-draw canvas');
+
+  // Simula el 304 que devolvía el CDN: el SW debe servir la copia cacheada.
+  await page.route('**/modes/color.js*', (r) => r.fulfill({ status: 304 }));
+  await page.click('.tab[data-view="color"]');
+  await expect(page.locator('#view-color img').first()).toBeVisible({ timeout: 8_000 });
+  await page.locator('#view-color img').first().click();
+  await expect(page.locator('#view-color canvas')).toBeVisible({ timeout: 8_000 });
+  await page.unroute('**/modes/color.js*');
+});
+
+test('las vistas quedan visibles de verdad (opacidad 1, no solo en el DOM)', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForSelector('#view-draw canvas');
+  await expect(page.locator('#view-draw')).toHaveCSS('opacity', '1');
+  await page.click('.tab[data-view="color"]');
+  await expect(page.locator('#view-color')).toHaveCSS('opacity', '1');
+  await page.click('.tab[data-view="learn"]');
+  await expect(page.locator('#view-learn')).toHaveCSS('opacity', '1');
+});
