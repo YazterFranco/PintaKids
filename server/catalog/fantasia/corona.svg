@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="4" data-name="cojin">
+    <path d="M56 302 C56 268 344 268 344 302 C352 344 48 344 56 302 Z"/>
+    <path d="M56 302 L42 318 M344 302 L358 318 M120 330 Q200 340 280 330" fill="none"/>
+  </g>
+  <g data-step="1" data-name="corona">
+    <path d="M92 262 L80 132 L142 192 L200 112 L258 192 L320 132 L308 262 Z"/>
+    <path d="M88 226 H312" fill="none"/>
+  </g>
+  <g data-step="3" data-name="bolitas">
+    <circle cx="80" cy="124" r="13"/><circle cx="200" cy="100" r="15"/><circle cx="320" cy="124" r="13"/>
+  </g>
+  <g data-step="2" data-name="joyas">
+    <circle cx="200" cy="246" r="13"/>
+    <path d="M128 246 L140 232 L152 246 L140 260 Z M248 246 L260 232 L272 246 L260 260 Z"/>
+    <path d="M200 162 L212 180 L200 198 L188 180 Z"/>
+    <path d="M60 48 Q61.8 58.2 72 60 Q61.8 61.8 60 72 Q58.2 61.8 48 60 Q58.2 58.2 60 48 Z"/>
+    <path d="M344 54 Q345.5 62.5 354 64 Q345.5 65.5 344 74 Q342.5 65.5 334 64 Q342.5 62.5 344 54 Z"/>
+  </g>
+</svg>

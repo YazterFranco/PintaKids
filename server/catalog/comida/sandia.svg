@@ -1,2 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><g fill="none" stroke="#2b2d42" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 96 Q100 24 182 96 Q100 200 18 96 Z"/><path d="M32 108 Q100 48 168 108"/><ellipse cx="78" cy="114" rx="4.5" ry="7" transform="rotate(12 78 114)"/><ellipse cx="112" cy="108" rx="4.5" ry="7" transform="rotate(-8 112 108)"/><ellipse cx="138" cy="118" rx="4.5" ry="7" transform="rotate(15 138 118)"/><ellipse cx="94" cy="136" rx="4.5" ry="7" transform="rotate(-12 94 136)"/><ellipse cx="122" cy="140" rx="4.5" ry="7" transform="rotate(8 122 140)"/><ellipse cx="66" cy="128" rx="4.5" ry="7" transform="rotate(-15 66 128)"/><ellipse cx="104" cy="158" rx="4.5" ry="7" transform="rotate(5 104 158)"/><ellipse cx="86" cy="166" rx="4" ry="6" transform="rotate(10 86 166)"/><ellipse cx="128" cy="162" rx="4" ry="6" transform="rotate(-6 128 162)"/><path d="M80 78 Q87 74 94 76"/><path d="M106 76 Q113 74 120 78"/><circle cx="87" cy="92" r="3.5"/><circle cx="113" cy="92" r="3.5"/><circle cx="88.225" cy="90.6" r="1.1900000000000002"/><circle cx="114.225" cy="90.6" r="1.1900000000000002"/><path d="M92 106 Q100 113.6 108 106"/><circle cx="78" cy="102" r="4"/><circle cx="122" cy="102" r="4"/><polygon points="24,41 26.1,45.9 31,48 26.1,50.1 24,55 21.9,50.1 17,48 21.9,45.9"/><polygon points="176,36 177.8,40.2 182,42 177.8,43.8 176,48 174.2,43.8 170,42 174.2,40.2"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="1" data-name="tajada">
+    <path d="M200 120 L332 300 Q200 362 68 300 Z"/>
+  </g>
+  <g data-step="2" data-name="corteza">
+    <path d="M68 300 Q200 362 332 300 L316 290 Q200 342 84 290 Z"/>
+    <path d="M84 290 Q200 342 316 290 L302 280 Q200 324 98 280 Z"/>
+  </g>
+  <g data-step="3" data-name="semillas">
+    <path d="M192 178 q8 -18 16 0 q-8 13 -16 0 Z M158 220 q8 -18 16 0 q-8 13 -16 0 Z M224 220 q8 -18 16 0 q-8 13 -16 0 Z M128 258 q8 -18 16 0 q-8 13 -16 0 Z M190 252 q8 -18 16 0 q-8 13 -16 0 Z M254 258 q8 -18 16 0 q-8 13 -16 0 Z"/>
+  </g>
+  <g data-step="4" data-name="carita">
+    <path d="M178 286 Q186 292 194 286 M206 286 Q214 292 222 286 M190 300 Q200 308 210 300" fill="none"/>
+    <ellipse cx="166" cy="298" rx="9" ry="6"/><ellipse cx="234" cy="298" rx="9" ry="6"/>
+  </g>
+</svg>

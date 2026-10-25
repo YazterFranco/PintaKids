@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="1" data-name="fresa">
+    <path d="M200 340 C140 320 96 250 100 190 C104 150 140 132 200 142 C260 132 296 150 300 190 C304 250 260 320 200 340 Z"/>
+  </g>
+  <g data-step="3" data-name="semillas">
+    <path d="M146 190 q6 -13 12 0 q-6 10 -12 0 Z M198 178 q6 -13 12 0 q-6 10 -12 0 Z M248 190 q6 -13 12 0 q-6 10 -12 0 Z M124 240 q6 -13 12 0 q-6 10 -12 0 Z M268 240 q6 -13 12 0 q-6 10 -12 0 Z M156 288 q6 -13 12 0 q-6 10 -12 0 Z M236 286 q6 -13 12 0 q-6 10 -12 0 Z M196 318 q6 -13 12 0 q-6 10 -12 0 Z"/>
+  </g>
+  <g data-step="4" data-name="carita">
+    <circle cx="178" cy="228" r="7" fill="#2b2d42"/><circle cx="222" cy="228" r="7" fill="#2b2d42"/>
+    <circle cx="176" cy="225" r="2.5" stroke="none"/><circle cx="220" cy="225" r="2.5" stroke="none"/>
+    <path d="M188 250 Q200 260 212 250" fill="none"/>
+    <ellipse cx="160" cy="250" rx="11" ry="7"/><ellipse cx="240" cy="250" rx="11" ry="7"/>
+    <path d="M122 200 C120 178 132 164 146 160 C138 174 134 188 136 204 Z"/>
+  </g>
+  <g data-step="2" data-name="hojas">
+    <path d="M200 160 L140 132 L176 122 L152 86 L194 108 L200 72 L212 108 L250 86 L228 122 L262 132 Z"/>
+    <path d="M202 76 Q206 54 222 44" fill="none"/>
+  </g>
+</svg>

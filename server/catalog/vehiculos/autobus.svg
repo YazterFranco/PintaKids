@@ -1,2 +1,36 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><g fill="none" stroke="#2b2d42" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"><rect x="24" y="76" width="152" height="76" rx="12"/><rect x="38" y="90" width="24" height="22" rx="5"/><rect x="70" y="90" width="24" height="22" rx="5"/><rect x="102" y="90" width="24" height="22" rx="5"/><rect x="134" y="90" width="28" height="34" rx="6"/><circle cx="56" cy="162" r="18"/><circle cx="56" cy="162" r="7"/><circle cx="148" cy="162" r="18"/><circle cx="148" cy="162" r="7"/><path d="M24 140L176 140"/><circle cx="30" cy="118" r="5"/><circle cx="172" cy="128" r="5"/><path d="M24 88 L176 88"/><path d="M133 94 Q140 90 147 92"/><path d="M149 92 Q156 90 163 94"/><circle cx="140" cy="108" r="3.5"/><circle cx="156" cy="108" r="3.5"/><circle cx="141.225" cy="106.6" r="1.1900000000000002"/><circle cx="157.225" cy="106.6" r="1.1900000000000002"/><path d="M142 120 Q148 125.7 154 120"/><circle cx="135" cy="116" r="3"/><circle cx="161" cy="116" r="3"/><polygon points="24,43 26.1,47.9 31,50 26.1,52.1 24,57 21.9,52.1 17,50 21.9,47.9"/><polygon points="176,50 177.8,54.2 182,56 177.8,57.8 176,62 174.2,57.8 170,56 174.2,54.2"/><path d="M36 40 Q30.4 40 30.4 35.2 Q30.4 30.4 36.8 30.4 Q39.2 25.6 45.6 27.2 Q49.6 23.2 55.2 26.4 Q62.4 26.4 62.4 32.8 Q67.2 33.6 65.6 39.2 Q64 40 58.4 40 Z"/><path d="M136.5 38 Q130.2 38 130.2 32.6 Q130.2 27.2 137.4 27.2 Q140.1 21.8 147.3 23.6 Q151.8 19.099999999999998 158.1 22.7 Q166.2 22.7 166.2 29.9 Q171.6 30.8 169.8 37.1 Q168 38 161.7 38 Z"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="7" data-name="parada">
+    <path d="M370 136 V322" fill="none"/>
+    <circle cx="370" cy="118" r="20"/>
+    <path d="M362 118 H378" fill="none"/>
+  </g>
+  <g data-step="1" data-name="carroceria">
+    <path d="M50 160 C50 148 60 138 74 138 L320 138 C334 138 344 148 344 162 L344 286 C344 292 340 296 334 296 L60 296 C54 296 50 292 50 286 Z"/>
+  </g>
+  <g data-step="6" data-name="franja">
+    <path d="M108 226 H344 V242 H108 Z"/>
+  </g>
+  <g data-step="2" data-name="ventanas">
+    <path d="M116 156 H162 V206 H116 Z"/>
+    <path d="M174 156 H220 V206 H174 Z"/>
+    <path d="M232 156 H278 V206 H232 Z"/>
+    <path d="M290 156 H336 V206 H290 Z"/>
+  </g>
+  <g data-step="3" data-name="puerta">
+    <path d="M62 156 H104 V282 H62 Z"/>
+    <path d="M83 156 V282 M68 166 H78 V214 H68 Z M88 166 H98 V214 H88 Z" fill="none"/>
+  </g>
+  <g data-step="5" data-name="luces">
+    <path d="M42 280 H66 V298 H42 Z"/>
+    <path d="M336 254 H346 V272 H336 Z"/>
+  </g>
+  <g data-step="4" data-name="ruedas">
+    <circle cx="110" cy="298" r="30"/>
+    <circle cx="110" cy="298" r="14"/>
+    <circle cx="110" cy="298" r="4" fill="#2b2d42"/>
+    <circle cx="284" cy="298" r="30"/>
+    <circle cx="284" cy="298" r="14"/>
+    <circle cx="284" cy="298" r="4" fill="#2b2d42"/>
+    <path d="M14 330 H386" fill="none"/>
+  </g>
+</svg>

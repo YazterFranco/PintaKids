@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="4" data-name="arena">
+    <path d="M14 316 Q200 284 386 316 L386 372 L14 372 Z"/>
+    <path d="M300 346 C300 326 340 326 340 346 Z M310 346 L314 332 M320 346 V328 M330 346 L326 332" fill="none"/>
+    <path d="M300 346 C300 326 340 326 340 346 Z"/>
+    <path d="M314 344 L316 332 M320 344 V328 M326 344 L324 332" fill="none"/>
+  </g>
+  <g data-step="1" data-name="estrella">
+    <path d="M191.7 80.1 Q200.0 62.0 208.3 80.1 L237.6 144.2 L307.7 152.3 Q327.4 154.6 312.8 168.1 L260.9 215.8 L274.8 284.9 Q278.8 304.4 261.4 294.6 L200.0 260.0 L138.6 294.6 Q121.2 304.4 125.2 284.9 L139.1 215.8 L87.2 168.1 Q72.6 154.6 92.3 152.3 L162.4 144.2 Z"/>
+  </g>
+  <g data-step="2" data-name="cara">
+    <ellipse cx="184" cy="190" rx="8" ry="11" fill="#2b2d42"/>
+    <ellipse cx="216" cy="190" rx="8" ry="11" fill="#2b2d42"/>
+    <circle cx="181" cy="185" r="3" stroke="none"/>
+    <circle cx="213" cy="185" r="3" stroke="none"/>
+    <path d="M186 214 Q200 226 214 214" fill="none"/>
+    <ellipse cx="168" cy="210" rx="9" ry="6"/>
+    <ellipse cx="232" cy="210" rx="9" ry="6"/>
+  </g>
+  <g data-step="3" data-name="puntitos">
+    <circle cx="200" cy="112" r="6"/><circle cx="200" cy="138" r="5"/>
+    <circle cx="282" cy="172" r="6"/><circle cx="258" cy="180" r="5"/>
+    <circle cx="118" cy="172" r="6"/><circle cx="142" cy="180" r="5"/>
+    <circle cx="252" cy="270" r="6"/><circle cx="238" cy="250" r="5"/>
+    <circle cx="148" cy="270" r="6"/><circle cx="162" cy="250" r="5"/>
+  </g>
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="8" data-name="plato">
+    <ellipse cx="200" cy="306" rx="152" ry="22"/>
+  </g>
+  <g data-step="7" data-name="panabajo">
+    <path d="M92 256 H308 C312 256 314 260 314 266 C314 290 300 300 280 300 H120 C100 300 86 290 86 266 C86 260 88 256 92 256 Z"/>
+  </g>
+  <g data-step="6" data-name="carne">
+    <path d="M88 214 C88 206 96 202 106 202 H294 C304 202 312 206 312 214 V240 C312 250 304 256 294 256 H106 C96 256 88 250 88 240 Z"/>
+  </g>
+  <g data-step="5" data-name="queso">
+    <path d="M84 204 H316 L304 214 L292 236 L280 214 H152 L138 240 L124 214 H96 Z"/>
+  </g>
+  <g data-step="4" data-name="tomate">
+    <path d="M94 186 H306 C314 186 314 202 306 202 H94 C86 202 86 186 94 186 Z"/>
+  </g>
+  <g data-step="3" data-name="lechuga">
+    <path d="M80 160 L320 160 L320 168 Q316 184 304 172 Q288 192 272 174 Q256 194 240 176 Q224 196 208 176 Q192 196 176 176 Q160 194 144 174 Q128 192 112 172 Q96 188 80 168 Z"/>
+  </g>
+  <g data-step="1" data-name="panarriba">
+    <path d="M88 168 C88 100 140 70 200 70 C260 70 312 100 312 168 Z"/>
+  </g>
+  <g data-step="2" data-name="semillas">
+    <ellipse cx="160" cy="110" rx="6" ry="3.5" transform="rotate(-20 160 110)"/><ellipse cx="200" cy="96" rx="6" ry="3.5"/>
+    <ellipse cx="240" cy="110" rx="6" ry="3.5" transform="rotate(20 240 110)"/><ellipse cx="136" cy="140" rx="6" ry="3.5" transform="rotate(-30 136 140)"/>
+    <ellipse cx="184" cy="132" rx="6" ry="3.5"/><ellipse cx="222" cy="138" rx="6" ry="3.5"/><ellipse cx="266" cy="140" rx="6" ry="3.5" transform="rotate(30 266 140)"/>
+  </g>
+</svg>

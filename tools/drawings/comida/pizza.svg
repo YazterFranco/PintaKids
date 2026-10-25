@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="6" data-name="plato">
+    <ellipse cx="200" cy="352" rx="150" ry="26"/>
+    <ellipse cx="200" cy="352" rx="116" ry="16"/>
+  </g>
+  <g data-step="1" data-name="rebanada">
+    <path d="M200 360 L80 120 Q200 74 320 120 Z"/>
+    <path d="M100 162 Q112 178 108 196 M298 162 Q286 178 292 196 M150 270 Q164 280 162 296" fill="none"/>
+  </g>
+  <g data-step="2" data-name="borde">
+    <path d="M78 122 Q200 74 322 122 L334 98 Q200 42 66 98 Z"/>
+  </g>
+  <g data-step="3" data-name="pepperoni">
+    <circle cx="168" cy="170" r="22"/><circle cx="240" cy="160" r="20"/><circle cx="206" cy="230" r="20"/><circle cx="200" cy="300" r="13"/>
+  </g>
+  <g data-step="4" data-name="aceitunas">
+    <circle cx="128" cy="138" r="9"/><circle cx="128" cy="138" r="3.5" fill="#2b2d42"/>
+    <circle cx="176" cy="264" r="9"/><circle cx="176" cy="264" r="3.5" fill="#2b2d42"/>
+    <circle cx="252" cy="212" r="9"/><circle cx="252" cy="212" r="3.5" fill="#2b2d42"/>
+  </g>
+  <g data-step="5" data-name="hojas">
+    <path d="M210 132 C220 116 240 116 246 124 C238 134 222 138 210 132 Z"/>
+    <path d="M150 210 C156 192 176 190 182 198 C176 208 160 214 150 210 Z"/>
+    <path d="M226 270 C232 256 248 254 254 262 C248 270 236 276 226 270 Z"/>
+  </g>
+</svg>

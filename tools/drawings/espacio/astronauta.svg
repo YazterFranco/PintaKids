@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="10" data-name="fondo">
+    <circle cx="330" cy="76" r="26"/>
+    <path d="M292 86 Q330 66 368 66" fill="none"/>
+    <path d="M14 352 H386" fill="none"/>
+    <ellipse cx="70" cy="364" rx="22" ry="6"/><ellipse cx="320" cy="366" rx="28" ry="7"/>
+    <path d="M59.4 47.3 Q60.0 46.0 60.6 47.3 L63.7 54.9 L71.9 55.6 Q73.3 55.7 72.2 56.6 L66.0 61.9 L67.9 69.9 Q68.2 71.3 67.0 70.6 L60.0 66.3 L53.0 70.6 Q51.8 71.3 52.1 69.9 L54.0 61.9 L47.8 56.6 Q46.7 55.7 48.1 55.6 L56.3 54.9 Z"/>
+    <path d="M80 240 Q81.5 248.5 90 250 Q81.5 251.5 80 260 Q78.5 251.5 70 250 Q78.5 248.5 80 240 Z"/>
+    <path d="M340 191 Q341.35 198.65 349 200 Q341.35 201.35 340 209 Q338.65 201.35 331 200 Q338.65 198.65 340 191 Z"/>
+  </g>
+  <g data-step="4" data-name="antena">
+    <path d="M244 68 L264 40" fill="none"/>
+    <circle cx="266" cy="35" r="8"/>
+  </g>
+  <g data-step="9" data-name="piernas">
+    <path d="M146 294 V334 H194 V294 Z M206 294 V334 H254 V294 Z"/>
+    <path d="M136 332 H198 V352 H136 Z M202 332 H264 V352 H202 Z"/>
+  </g>
+  <g data-step="5" data-name="cuerpo">
+    <path d="M140 186 C126 210 124 260 132 298 H268 C276 260 274 210 260 186 C240 178 160 178 140 186 Z"/>
+  </g>
+  <g data-step="6" data-name="panel">
+    <path d="M170 212 H230 V256 H170 Z"/>
+    <circle cx="186" cy="234" r="7"/><circle cx="214" cy="234" r="7"/>
+    <path d="M140 272 H260" fill="none"/>
+  </g>
+  <g data-step="7" data-name="brazos">
+    <path d="M142 198 C114 194 94 174 90 148 L108 142 C114 164 126 176 148 180 Z"/>
+    <path d="M258 198 C282 212 294 238 290 264 L272 262 C274 242 268 226 252 216 Z"/>
+  </g>
+  <g data-step="8" data-name="guantes">
+    <circle cx="97" cy="136" r="17"/><circle cx="282" cy="276" r="17"/>
+  </g>
+  <g data-step="1" data-name="casco">
+    <circle cx="200" cy="120" r="70"/>
+  </g>
+  <g data-step="2" data-name="visor">
+    <path d="M150 114 C150 86 172 76 200 76 C228 76 250 86 250 114 C250 152 228 166 200 166 C172 166 150 152 150 114 Z"/>
+    <path d="M164 100 Q170 88 182 84" fill="none"/>
+  </g>
+  <g data-step="3" data-name="cara">
+    <circle cx="184" cy="118" r="6" fill="#2b2d42"/><circle cx="216" cy="118" r="6" fill="#2b2d42"/>
+    <path d="M186 138 Q200 150 214 138" fill="none"/>
+    <ellipse cx="172" cy="134" rx="7" ry="4.5"/><ellipse cx="228" cy="134" rx="7" ry="4.5"/>
+  </g>
+</svg>

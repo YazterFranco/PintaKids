@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="7" data-name="nube">
+    <path d="M44 84 C30 84 26 64 42 60 C44 44 66 40 74 52 C84 40 106 46 104 62 C118 64 118 84 104 84 Z"/>
+  </g>
+  <g data-step="5" data-name="silo">
+    <path d="M286 160 C286 120 348 120 348 160 Z"/>
+    <path d="M286 160 V340 H348 V160 Z"/>
+    <path d="M286 212 H348 M286 264 H348 M286 316 H348" fill="none"/>
+  </g>
+  <g data-step="2" data-name="pared">
+    <path d="M112 340 V198 L134 142 L200 106 L266 142 L288 198 V340 Z"/>
+  </g>
+  <g data-step="1" data-name="tejado">
+    <path d="M90 204 L118 126 L200 82 L282 126 L310 204 L290 204 L266 144 L200 108 L134 144 L110 204 Z"/>
+  </g>
+  <g data-step="4" data-name="ventana">
+    <path d="M182 146 H218 V188 H182 Z"/>
+    <path d="M200 146 V188 M182 167 H218" fill="none"/>
+  </g>
+  <g data-step="3" data-name="puertas">
+    <path d="M156 244 H244 V340 H156 Z"/>
+    <path d="M200 244 V340 M156 244 L200 340 M200 244 L156 340 M200 244 L244 340 M244 244 L200 340" fill="none"/>
+  </g>
+  <g data-step="6" data-name="cerca">
+    <path d="M14 342 H386" fill="none"/>
+    <path d="M20 300 H110 V310 H20 Z M20 322 H110 V332 H20 Z"/>
+    <path d="M30 352 V292 L40 280 L50 292 V352 Z M80 352 V292 L90 280 L100 292 V352 Z"/>
+    <path d="M300 310 H384 V320 H300 Z M300 330 H384 V340 H300 Z"/>
+    <path d="M318 356 V300 L328 288 L338 300 V356 Z M362 356 V300 L372 288 L382 300 V356 Z"/>
+  </g>
+</svg>

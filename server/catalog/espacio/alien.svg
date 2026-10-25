@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="6" data-name="planeta">
+    <path d="M14 352 Q200 330 386 352 L386 382 L14 382 Z"/>
+    <ellipse cx="80" cy="362" rx="18" ry="6"/><ellipse cx="310" cy="364" rx="24" ry="7"/>
+    <path d="M59.4 57.3 Q60.0 56.0 60.6 57.3 L63.7 64.9 L71.9 65.6 Q73.3 65.7 72.2 66.6 L66.0 71.9 L67.9 79.9 Q68.2 81.3 67.0 80.6 L60.0 76.3 L53.0 80.6 Q51.8 81.3 52.1 79.9 L54.0 71.9 L47.8 66.6 Q46.7 65.7 48.1 65.6 L56.3 64.9 Z"/>
+    <path d="M339.5 79.1 Q340.0 78.0 340.5 79.1 L343.2 85.6 L350.2 86.2 Q351.4 86.3 350.5 87.1 L345.1 91.7 L346.8 98.5 Q347.1 99.7 346.0 99.1 L340.0 95.4 L334.0 99.1 Q332.9 99.7 333.2 98.5 L334.9 91.7 L329.5 87.1 Q328.6 86.3 329.8 86.2 L336.8 85.6 Z"/>
+    <path d="M330 210 Q331.5 218.5 340 220 Q331.5 221.5 330 230 Q328.5 221.5 320 220 Q328.5 218.5 330 210 Z"/>
+  </g>
+  <g data-step="3" data-name="antenas">
+    <path d="M160 84 L136 42 M240 84 L264 42" fill="none"/>
+    <circle cx="132" cy="34" r="11"/><circle cx="268" cy="34" r="11"/>
+  </g>
+  <g data-step="5" data-name="cuerpo">
+    <path d="M162 250 C140 256 128 272 130 292 L144 292 C146 278 152 270 166 268 Z"/>
+    <path d="M238 250 C260 256 272 272 270 292 L256 292 C254 278 248 270 234 268 Z"/>
+    <path d="M160 226 C150 260 152 310 164 340 H236 C248 310 250 260 240 226 Z"/>
+    <ellipse cx="176" cy="344" rx="24" ry="11"/><ellipse cx="224" cy="344" rx="24" ry="11"/>
+  </g>
+  <g data-step="1" data-name="cabeza">
+    <path d="M110 160 C110 100 150 70 200 70 C250 70 290 100 290 160 C290 210 250 236 200 236 C150 236 110 210 110 160 Z"/>
+  </g>
+  <g data-step="2" data-name="ojos">
+    <circle cx="156" cy="152" r="20"/><circle cx="244" cy="152" r="20"/><circle cx="200" cy="118" r="15"/>
+    <circle cx="160" cy="155" r="9" fill="#2b2d42"/><circle cx="240" cy="155" r="9" fill="#2b2d42"/><circle cx="200" cy="120" r="7" fill="#2b2d42"/>
+  </g>
+  <g data-step="4" data-name="sonrisa">
+    <path d="M170 192 Q200 214 230 192 Z"/>
+    <ellipse cx="146" cy="190" rx="10" ry="6"/><ellipse cx="254" cy="190" rx="10" ry="6"/>
+  </g>
+</svg>

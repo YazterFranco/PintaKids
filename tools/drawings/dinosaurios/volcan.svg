@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="5" data-name="palmera">
+    <path d="M330 356 C326 300 320 260 304 220 L318 216 C334 256 342 300 346 356 Z"/>
+    <path d="M310 218 C290 196 260 196 244 210 C270 206 290 214 306 226 Z"/>
+    <path d="M312 216 C320 188 348 176 372 186 C348 192 332 204 320 222 Z"/>
+    <path d="M308 222 C300 248 276 262 256 262 C274 250 290 236 300 218 Z"/>
+    <path d="M316 220 C340 222 362 240 368 262 C350 246 334 236 314 230 Z"/>
+  </g>
+  <g data-step="1" data-name="volcan">
+    <path d="M60 352 L158 142 C168 130 232 130 242 142 L320 316 L330 352 Z"/>
+    <path d="M14 352 H386" fill="none"/>
+  </g>
+  <g data-step="2" data-name="lava">
+    <path d="M158 144 C176 134 224 134 242 144 L234 162 C230 180 218 180 216 164 L210 186 C206 200 194 200 192 186 L186 168 C180 182 168 182 166 166 Z"/>
+    <circle cx="176" cy="112" r="7"/><circle cx="226" cy="104" r="6"/><circle cx="204" cy="90" r="5"/>
+  </g>
+  <g data-step="3" data-name="humo">
+    <path d="M150 72 c-15 0 -20 -22 -2 -26 c2 -18 26 -22 35 -9 c11 -13 35 -7 33 11 c15 2 15 24 0 24 Z"/>
+    <path d="M230 48 c-13 0 -16 -18 -2 -22 c2 -14 22 -18 29 -7 c9 -11 29 -5 27 9 c13 2 13 20 0 20 Z"/>
+  </g>
+  <g data-step="4" data-name="piedras">
+    <ellipse cx="104" cy="344" rx="26" ry="14"/>
+    <ellipse cx="222" cy="346" rx="20" ry="10"/>
+    <path d="M160 262 l14 -8 M230 236 l14 6 M122 300 l18 -4" fill="none"/>
+  </g>
+</svg>

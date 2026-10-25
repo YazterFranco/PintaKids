@@ -1,61 +1,344 @@
 {
   "name": "Granja",
-  "version": 3,
+  "name_en": "Farm",
+  "version": 4,
   "license": "Pintakids-Original",
   "files": [
     {
-      "file": "vaca-granja.svg",
-      "title": "Vaca de la granja",
+      "file": "pollito.svg",
+      "title": "Pollito",
+      "title_en": "Chick",
+      "level": 1,
+      "steps": [
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo redondo",
+          "en": "the round body"
+        },
+        {
+          "key": "cara",
+          "es": "los ojos y el pico",
+          "en": "the eyes and beak"
+        },
+        {
+          "key": "alitas",
+          "es": "las alitas",
+          "en": "the little wings"
+        },
+        {
+          "key": "cascaron",
+          "es": "el cascarón",
+          "en": "the eggshell"
+        },
+        {
+          "key": "gorrito",
+          "es": "el gorrito de cascarón",
+          "en": "the shell hat"
+        }
+      ],
       "license": "Pintakids-Original"
     },
     {
-      "file": "cerdito-granja.svg",
-      "title": "Cerdito feliz",
+      "file": "cerdito.svg",
+      "title": "Cerdito",
+      "title_en": "Piglet",
+      "level": 1,
+      "steps": [
+        {
+          "key": "cabeza",
+          "es": "la cabeza",
+          "en": "the head"
+        },
+        {
+          "key": "orejas",
+          "es": "las orejas",
+          "en": "the ears"
+        },
+        {
+          "key": "hocico",
+          "es": "el hocico",
+          "en": "the snout"
+        },
+        {
+          "key": "ojos",
+          "es": "los ojos",
+          "en": "the eyes"
+        },
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo y las patas",
+          "en": "the body and legs"
+        }
+      ],
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "pato.svg",
+      "title": "Pato",
+      "title_en": "Duck",
+      "level": 1,
+      "steps": [
+        {
+          "key": "cabeza",
+          "es": "la cabeza",
+          "en": "the head"
+        },
+        {
+          "key": "pico",
+          "es": "el pico",
+          "en": "the beak"
+        },
+        {
+          "key": "ojo",
+          "es": "el ojo",
+          "en": "the eye"
+        },
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo y el ala",
+          "en": "the body and wing"
+        },
+        {
+          "key": "agua",
+          "es": "el agua",
+          "en": "the water"
+        }
+      ],
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "oveja.svg",
+      "title": "Oveja",
+      "title_en": "Sheep",
+      "level": 2,
+      "steps": [
+        {
+          "key": "cara",
+          "es": "la cara",
+          "en": "the face"
+        },
+        {
+          "key": "orejas",
+          "es": "las orejas",
+          "en": "the ears"
+        },
+        {
+          "key": "ojos",
+          "es": "los ojos y la boca",
+          "en": "the eyes and mouth"
+        },
+        {
+          "key": "lana",
+          "es": "la lana esponjosa",
+          "en": "the fluffy wool"
+        },
+        {
+          "key": "patas",
+          "es": "las patas",
+          "en": "the legs"
+        },
+        {
+          "key": "pasto",
+          "es": "el pasto y la flor",
+          "en": "the grass and flower"
+        }
+      ],
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "granero.svg",
+      "title": "Granero",
+      "title_en": "Barn",
+      "level": 2,
+      "steps": [
+        {
+          "key": "tejado",
+          "es": "el tejado",
+          "en": "the roof"
+        },
+        {
+          "key": "pared",
+          "es": "la pared",
+          "en": "the wall"
+        },
+        {
+          "key": "puertas",
+          "es": "las puertas",
+          "en": "the doors"
+        },
+        {
+          "key": "ventana",
+          "es": "la ventana",
+          "en": "the window"
+        },
+        {
+          "key": "silo",
+          "es": "el silo",
+          "en": "the silo"
+        },
+        {
+          "key": "cerca",
+          "es": "la cerca",
+          "en": "the fence"
+        },
+        {
+          "key": "nube",
+          "es": "la nube",
+          "en": "the cloud"
+        }
+      ],
       "license": "Pintakids-Original"
     },
     {
       "file": "gallina.svg",
       "title": "Gallina",
+      "title_en": "Hen",
+      "level": 2,
+      "steps": [
+        {
+          "key": "cabeza",
+          "es": "la cabeza",
+          "en": "the head"
+        },
+        {
+          "key": "cresta",
+          "es": "la cresta",
+          "en": "the comb"
+        },
+        {
+          "key": "pico",
+          "es": "el pico",
+          "en": "the beak"
+        },
+        {
+          "key": "ojo",
+          "es": "el ojo",
+          "en": "the eye"
+        },
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo",
+          "en": "the body"
+        },
+        {
+          "key": "ala",
+          "es": "el ala",
+          "en": "the wing"
+        },
+        {
+          "key": "cola",
+          "es": "las plumas de la cola",
+          "en": "the tail feathers"
+        },
+        {
+          "key": "nido",
+          "es": "el nido",
+          "en": "the nest"
+        }
+      ],
       "license": "Pintakids-Original"
     },
     {
-      "file": "pollito.svg",
-      "title": "Pollito",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "oveja.svg",
-      "title": "Oveja lanuda",
+      "file": "vaca.svg",
+      "title": "Vaca",
+      "title_en": "Cow",
+      "level": 2,
+      "steps": [
+        {
+          "key": "cabeza",
+          "es": "la cabeza",
+          "en": "the head"
+        },
+        {
+          "key": "hocico",
+          "es": "el hocico",
+          "en": "the muzzle"
+        },
+        {
+          "key": "ojos",
+          "es": "los ojos",
+          "en": "the eyes"
+        },
+        {
+          "key": "orejas",
+          "es": "las orejas",
+          "en": "the ears"
+        },
+        {
+          "key": "cuernos",
+          "es": "los cuernos",
+          "en": "the horns"
+        },
+        {
+          "key": "manchas",
+          "es": "las manchas",
+          "en": "the spots"
+        },
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo y la campana",
+          "en": "the body and bell"
+        },
+        {
+          "key": "flores",
+          "es": "las flores",
+          "en": "the flowers"
+        }
+      ],
       "license": "Pintakids-Original"
     },
     {
       "file": "caballo.svg",
-      "title": "Caballito",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "gallo.svg",
-      "title": "Gallo",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "pato-granja.svg",
-      "title": "Pato del estanque",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "perro-granja.svg",
-      "title": "Perro guardián",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "conejo-granja.svg",
-      "title": "Conejo del campo",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "rancho.svg",
-      "title": "Granja feliz",
+      "title": "Caballo",
+      "title_en": "Horse",
+      "level": 3,
+      "steps": [
+        {
+          "key": "cabeza",
+          "es": "la cabeza",
+          "en": "the head"
+        },
+        {
+          "key": "oreja",
+          "es": "la oreja",
+          "en": "the ear"
+        },
+        {
+          "key": "ojo",
+          "es": "el ojo y la nariz",
+          "en": "the eye and nose"
+        },
+        {
+          "key": "crin",
+          "es": "la crin",
+          "en": "the mane"
+        },
+        {
+          "key": "cuello",
+          "es": "el cuello",
+          "en": "the neck"
+        },
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo",
+          "en": "the body"
+        },
+        {
+          "key": "patas",
+          "es": "las patas",
+          "en": "the legs"
+        },
+        {
+          "key": "cola",
+          "es": "la cola",
+          "en": "the tail"
+        },
+        {
+          "key": "pasto",
+          "es": "el pasto",
+          "en": "the grass"
+        }
+      ],
       "license": "Pintakids-Original"
     }
   ]

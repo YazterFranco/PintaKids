@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="8" data-name="piernas">
+    <path d="M146 318 V352 H178 V318 Z M222 318 V352 H254 V318 Z"/>
+    <path d="M134 350 H190 V366 H134 Z M210 350 H266 V366 H210 Z"/>
+  </g>
+  <g data-step="7" data-name="brazos">
+    <path d="M112 230 C86 236 74 256 76 282 L92 282 C92 262 100 252 114 248 Z"/>
+    <path d="M288 230 C314 236 326 256 324 282 L308 282 C308 262 300 252 286 248 Z"/>
+    <path d="M70 284 A14 14 0 1 0 98 284 M302 284 A14 14 0 1 0 330 284" fill="none"/>
+  </g>
+  <g data-step="5" data-name="cuerpo">
+    <path d="M184 188 H216 V208 H184 Z"/>
+    <path d="M130 206 H270 C282 206 290 214 290 226 V300 C290 312 282 320 270 320 H130 C118 320 110 312 110 300 V226 C110 214 118 206 130 206 Z"/>
+  </g>
+  <g data-step="6" data-name="panel">
+    <path d="M150 228 H250 V274 H150 Z"/>
+    <path d="M200 266 C176 250 178 236 190 236 C196 236 200 242 200 246 C200 242 204 236 210 236 C222 236 224 250 200 266 Z"/>
+    <circle cx="160" cy="296" r="7"/><circle cx="184" cy="296" r="7"/><circle cx="238" cy="296" r="11"/>
+  </g>
+  <g data-step="2" data-name="antena">
+    <path d="M200 80 V52" fill="none"/>
+    <circle cx="200" cy="42" r="11"/>
+  </g>
+  <g data-step="1" data-name="cabeza">
+    <path d="M98 112 H112 V160 H98 Z M288 112 H302 V160 H288 Z"/>
+    <path d="M132 80 H268 C280 80 290 90 290 102 V168 C290 180 280 190 268 190 H132 C120 190 110 180 110 168 V102 C110 90 120 80 132 80 Z"/>
+  </g>
+  <g data-step="3" data-name="ojos">
+    <circle cx="166" cy="128" r="19"/><circle cx="234" cy="128" r="19"/>
+    <circle cx="166" cy="128" r="8" fill="#2b2d42"/><circle cx="234" cy="128" r="8" fill="#2b2d42"/>
+  </g>
+  <g data-step="4" data-name="boca">
+    <path d="M166 156 H234 V174 H166 Z"/>
+    <path d="M183 156 V174 M200 156 V174 M217 156 V174" fill="none"/>
+  </g>
+</svg>

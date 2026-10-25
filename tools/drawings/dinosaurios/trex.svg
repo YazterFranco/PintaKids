@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="10" data-name="suelo">
+    <path d="M14 354 H386" fill="none"/>
+    <path d="M30 352 C26 320 44 296 60 284 C56 310 50 330 48 352 Z M44 352 C52 324 76 308 96 304 C84 322 70 338 64 352 Z"/>
+  </g>
+  <g data-step="8" data-name="cola">
+    <path d="M270 204 C318 222 356 254 382 300 C350 300 312 296 282 292 Z"/>
+  </g>
+  <g data-step="9" data-name="placas">
+    <path d="M187.0 67.0 L176.0 49.0 L165.0 67.0 Z"/>
+    <path d="M213.2 93.7 L220.7 69.8 L196.5 76.5 Z"/>
+    <path d="M259.6 187.9 L261.1 162.9 L239.2 175.2 Z"/>
+    <path d="M279.1 225.3 L296.0 206.8 L271.3 202.6 Z"/>
+    <path d="M317.4 234.6 L319.5 211.9 L299.2 222.3 Z"/>
+    <path d="M346.9 262.3 L356.3 246.5 L337.9 246.7 Z"/>
+  </g>
+  <g data-step="4" data-name="cuerpo">
+    <path d="M170 150 C220 150 268 180 284 226 C298 268 286 306 252 322 C220 336 176 330 156 306 C136 282 134 238 142 206 C148 182 154 160 170 150 Z"/>
+  </g>
+  <g data-step="5" data-name="panza">
+    <path d="M162 214 C154 252 164 290 198 306 C224 294 230 252 216 216 C198 206 176 206 162 214 Z"/>
+    <path d="M164 238 H222 M168 264 H224 M180 288 H216" fill="none"/>
+  </g>
+  <g data-step="7" data-name="patas">
+    <path d="M172 300 L168 344 L196 350 L194 304 Z"/>
+    <path d="M216 262 C254 246 292 266 290 298 L286 338 L308 350 L248 352 L248 322 C228 318 214 296 216 262 Z"/>
+  </g>
+  <g data-step="6" data-name="bracitos">
+    <path d="M158 216 C138 218 130 234 136 244 L148 240 C146 232 152 228 164 228 Z"/>
+  </g>
+  <g data-step="1" data-name="cabeza">
+    <path d="M66 118 C66 80 108 60 160 62 C204 64 226 92 222 124 C218 150 198 164 172 164 L98 164 C78 164 66 148 66 118 Z"/>
+  </g>
+  <g data-step="2" data-name="ojo">
+    <path d="M160 80 Q174 74 188 82" fill="none"/>
+    <circle cx="176" cy="100" r="11" fill="#2b2d42"/>
+    <circle cx="172" cy="95" r="4" stroke="none"/>
+    <circle cx="84" cy="100" r="3" fill="#2b2d42"/>
+  </g>
+  <g data-step="3" data-name="sonrisa">
+    <path d="M76 138 Q136 158 206 144" fill="none"/>
+    <path d="M96 143 L100 152 L106 145 M120 148 L124 157 L130 149 M144 150 L148 158 L154 150" fill="none"/>
+  </g>
+</svg>

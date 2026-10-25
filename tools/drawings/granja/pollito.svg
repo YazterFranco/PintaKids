@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="1" data-name="cuerpo">
+    <path d="M110 210 C108 150 150 110 200 110 C250 110 292 150 290 210 C288 260 250 290 200 290 C150 290 112 260 110 210 Z"/>
+  </g>
+  <g data-step="3" data-name="alitas">
+    <path d="M114 214 C88 206 78 236 94 254 C106 262 122 252 124 238 Z"/>
+    <path d="M286 214 C312 206 322 236 306 254 C294 262 278 252 276 238 Z"/>
+  </g>
+  <g data-step="2" data-name="cara">
+    <circle cx="172" cy="188" r="11" fill="#2b2d42"/>
+    <circle cx="228" cy="188" r="11" fill="#2b2d42"/>
+    <circle cx="168" cy="183" r="4" stroke="none"/>
+    <circle cx="224" cy="183" r="4" stroke="none"/>
+    <ellipse cx="152" cy="216" rx="11" ry="7"/>
+    <ellipse cx="248" cy="216" rx="11" ry="7"/>
+    <path d="M184 210 L216 210 L200 228 Z"/>
+  </g>
+  <g data-step="4" data-name="cascaron">
+    <path d="M100 250 L128 228 L158 254 L188 228 L218 254 L248 228 L278 254 L302 236 C308 300 270 352 200 352 C130 352 92 300 100 250 Z"/>
+    <path d="M150 300 l10 10 l10 -10 M230 316 l10 10 l10 -10" fill="none"/>
+  </g>
+  <g data-step="5" data-name="gorrito">
+    <path d="M146 124 C148 80 252 80 254 124 L240 112 L226 128 L212 110 L198 128 L184 110 L170 128 L158 112 Z"/>
+  </g>
+</svg>

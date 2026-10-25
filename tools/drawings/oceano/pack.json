@@ -1,0 +1,320 @@
+{
+  "name": "Océano",
+  "name_en": "Ocean",
+  "items": [
+    {
+      "id": "estrella",
+      "title": "Estrella de mar",
+      "title_en": "Starfish",
+      "level": 1,
+      "steps": [
+        {
+          "key": "estrella",
+          "es": "la estrella",
+          "en": "the star"
+        },
+        {
+          "key": "cara",
+          "es": "la carita",
+          "en": "the face"
+        },
+        {
+          "key": "puntitos",
+          "es": "los puntitos",
+          "en": "the dots"
+        },
+        {
+          "key": "arena",
+          "es": "la arena y la concha",
+          "en": "the sand and shell"
+        }
+      ]
+    },
+    {
+      "id": "pez",
+      "title": "Pez",
+      "title_en": "Fish",
+      "level": 1,
+      "steps": [
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo",
+          "en": "the body"
+        },
+        {
+          "key": "cola",
+          "es": "la cola",
+          "en": "the tail"
+        },
+        {
+          "key": "aletas",
+          "es": "las aletas",
+          "en": "the fins"
+        },
+        {
+          "key": "ojo",
+          "es": "el ojo y la boca",
+          "en": "the eye and mouth"
+        },
+        {
+          "key": "burbujas",
+          "es": "las burbujas",
+          "en": "the bubbles"
+        }
+      ]
+    },
+    {
+      "id": "pulpo",
+      "title": "Pulpo",
+      "title_en": "Octopus",
+      "level": 1,
+      "steps": [
+        {
+          "key": "cabeza",
+          "es": "la cabeza",
+          "en": "the head"
+        },
+        {
+          "key": "ojos",
+          "es": "los ojos",
+          "en": "the eyes"
+        },
+        {
+          "key": "boca",
+          "es": "la sonrisa",
+          "en": "the smile"
+        },
+        {
+          "key": "tentaculos",
+          "es": "los tentáculos",
+          "en": "the tentacles"
+        },
+        {
+          "key": "burbujas",
+          "es": "las burbujas",
+          "en": "the bubbles"
+        }
+      ]
+    },
+    {
+      "id": "ballena",
+      "title": "Ballena",
+      "title_en": "Whale",
+      "level": 2,
+      "steps": [
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo",
+          "en": "the body"
+        },
+        {
+          "key": "cola",
+          "es": "la cola",
+          "en": "the tail"
+        },
+        {
+          "key": "aleta",
+          "es": "la aleta",
+          "en": "the fin"
+        },
+        {
+          "key": "cara",
+          "es": "la cara",
+          "en": "the face"
+        },
+        {
+          "key": "chorro",
+          "es": "el chorro de agua",
+          "en": "the water spout"
+        },
+        {
+          "key": "olas",
+          "es": "las olas",
+          "en": "the waves"
+        }
+      ]
+    },
+    {
+      "id": "tortuga",
+      "title": "Tortuga",
+      "title_en": "Turtle",
+      "level": 2,
+      "steps": [
+        {
+          "key": "caparazon",
+          "es": "el caparazón",
+          "en": "the shell"
+        },
+        {
+          "key": "dibujo",
+          "es": "el dibujo del caparazón",
+          "en": "the shell pattern"
+        },
+        {
+          "key": "cabeza",
+          "es": "la cabeza",
+          "en": "the head"
+        },
+        {
+          "key": "cara",
+          "es": "el ojo y la sonrisa",
+          "en": "the eye and smile"
+        },
+        {
+          "key": "patas",
+          "es": "las patas",
+          "en": "the legs"
+        },
+        {
+          "key": "cola",
+          "es": "la cola",
+          "en": "the tail"
+        },
+        {
+          "key": "arena",
+          "es": "la arena",
+          "en": "the sand"
+        }
+      ]
+    },
+    {
+      "id": "cangrejo",
+      "title": "Cangrejo",
+      "title_en": "Crab",
+      "level": 2,
+      "steps": [
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo",
+          "en": "the body"
+        },
+        {
+          "key": "ojos",
+          "es": "los ojos",
+          "en": "the eyes"
+        },
+        {
+          "key": "sonrisa",
+          "es": "la sonrisa",
+          "en": "the smile"
+        },
+        {
+          "key": "pinzas",
+          "es": "las pinzas",
+          "en": "the claws"
+        },
+        {
+          "key": "patas",
+          "es": "las patas",
+          "en": "the legs"
+        },
+        {
+          "key": "arena",
+          "es": "la arena",
+          "en": "the sand"
+        },
+        {
+          "key": "concha",
+          "es": "la concha",
+          "en": "the shell"
+        }
+      ]
+    },
+    {
+      "id": "caballito",
+      "title": "Caballito de mar",
+      "title_en": "Seahorse",
+      "level": 2,
+      "steps": [
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo",
+          "en": "the body"
+        },
+        {
+          "key": "ojo",
+          "es": "el ojo",
+          "en": "the eye"
+        },
+        {
+          "key": "corona",
+          "es": "la coronita",
+          "en": "the little crown"
+        },
+        {
+          "key": "aleta",
+          "es": "la aleta",
+          "en": "the fin"
+        },
+        {
+          "key": "rayitas",
+          "es": "las rayitas",
+          "en": "the stripes"
+        },
+        {
+          "key": "algas",
+          "es": "las algas",
+          "en": "the seaweed"
+        },
+        {
+          "key": "burbujas",
+          "es": "las burbujas",
+          "en": "the bubbles"
+        }
+      ]
+    },
+    {
+      "id": "tiburon",
+      "title": "Tiburón",
+      "title_en": "Shark",
+      "level": 3,
+      "steps": [
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo",
+          "en": "the body"
+        },
+        {
+          "key": "aleta",
+          "es": "la aleta de arriba",
+          "en": "the top fin"
+        },
+        {
+          "key": "cola",
+          "es": "la cola",
+          "en": "the tail"
+        },
+        {
+          "key": "ojo",
+          "es": "el ojo",
+          "en": "the eye"
+        },
+        {
+          "key": "sonrisa",
+          "es": "la sonrisa",
+          "en": "the smile"
+        },
+        {
+          "key": "aleta2",
+          "es": "la aleta de abajo",
+          "en": "the side fin"
+        },
+        {
+          "key": "branquias",
+          "es": "las branquias",
+          "en": "the gills"
+        },
+        {
+          "key": "panza",
+          "es": "la panza",
+          "en": "the belly"
+        },
+        {
+          "key": "algas",
+          "es": "las algas y burbujas",
+          "en": "the seaweed and bubbles"
+        }
+      ]
+    }
+  ]
+}

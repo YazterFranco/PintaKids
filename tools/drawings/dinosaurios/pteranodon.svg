@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="6" data-name="nubes">
+    <path d="M70 320 c-17 0 -22 -24 -2 -29 c2 -19 29 -24 38 -10 c12 -14 38 -7 36 12 c17 2 17 26 0 26 Z"/>
+    <path d="M300 340 c-14 0 -18 -20 -2 -24 c2 -16 24 -20 32 -8 c10 -12 32 -6 30 10 c14 2 14 22 0 22 Z"/>
+  </g>
+  <g data-step="4" data-name="alas">
+    <path d="M172 186 C130 148 70 138 28 160 C58 178 90 202 110 232 C130 216 150 212 172 226 Z"/>
+    <path d="M228 186 C270 148 330 138 372 160 C342 178 310 202 290 232 C270 216 250 212 228 226 Z"/>
+    <path d="M110 232 C104 200 82 176 52 164 M290 232 C296 200 318 176 348 164" fill="none"/>
+  </g>
+  <g data-step="5" data-name="patitas">
+    <path d="M188 240 L180 262 M212 240 L220 262 M174 262 H186 M214 262 H226" fill="none"/>
+  </g>
+  <g data-step="1" data-name="cuerpo">
+    <ellipse cx="200" cy="202" rx="34" ry="46"/>
+    <path d="M188 210 Q200 218 212 210 M190 226 Q200 232 210 226" fill="none"/>
+  </g>
+  <g data-step="2" data-name="cabeza">
+    <path d="M184 128 L132 108 L178 146 Z"/>
+    <path d="M176 152 C176 128 196 118 214 122 L268 108 L224 142 C220 158 202 168 188 164 Z"/>
+  </g>
+  <g data-step="3" data-name="ojo">
+    <circle cx="200" cy="138" r="6" fill="#2b2d42"/>
+    <circle cx="198" cy="135" r="2" stroke="none"/>
+  </g>
+</svg>

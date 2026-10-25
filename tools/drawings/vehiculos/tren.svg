@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="9" data-name="vias">
+    <path d="M14 316 H386 V324 H14 Z"/>
+    <path d="M30 324 H50 V338 H30 Z M110 324 H130 V338 H110 Z M190 324 H210 V338 H190 Z M270 324 H290 V338 H270 Z M350 324 H370 V338 H350 Z"/>
+  </g>
+  <g data-step="5" data-name="humo">
+    <circle cx="118" cy="108" r="18"/><circle cx="150" cy="80" r="22"/><circle cx="192" cy="60" r="18"/><circle cx="228" cy="44" r="13"/>
+  </g>
+  <g data-step="4" data-name="chimenea">
+    <path d="M96 198 L90 150 H130 L124 198 Z"/>
+    <path d="M82 138 H138 V152 H82 Z"/>
+  </g>
+  <g data-step="8" data-name="domo">
+    <path d="M150 198 C150 176 178 176 178 198 Z"/>
+  </g>
+  <g data-step="1" data-name="caldera">
+    <path d="M80 196 H232 V272 H80 C64 272 56 256 56 234 C56 212 64 196 80 196 Z"/>
+    <path d="M120 196 V272 M184 196 V272" fill="none"/>
+  </g>
+  <g data-step="2" data-name="cabina">
+    <path d="M222 128 H332 V142 H222 Z"/>
+    <path d="M232 142 H320 V274 H232 Z"/>
+  </g>
+  <g data-step="3" data-name="ventana">
+    <path d="M248 160 H304 V208 H248 Z"/>
+  </g>
+  <g data-step="7" data-name="trompa">
+    <path d="M58 262 L36 300 H90 L82 272 Z"/>
+  </g>
+  <g data-step="6" data-name="ruedas">
+    <circle cx="110" cy="290" r="24"/>
+    <circle cx="110" cy="290" r="11"/>
+    <circle cx="110" cy="290" r="3" fill="#2b2d42"/>
+    <circle cx="170" cy="290" r="24"/>
+    <circle cx="170" cy="290" r="11"/>
+    <circle cx="170" cy="290" r="3" fill="#2b2d42"/>
+    <circle cx="276" cy="284" r="32"/>
+    <circle cx="276" cy="284" r="14"/>
+    <circle cx="276" cy="284" r="4" fill="#2b2d42"/>
+    <path d="M110 290 H276" fill="none"/>
+  </g>
+</svg>

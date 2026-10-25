@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="6" data-name="charco">
+    <ellipse cx="200" cy="364" rx="160" ry="20"/>
+    <path d="M70 330 q6 -12 12 0 q-6 6 -12 0 Z M322 324 q6 -12 12 0 q-6 6 -12 0 Z"/>
+  </g>
+  <g data-step="5" data-name="cuerpo">
+    <path d="M150 196 C118 226 114 288 126 336 L274 336 C286 288 282 226 250 196 Z"/>
+    <path d="M144 286 V350 Q144 360 154 360 H186 Q196 360 196 350 V286 Z"/>
+    <path d="M204 286 V350 Q204 360 214 360 H246 Q256 360 256 350 V286 Z"/>
+    <path d="M152 360 q6 -9 12 0 M168 360 q6 -9 12 0 M212 360 q6 -9 12 0 M228 360 q6 -9 12 0" fill="none"/>
+  </g>
+  <g data-step="4" data-name="orejas">
+    <path d="M150 108 C98 78 46 110 52 172 C58 224 112 238 150 202 Z"/>
+    <path d="M250 108 C302 78 354 110 348 172 C342 224 288 238 250 202 Z"/>
+    <path d="M140 124 C106 108 76 128 80 168 C84 200 116 210 140 190" fill="none"/>
+    <path d="M260 124 C294 108 324 128 320 168 C316 200 284 210 260 190" fill="none"/>
+  </g>
+  <g data-step="1" data-name="cabeza">
+    <path d="M140 156 C136 108 166 82 200 82 C234 82 264 108 260 156 C258 188 240 210 222 216 L178 216 C160 210 142 188 140 156 Z"/>
+  </g>
+  <g data-step="3" data-name="ojos">
+    <circle cx="174" cy="148" r="9" fill="#2b2d42"/>
+    <circle cx="226" cy="148" r="9" fill="#2b2d42"/>
+    <circle cx="171" cy="144" r="3" stroke="none"/>
+    <circle cx="223" cy="144" r="3" stroke="none"/>
+    <circle cx="160" cy="178" r="9"/>
+    <circle cx="240" cy="178" r="9"/>
+  </g>
+  <g data-step="2" data-name="trompa">
+    <path d="M182 176 C180 222 182 254 196 270 C208 284 232 282 236 264 C239 250 226 242 216 250 C212 236 214 206 218 176 Z"/>
+    <path d="M182 214 Q198 220 214 214 M184 240 Q196 246 210 240" fill="none"/>
+  </g>
+</svg>

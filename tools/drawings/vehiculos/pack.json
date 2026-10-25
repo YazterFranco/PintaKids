@@ -1,0 +1,350 @@
+{
+  "name": "Vehículos",
+  "name_en": "Vehicles",
+  "items": [
+    {
+      "id": "coche",
+      "title": "Coche",
+      "title_en": "Car",
+      "level": 1,
+      "steps": [
+        {
+          "key": "carroceria",
+          "es": "la carrocería",
+          "en": "the car body"
+        },
+        {
+          "key": "ventanas",
+          "es": "las ventanas",
+          "en": "the windows"
+        },
+        {
+          "key": "ruedas",
+          "es": "las ruedas",
+          "en": "the wheels"
+        },
+        {
+          "key": "luces",
+          "es": "las luces",
+          "en": "the lights"
+        },
+        {
+          "key": "carretera",
+          "es": "la carretera",
+          "en": "the road"
+        }
+      ]
+    },
+    {
+      "id": "velero",
+      "title": "Velero",
+      "title_en": "Sailboat",
+      "level": 1,
+      "steps": [
+        {
+          "key": "casco",
+          "es": "el barco",
+          "en": "the hull"
+        },
+        {
+          "key": "mastil",
+          "es": "el mástil",
+          "en": "the mast"
+        },
+        {
+          "key": "vela",
+          "es": "la vela grande",
+          "en": "the big sail"
+        },
+        {
+          "key": "vela2",
+          "es": "la vela chica y la bandera",
+          "en": "the small sail and flag"
+        },
+        {
+          "key": "olas",
+          "es": "las olas",
+          "en": "the waves"
+        }
+      ]
+    },
+    {
+      "id": "avion",
+      "title": "Avión",
+      "title_en": "Airplane",
+      "level": 2,
+      "steps": [
+        {
+          "key": "fuselaje",
+          "es": "el cuerpo del avión",
+          "en": "the body"
+        },
+        {
+          "key": "cabina",
+          "es": "la cabina",
+          "en": "the cockpit"
+        },
+        {
+          "key": "ventanillas",
+          "es": "las ventanillas",
+          "en": "the windows"
+        },
+        {
+          "key": "ala",
+          "es": "el ala",
+          "en": "the wing"
+        },
+        {
+          "key": "cola",
+          "es": "la cola",
+          "en": "the tail"
+        },
+        {
+          "key": "nubes",
+          "es": "las nubes",
+          "en": "the clouds"
+        }
+      ]
+    },
+    {
+      "id": "autobus",
+      "title": "Autobús",
+      "title_en": "Bus",
+      "level": 2,
+      "steps": [
+        {
+          "key": "carroceria",
+          "es": "el autobús",
+          "en": "the bus"
+        },
+        {
+          "key": "ventanas",
+          "es": "las ventanas",
+          "en": "the windows"
+        },
+        {
+          "key": "puerta",
+          "es": "la puerta",
+          "en": "the door"
+        },
+        {
+          "key": "ruedas",
+          "es": "las ruedas",
+          "en": "the wheels"
+        },
+        {
+          "key": "luces",
+          "es": "las luces",
+          "en": "the lights"
+        },
+        {
+          "key": "franja",
+          "es": "la franja",
+          "en": "the stripe"
+        },
+        {
+          "key": "parada",
+          "es": "la parada",
+          "en": "the bus stop"
+        }
+      ]
+    },
+    {
+      "id": "tractor",
+      "title": "Tractor",
+      "title_en": "Tractor",
+      "level": 2,
+      "steps": [
+        {
+          "key": "cabina",
+          "es": "la cabina",
+          "en": "the cab"
+        },
+        {
+          "key": "capo",
+          "es": "el motor",
+          "en": "the engine"
+        },
+        {
+          "key": "ventana",
+          "es": "la ventana",
+          "en": "the window"
+        },
+        {
+          "key": "ruedagrande",
+          "es": "la rueda grande",
+          "en": "the big wheel"
+        },
+        {
+          "key": "ruedachica",
+          "es": "la rueda chica",
+          "en": "the small wheel"
+        },
+        {
+          "key": "tubo",
+          "es": "el tubo y el humo",
+          "en": "the pipe and smoke"
+        },
+        {
+          "key": "campo",
+          "es": "el campo",
+          "en": "the field"
+        }
+      ]
+    },
+    {
+      "id": "helicoptero",
+      "title": "Helicóptero",
+      "title_en": "Helicopter",
+      "level": 2,
+      "steps": [
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo",
+          "en": "the body"
+        },
+        {
+          "key": "ventana",
+          "es": "la ventana",
+          "en": "the window"
+        },
+        {
+          "key": "cola",
+          "es": "la cola",
+          "en": "the tail"
+        },
+        {
+          "key": "helice",
+          "es": "la hélice",
+          "en": "the rotor"
+        },
+        {
+          "key": "helicecola",
+          "es": "la hélice de la cola",
+          "en": "the tail rotor"
+        },
+        {
+          "key": "patines",
+          "es": "los patines",
+          "en": "the skids"
+        },
+        {
+          "key": "nubes",
+          "es": "las nubes",
+          "en": "the clouds"
+        }
+      ]
+    },
+    {
+      "id": "tren",
+      "title": "Tren",
+      "title_en": "Train",
+      "level": 3,
+      "steps": [
+        {
+          "key": "caldera",
+          "es": "la caldera",
+          "en": "the boiler"
+        },
+        {
+          "key": "cabina",
+          "es": "la cabina",
+          "en": "the cab"
+        },
+        {
+          "key": "ventana",
+          "es": "la ventana",
+          "en": "the window"
+        },
+        {
+          "key": "chimenea",
+          "es": "la chimenea",
+          "en": "the chimney"
+        },
+        {
+          "key": "humo",
+          "es": "el humo",
+          "en": "the smoke"
+        },
+        {
+          "key": "ruedas",
+          "es": "las ruedas",
+          "en": "the wheels"
+        },
+        {
+          "key": "trompa",
+          "es": "la trompa",
+          "en": "the cowcatcher"
+        },
+        {
+          "key": "domo",
+          "es": "el domo",
+          "en": "the dome"
+        },
+        {
+          "key": "vias",
+          "es": "las vías",
+          "en": "the tracks"
+        }
+      ]
+    },
+    {
+      "id": "bomberos",
+      "title": "Camión de bomberos",
+      "title_en": "Fire truck",
+      "level": 3,
+      "steps": [
+        {
+          "key": "cabina",
+          "es": "la cabina",
+          "en": "the cab"
+        },
+        {
+          "key": "ventana",
+          "es": "la ventana",
+          "en": "the window"
+        },
+        {
+          "key": "caja",
+          "es": "la caja",
+          "en": "the body"
+        },
+        {
+          "key": "escalera",
+          "es": "la escalera",
+          "en": "the ladder"
+        },
+        {
+          "key": "ruedas",
+          "es": "las ruedas",
+          "en": "the wheels"
+        },
+        {
+          "key": "luces",
+          "es": "la sirena",
+          "en": "the siren"
+        },
+        {
+          "key": "manguera",
+          "es": "la manguera",
+          "en": "the hose"
+        },
+        {
+          "key": "puertas",
+          "es": "las puertas",
+          "en": "the doors"
+        },
+        {
+          "key": "parachoques",
+          "es": "el parachoques",
+          "en": "the bumper"
+        },
+        {
+          "key": "calle",
+          "es": "la calle",
+          "en": "the street"
+        }
+      ]
+    }
+  ]
+}

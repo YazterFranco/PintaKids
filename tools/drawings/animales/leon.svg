@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="10" data-name="sol">
+    <circle cx="62" cy="62" r="26"/>
+    <path d="M62 20 V8 M62 104 V116 M20 62 H8 M104 62 H116 M32 32 L24 24 M92 92 L100 100 M92 32 L100 24 M32 92 L24 100" fill="none"/>
+  </g>
+  <g data-step="9" data-name="suelo">
+    <path d="M14 362 Q200 342 386 362" fill="none"/>
+    <path d="M54 356 l5 -16 l5 16 l5 -11 M330 352 l5 -16 l5 16 l5 -11" fill="none"/>
+  </g>
+  <g data-step="8" data-name="cola">
+    <path d="M262 338 C312 344 334 314 328 284 L318 284 C322 306 306 328 262 328 Z"/>
+    <path d="M316 288 C302 272 312 246 330 248 C348 250 352 276 336 290 Z"/>
+  </g>
+  <g data-step="6" data-name="cuerpo">
+    <path d="M150 238 C118 270 114 330 128 356 L272 356 C286 330 282 270 250 238 Z"/>
+    <path d="M200 264 C180 272 176 320 184 354 L216 354 C224 320 220 272 200 264 Z"/>
+  </g>
+  <g data-step="7" data-name="patas">
+    <path d="M144 358 C140 334 156 322 172 324 C188 326 196 342 192 358 Z"/>
+    <path d="M208 358 C204 342 212 326 228 324 C244 322 260 334 256 358 Z"/>
+    <path d="M158 346 L158 357 M174 344 L174 357 M226 344 L226 357 M242 346 L242 357" fill="none"/>
+  </g>
+  <g data-step="5" data-name="melena">
+    <path d="M298.0 166.0 A25 25 0 0 1 288.3 208.5 A25 25 0 0 1 261.1 242.6 A25 25 0 0 1 221.8 261.5 A25 25 0 0 1 178.2 261.5 A25 25 0 0 1 138.9 242.6 A25 25 0 0 1 111.7 208.5 A25 25 0 0 1 102.0 166.0 A25 25 0 0 1 111.7 123.5 A25 25 0 0 1 138.9 89.4 A25 25 0 0 1 178.2 70.5 A25 25 0 0 1 221.8 70.5 A25 25 0 0 1 261.1 89.4 A25 25 0 0 1 288.3 123.5 A25 25 0 0 1 298.0 166.0 Z"/>
+  </g>
+  <g data-step="4" data-name="orejas">
+    <circle cx="150" cy="114" r="21"/>
+    <circle cx="250" cy="114" r="21"/>
+    <circle cx="150" cy="114" r="9"/>
+    <circle cx="250" cy="114" r="9"/>
+  </g>
+  <g data-step="1" data-name="cara">
+    <path d="M140 170 C138 128 166 106 200 106 C234 106 262 128 260 170 C258 206 234 228 200 228 C166 228 142 206 140 170 Z"/>
+  </g>
+  <g data-step="3" data-name="ojos">
+    <path d="M164 144 Q176 137 188 144 M212 144 Q224 137 236 144" fill="none"/>
+    <ellipse cx="177" cy="162" rx="8" ry="10" fill="#2b2d42"/>
+    <ellipse cx="223" cy="162" rx="8" ry="10" fill="#2b2d42"/>
+    <circle cx="174" cy="158" r="3" stroke="none"/>
+    <circle cx="220" cy="158" r="3" stroke="none"/>
+  </g>
+  <g data-step="2" data-name="hocico">
+    <path d="M176 194 C158 194 156 220 176 222 C186 223 194 216 200 210 C206 216 214 223 224 222 C244 220 242 194 224 194 Z"/>
+    <path d="M200 198 V210 M188 228 Q200 236 212 228" fill="none"/>
+    <path d="M188 186 Q200 179 212 186 Q206 198 200 199 Q194 198 188 186 Z" fill="#2b2d42"/>
+  </g>
+</svg>

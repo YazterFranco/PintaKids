@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="5" data-name="plato">
+    <ellipse cx="200" cy="346" rx="124" ry="16"/>
+  </g>
+  <g data-step="1" data-name="capacillo">
+    <path d="M118 230 L146 342 H254 L282 230 Z"/>
+    <path d="M146 232 L164 340 M172 232 L184 340 M200 232 V340 M228 232 L216 340 M254 232 L236 340" fill="none"/>
+  </g>
+  <g data-step="2" data-name="crema">
+    <path d="M106 238 C92 214 114 196 136 202 C126 176 150 156 174 168 C172 138 196 122 216 132 C238 120 264 134 258 162 C282 158 302 180 292 200 C312 206 312 234 292 238 Z"/>
+    <path d="M140 220 Q190 236 270 214 M164 188 Q206 200 254 182" fill="none"/>
+  </g>
+  <g data-step="4" data-name="chispitas">
+    <path d="M150 210 l8 3 M190 214 l2 8 M236 204 l-6 6 M262 222 l7 -3 M178 186 l6 5 M222 176 l-2 8" fill="none"/>
+  </g>
+  <g data-step="3" data-name="cereza">
+    <path d="M214 108 Q220 90 236 84" fill="none"/>
+    <circle cx="210" cy="120" r="16"/>
+  </g>
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="8" data-name="alfombra">
+    <ellipse cx="200" cy="352" rx="160" ry="26"/>
+    <ellipse cx="200" cy="352" rx="128" ry="16"/>
+  </g>
+  <g data-step="7" data-name="cola">
+    <path d="M250 318 C318 330 346 286 318 246 C308 232 290 238 298 254 C316 284 300 306 252 300 Z"/>
+    <path d="M318 262 C326 270 328 280 326 290" fill="none"/>
+  </g>
+  <g data-step="5" data-name="cuerpo">
+    <path d="M158 196 C120 236 112 306 132 346 L268 346 C288 306 280 236 242 196 Z"/>
+    <path d="M200 236 C172 242 166 300 176 344 L224 344 C234 300 228 242 200 236 Z"/>
+  </g>
+  <g data-step="6" data-name="patas">
+    <path d="M150 346 C146 326 160 314 174 316 C190 318 196 334 192 346 Z"/>
+    <path d="M208 346 C204 334 210 318 226 316 C240 314 254 326 250 346 Z"/>
+    <path d="M164 334 L164 344 M178 332 L178 344 M222 332 L222 344 M236 334 L236 344" fill="none"/>
+  </g>
+  <g data-step="2" data-name="orejas">
+    <path d="M128 132 L122 52 C122 46 128 44 133 47 L192 92 Z"/>
+    <path d="M272 132 L278 52 C278 46 272 44 267 47 L208 92 Z"/>
+    <path d="M140 112 L138 70 L172 96 Z"/>
+    <path d="M260 112 L262 70 L228 96 Z"/>
+  </g>
+  <g data-step="1" data-name="cabeza">
+    <path d="M124 152 C120 104 158 82 200 82 C242 82 280 104 276 152 C274 194 242 218 200 218 C158 218 126 194 124 152 Z"/>
+    <path d="M186 88 Q190 100 188 110 M200 86 L200 112 M214 88 Q210 100 212 110" fill="none"/>
+  </g>
+  <g data-step="3" data-name="ojos">
+    <ellipse cx="168" cy="150" rx="16" ry="20"/>
+    <ellipse cx="232" cy="150" rx="16" ry="20"/>
+    <ellipse cx="170" cy="154" rx="8" ry="13" fill="#2b2d42"/>
+    <ellipse cx="234" cy="154" rx="8" ry="13" fill="#2b2d42"/>
+    <circle cx="166" cy="146" r="4" stroke="none"/>
+    <circle cx="230" cy="146" r="4" stroke="none"/>
+  </g>
+  <g data-step="4" data-name="cara">
+    <path d="M150 182 L104 174 M150 190 L106 196 M250 182 L296 174 M250 190 L294 196" fill="none"/>
+    <ellipse cx="146" cy="176" rx="11" ry="7"/>
+    <ellipse cx="254" cy="176" rx="11" ry="7"/>
+    <path d="M191 178 Q200 172 209 178 Q205 187 200 188 Q195 187 191 178 Z"/>
+    <path d="M200 188 Q200 198 188 200 M200 188 Q200 198 212 200" fill="none"/>
+  </g>
+</svg>

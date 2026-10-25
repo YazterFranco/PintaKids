@@ -1,2 +1,32 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><g fill="none" stroke="#2b2d42" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"><rect x="62" y="88" width="76" height="92"/><rect x="36" y="54" width="26" height="126" rx="6"/><rect x="138" y="54" width="26" height="126" rx="6"/><path d="M36 54 L36 38 M49 54 L49 38 M62 54 L62 38"/><path d="M138 54 L138 38 M151 54 L151 38 M164 54 L164 38"/><polygon points="62,88 100,48 138,88"/><path d="M88 180 L88 136 Q100 118 112 136 L112 180 Z"/><rect x="70" y="108" width="14" height="20" rx="7"/><rect x="116" y="108" width="14" height="20" rx="7"/><path d="M49 38L49 20"/><polygon points="49,20 70,26 49,34"/><path d="M151 38L151 20"/><polygon points="151,20 172,26 151,34"/><path d="M62 120 L138 120 M62 150 L84 150 M116 150 L138 150"/><path d="M44 84 L54 84 M146 84 L156 84"/><path d="M100 77.6 C92 68.8 95.84 62 100 67.2 C104.16 62 108 68.8 100 77.6 Z"/><polygon points="24,82 25.8,86.2 30,88 25.8,89.8 24,94 22.2,89.8 18,88 22.2,86.2"/><polygon points="178,92 179.8,96.2 184,98 179.8,99.8 178,104 176.2,99.8 172,98 176.2,96.2"/><polygon points="100,21 102,27 109,27 104,31 105,37 100,34 95,37 96,31 91,27 98,27"/><polygon points="24,155 25.5,158.5 29,160 25.5,161.5 24,165 22.5,161.5 19,160 22.5,158.5"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="8" data-name="camino">
+    <path d="M14 352 H386" fill="none"/>
+    <path d="M174 352 H226 L262 390 H138 Z"/>
+  </g>
+  <g data-step="7" data-name="banderas">
+    <path d="M100 82 V50 M300 82 V50 M200 52 V20" fill="none"/>
+    <path d="M100 50 L126 58 L100 66 Z M300 50 L326 58 L300 66 Z M200 20 L226 28 L200 36 Z"/>
+  </g>
+  <g data-step="4" data-name="torrecentral">
+    <path d="M156 114 L200 52 L244 114 Z"/>
+    <path d="M164 112 H236 V200 H164 Z"/>
+    <circle cx="200" cy="148" r="12"/>
+  </g>
+  <g data-step="2" data-name="torres">
+    <path d="M68 150 H132 V352 H68 Z M268 150 H332 V352 H268 Z"/>
+  </g>
+  <g data-step="3" data-name="techos">
+    <path d="M60 152 L100 80 L140 152 Z M260 152 L300 80 L340 152 Z"/>
+  </g>
+  <g data-step="1" data-name="muro">
+    <path d="M110 352 V184 H128 V166 H148 V184 H166 V166 H186 V184 H214 V166 H234 V184 H252 V166 H272 V184 H290 V352 Z"/>
+  </g>
+  <g data-step="5" data-name="puerta">
+    <path d="M172 352 V286 C172 256 228 256 228 286 V352 Z"/>
+    <path d="M190 264 V352 M210 264 V352" fill="none"/>
+  </g>
+  <g data-step="6" data-name="ventanas">
+    <path d="M90 214 V198 C90 186 110 186 110 198 V214 Z M290 214 V198 C290 186 310 186 310 198 V214 Z"/>
+    <path d="M90 290 V274 C90 262 110 262 110 274 V290 Z M290 290 V274 C290 262 310 262 310 274 V290 Z"/>
+  </g>
+</svg>

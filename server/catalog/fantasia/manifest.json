@@ -1,76 +1,369 @@
 {
   "name": "Fantasía",
-  "version": 3,
+  "name_en": "Fantasy",
+  "version": 4,
   "license": "Pintakids-Original",
   "files": [
     {
+      "file": "corona.svg",
+      "title": "Corona",
+      "title_en": "Crown",
+      "level": 1,
+      "steps": [
+        {
+          "key": "corona",
+          "es": "la corona",
+          "en": "the crown"
+        },
+        {
+          "key": "joyas",
+          "es": "las joyas",
+          "en": "the jewels"
+        },
+        {
+          "key": "bolitas",
+          "es": "las bolitas",
+          "en": "the little balls"
+        },
+        {
+          "key": "cojin",
+          "es": "el cojín",
+          "en": "the cushion"
+        }
+      ],
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "arcoiris.svg",
+      "title": "Arcoíris",
+      "title_en": "Rainbow",
+      "level": 1,
+      "steps": [
+        {
+          "key": "arcoiris",
+          "es": "el arcoíris",
+          "en": "the rainbow"
+        },
+        {
+          "key": "nubes",
+          "es": "las nubes",
+          "en": "the clouds"
+        },
+        {
+          "key": "sol",
+          "es": "el sol",
+          "en": "the sun"
+        },
+        {
+          "key": "estrellitas",
+          "es": "los brillitos",
+          "en": "the sparkles"
+        }
+      ],
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "cofre.svg",
+      "title": "Cofre del tesoro",
+      "title_en": "Treasure chest",
+      "level": 2,
+      "steps": [
+        {
+          "key": "caja",
+          "es": "el cofre",
+          "en": "the chest"
+        },
+        {
+          "key": "tapa",
+          "es": "la tapa",
+          "en": "the lid"
+        },
+        {
+          "key": "bandas",
+          "es": "las bandas",
+          "en": "the straps"
+        },
+        {
+          "key": "cerradura",
+          "es": "la cerradura",
+          "en": "the lock"
+        },
+        {
+          "key": "monedas",
+          "es": "las monedas",
+          "en": "the coins"
+        },
+        {
+          "key": "arena",
+          "es": "la arena y los brillos",
+          "en": "the sand and sparkles"
+        }
+      ],
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "hongo.svg",
+      "title": "Casita hongo",
+      "title_en": "Mushroom house",
+      "level": 2,
+      "steps": [
+        {
+          "key": "sombrero",
+          "es": "el sombrero",
+          "en": "the cap"
+        },
+        {
+          "key": "lunares",
+          "es": "los lunares",
+          "en": "the dots"
+        },
+        {
+          "key": "tallo",
+          "es": "la casita",
+          "en": "the little house"
+        },
+        {
+          "key": "puerta",
+          "es": "la puerta",
+          "en": "the door"
+        },
+        {
+          "key": "ventana",
+          "es": "las ventanas",
+          "en": "the windows"
+        },
+        {
+          "key": "hierba",
+          "es": "la hierba",
+          "en": "the grass"
+        },
+        {
+          "key": "flores",
+          "es": "las flores",
+          "en": "the flowers"
+        }
+      ],
+      "license": "Pintakids-Original"
+    },
+    {
       "file": "castillo.svg",
-      "title": "Castillo mágico",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "dragon.svg",
-      "title": "Dragón amistoso",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "princesa-corona.svg",
-      "title": "Corona real",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "robot.svg",
-      "title": "Robot amigable",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "unicornio.svg",
-      "title": "Unicornio",
+      "title": "Castillo",
+      "title_en": "Castle",
+      "level": 2,
+      "steps": [
+        {
+          "key": "muro",
+          "es": "el muro",
+          "en": "the wall"
+        },
+        {
+          "key": "torres",
+          "es": "las torres",
+          "en": "the towers"
+        },
+        {
+          "key": "techos",
+          "es": "los techos",
+          "en": "the roofs"
+        },
+        {
+          "key": "torrecentral",
+          "es": "la torre central",
+          "en": "the middle tower"
+        },
+        {
+          "key": "puerta",
+          "es": "la puerta",
+          "en": "the door"
+        },
+        {
+          "key": "ventanas",
+          "es": "las ventanas",
+          "en": "the windows"
+        },
+        {
+          "key": "banderas",
+          "es": "las banderas",
+          "en": "the flags"
+        },
+        {
+          "key": "camino",
+          "es": "el camino",
+          "en": "the path"
+        }
+      ],
       "license": "Pintakids-Original"
     },
     {
       "file": "sirena.svg",
       "title": "Sirena",
+      "title_en": "Mermaid",
+      "level": 3,
+      "steps": [
+        {
+          "key": "cabeza",
+          "es": "la cabeza",
+          "en": "the head"
+        },
+        {
+          "key": "fleco",
+          "es": "el flequillo",
+          "en": "the bangs"
+        },
+        {
+          "key": "cara",
+          "es": "la carita",
+          "en": "the face"
+        },
+        {
+          "key": "pelo",
+          "es": "el pelo largo",
+          "en": "the long hair"
+        },
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo",
+          "en": "the body"
+        },
+        {
+          "key": "brazos",
+          "es": "los brazos",
+          "en": "the arms"
+        },
+        {
+          "key": "cola",
+          "es": "la cola",
+          "en": "the tail"
+        },
+        {
+          "key": "aleta",
+          "es": "la aleta",
+          "en": "the fin"
+        },
+        {
+          "key": "roca",
+          "es": "la roca y las burbujas",
+          "en": "the rock and bubbles"
+        }
+      ],
       "license": "Pintakids-Original"
     },
     {
-      "file": "hada.svg",
-      "title": "Hada con varita",
+      "file": "unicornio.svg",
+      "title": "Unicornio",
+      "title_en": "Unicorn",
+      "level": 3,
+      "steps": [
+        {
+          "key": "cabeza",
+          "es": "la cabeza",
+          "en": "the head"
+        },
+        {
+          "key": "cuerno",
+          "es": "el cuerno",
+          "en": "the horn"
+        },
+        {
+          "key": "oreja",
+          "es": "la oreja",
+          "en": "the ear"
+        },
+        {
+          "key": "ojo",
+          "es": "el ojo",
+          "en": "the eye"
+        },
+        {
+          "key": "crin",
+          "es": "la crin",
+          "en": "the mane"
+        },
+        {
+          "key": "cuello",
+          "es": "el cuello",
+          "en": "the neck"
+        },
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo",
+          "en": "the body"
+        },
+        {
+          "key": "patas",
+          "es": "las patas",
+          "en": "the legs"
+        },
+        {
+          "key": "cola",
+          "es": "la cola",
+          "en": "the tail"
+        },
+        {
+          "key": "estrellas",
+          "es": "las estrellas",
+          "en": "the stars"
+        }
+      ],
       "license": "Pintakids-Original"
     },
     {
-      "file": "mago.svg",
-      "title": "Mago",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "fenix.svg",
-      "title": "Fénix",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "estrella-feliz.svg",
-      "title": "Estrella feliz",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "arcoiris-magico.svg",
-      "title": "Arcoíris mágico",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "genio.svg",
-      "title": "Genio de la lámpara",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "caballero.svg",
-      "title": "Caballero valiente",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "diente-de-leon.svg",
-      "title": "Diente de león",
+      "file": "dragon.svg",
+      "title": "Dragón",
+      "title_en": "Dragon",
+      "level": 3,
+      "steps": [
+        {
+          "key": "cabeza",
+          "es": "la cabeza",
+          "en": "the head"
+        },
+        {
+          "key": "cuernos",
+          "es": "los cuernos",
+          "en": "the horns"
+        },
+        {
+          "key": "ojos",
+          "es": "los ojos",
+          "en": "the eyes"
+        },
+        {
+          "key": "hocico",
+          "es": "el hocico",
+          "en": "the snout"
+        },
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo",
+          "en": "the body"
+        },
+        {
+          "key": "panza",
+          "es": "la panza",
+          "en": "the belly"
+        },
+        {
+          "key": "alas",
+          "es": "las alas",
+          "en": "the wings"
+        },
+        {
+          "key": "patas",
+          "es": "las patas",
+          "en": "the feet"
+        },
+        {
+          "key": "cola",
+          "es": "la cola",
+          "en": "the tail"
+        },
+        {
+          "key": "humo",
+          "es": "el humito",
+          "en": "the smoke puffs"
+        }
+      ],
       "license": "Pintakids-Original"
     }
   ]

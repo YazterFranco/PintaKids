@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="4" data-name="cuerpo">
+    <path d="M140 196 C116 230 136 292 210 294 C272 296 322 270 334 214 C320 226 300 228 290 222 C278 206 248 198 220 208 C198 214 178 204 168 190 Z"/>
+    <path d="M202 236 C228 220 270 226 278 248 C262 268 224 270 206 258 C212 250 210 242 202 236 Z"/>
+  </g>
+  <g data-step="1" data-name="cabeza">
+    <circle cx="152" cy="150" r="46"/>
+  </g>
+  <g data-step="2" data-name="pico">
+    <path d="M112 152 C94 146 76 156 82 168 C90 180 116 178 124 168 Z"/>
+    <path d="M84 164 Q100 164 120 162" fill="none"/>
+  </g>
+  <g data-step="3" data-name="ojo">
+    <circle cx="146" cy="138" r="9" fill="#2b2d42"/>
+    <circle cx="143" cy="134" r="3" stroke="none"/>
+    <ellipse cx="168" cy="164" rx="11" ry="7"/>
+  </g>
+  <g data-step="5" data-name="agua">
+    <path d="M20 282 Q50 268 80 282 T140 282 T200 282 T260 282 T320 282 T380 282 L380 336 L20 336 Z"/>
+    <path d="M60 310 Q80 302 100 310 M180 318 Q200 310 220 318 M290 308 Q310 300 330 310" fill="none"/>
+  </g>
+</svg>

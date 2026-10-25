@@ -17,15 +17,40 @@ export const ALLOWED_LICENSES = new Set(['Pintakids-Original', 'CC0-1.0']);
 const PACK_ID = /^[a-z0-9][a-z0-9-]{0,38}$/;
 const FILE_NAME = /^[a-z0-9][a-z0-9._-]{0,58}\.svg$/i;
 
+export interface CatalogStep {
+  key: string;
+  es: string;
+  en: string;
+}
+
 export interface CatalogFile {
   file: string;
   title: string;
   license: string;
+  title_en?: string;
+  level?: 1 | 2 | 3;
+  steps?: CatalogStep[];
+}
+
+/** Pasos del dibujo guiado: lista de {key, es, en} con textos cortos; cualquier otra cosa se ignora. */
+function stepsOf(raw: unknown): CatalogStep[] | undefined {
+  if (!Array.isArray(raw)) return undefined;
+  const out: CatalogStep[] = [];
+  for (const r of raw) {
+    const o = obj(r);
+    const key = str(o?.key);
+    const es = str(o?.es);
+    const en = str(o?.en);
+    if (!key || !es || !en || key.length > 40 || es.length > 80 || en.length > 80) return undefined;
+    out.push({ key, es, en });
+  }
+  return out;
 }
 
 export interface CatalogPack {
   id: string;
   name: string;
+  name_en?: string;
   version: number;
   files: CatalogFile[];
 }
@@ -91,9 +116,17 @@ export function loadCatalog(root: string): LoadReport {
         rejected.push({ pack: id, reason: `svg-inseguro:${file}` });
         continue;
       }
-      accepted.push({ file, title, license });
+      const entry: CatalogFile = { file, title, license };
+      const titleEn = str(f?.title_en);
+      if (titleEn) entry.title_en = titleEn;
+      const level = num(f?.level);
+      if (level === 1 || level === 2 || level === 3) entry.level = level;
+      const steps = stepsOf(f?.steps);
+      if (steps) entry.steps = steps;
+      accepted.push(entry);
     }
-    if (accepted.length) packs.push({ id, name, version, files: accepted });
+    const nameEn = str(m?.name_en);
+    if (accepted.length) packs.push({ id, name, ...(nameEn ? { name_en: nameEn } : {}), version, files: accepted });
   }
   return { packs, rejected };
 }
@@ -114,8 +147,8 @@ export class Catalog {
     this.count = packs.reduce((n, p) => n + p.files.length, 0);
   }
 
-  summary(): { packs: { id: string; name: string; version: number; fileCount: number }[]; total: number } {
-    return { packs: this.index.map((p) => ({ id: p.id, name: p.name, version: p.version, fileCount: p.files.length })), total: this.count };
+  summary(): { packs: { id: string; name: string; name_en?: string; version: number; fileCount: number }[]; total: number } {
+    return { packs: this.index.map((p) => ({ id: p.id, name: p.name, ...(p.name_en ? { name_en: p.name_en } : {}), version: p.version, fileCount: p.files.length })), total: this.count };
   }
 
   pack(packId: string): CatalogPack | null {

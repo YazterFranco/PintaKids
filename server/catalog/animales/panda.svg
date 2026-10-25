@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="5" data-name="cuerpo">
+    <path d="M128 220 C96 260 98 330 126 356 L274 356 C302 330 304 260 272 220 Z"/>
+    <ellipse cx="200" cy="300" rx="46" ry="42"/>
+    <path d="M136 244 C108 262 104 308 130 318 C150 324 162 300 160 270 Z"/>
+    <path d="M264 244 C292 262 296 308 270 318 C250 324 238 300 240 270 Z"/>
+    <ellipse cx="148" cy="352" rx="40" ry="24"/>
+    <ellipse cx="252" cy="352" rx="40" ry="24"/>
+    <ellipse cx="148" cy="352" rx="17" ry="10"/>
+    <ellipse cx="252" cy="352" rx="17" ry="10"/>
+  </g>
+  <g data-step="2" data-name="orejas">
+    <circle cx="128" cy="92" r="32"/>
+    <circle cx="272" cy="92" r="32"/>
+  </g>
+  <g data-step="1" data-name="cabeza">
+    <path d="M108 160 C104 104 150 74 200 74 C250 74 296 104 292 160 C290 210 250 240 200 240 C150 240 110 210 108 160 Z"/>
+  </g>
+  <g data-step="3" data-name="ojos">
+    <ellipse cx="160" cy="160" rx="26" ry="34" transform="rotate(30 160 160)"/>
+    <ellipse cx="240" cy="160" rx="26" ry="34" transform="rotate(-30 240 160)"/>
+    <circle cx="164" cy="158" r="11"/>
+    <circle cx="236" cy="158" r="11"/>
+    <circle cx="166" cy="160" r="6" fill="#2b2d42"/>
+    <circle cx="234" cy="160" r="6" fill="#2b2d42"/>
+  </g>
+  <g data-step="4" data-name="nariz">
+    <ellipse cx="200" cy="194" rx="14" ry="9" fill="#2b2d42"/>
+    <path d="M200 203 Q200 216 186 218 M200 203 Q200 216 214 218" fill="none"/>
+  </g>
+</svg>

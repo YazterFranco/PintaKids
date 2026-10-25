@@ -1,0 +1,326 @@
+{
+  "name": "Dinosaurios",
+  "name_en": "Dinosaurs",
+  "version": 4,
+  "license": "Pintakids-Original",
+  "files": [
+    {
+      "file": "bebe.svg",
+      "title": "Dino bebé",
+      "title_en": "Baby dino",
+      "level": 1,
+      "steps": [
+        {
+          "key": "cabeza",
+          "es": "la cabeza",
+          "en": "the head"
+        },
+        {
+          "key": "cara",
+          "es": "los ojos y la sonrisa",
+          "en": "the eyes and smile"
+        },
+        {
+          "key": "crestas",
+          "es": "las crestas",
+          "en": "the spikes"
+        },
+        {
+          "key": "cascaron",
+          "es": "el cascarón",
+          "en": "the eggshell"
+        },
+        {
+          "key": "nido",
+          "es": "el nido",
+          "en": "the nest"
+        }
+      ],
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "volcan.svg",
+      "title": "Volcán",
+      "title_en": "Volcano",
+      "level": 1,
+      "steps": [
+        {
+          "key": "volcan",
+          "es": "el volcán",
+          "en": "the volcano"
+        },
+        {
+          "key": "lava",
+          "es": "la lava",
+          "en": "the lava"
+        },
+        {
+          "key": "humo",
+          "es": "el humo",
+          "en": "the smoke"
+        },
+        {
+          "key": "piedras",
+          "es": "las piedras",
+          "en": "the rocks"
+        },
+        {
+          "key": "palmera",
+          "es": "la palmera",
+          "en": "the palm tree"
+        }
+      ],
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "pteranodon.svg",
+      "title": "Pteranodon",
+      "title_en": "Pteranodon",
+      "level": 2,
+      "steps": [
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo",
+          "en": "the body"
+        },
+        {
+          "key": "cabeza",
+          "es": "la cabeza y la cresta",
+          "en": "the head and crest"
+        },
+        {
+          "key": "ojo",
+          "es": "el ojo",
+          "en": "the eye"
+        },
+        {
+          "key": "alas",
+          "es": "las alas",
+          "en": "the wings"
+        },
+        {
+          "key": "patitas",
+          "es": "las patitas",
+          "en": "the little feet"
+        },
+        {
+          "key": "nubes",
+          "es": "las nubes",
+          "en": "the clouds"
+        }
+      ],
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "diplodocus.svg",
+      "title": "Diplodocus",
+      "title_en": "Diplodocus",
+      "level": 2,
+      "steps": [
+        {
+          "key": "cabeza",
+          "es": "la cabeza",
+          "en": "the head"
+        },
+        {
+          "key": "ojo",
+          "es": "el ojo y la sonrisa",
+          "en": "the eye and smile"
+        },
+        {
+          "key": "cuello",
+          "es": "el cuello largo",
+          "en": "the long neck"
+        },
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo",
+          "en": "the body"
+        },
+        {
+          "key": "patas",
+          "es": "las patas",
+          "en": "the legs"
+        },
+        {
+          "key": "cola",
+          "es": "la cola",
+          "en": "the tail"
+        },
+        {
+          "key": "manchas",
+          "es": "las manchas",
+          "en": "the spots"
+        }
+      ],
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "trex.svg",
+      "title": "T-Rex",
+      "title_en": "T-Rex",
+      "level": 3,
+      "steps": [
+        {
+          "key": "cabeza",
+          "es": "la cabeza",
+          "en": "the head"
+        },
+        {
+          "key": "ojo",
+          "es": "el ojo",
+          "en": "the eye"
+        },
+        {
+          "key": "sonrisa",
+          "es": "la sonrisa y los dientes",
+          "en": "the smile and teeth"
+        },
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo",
+          "en": "the body"
+        },
+        {
+          "key": "panza",
+          "es": "la panza",
+          "en": "the belly"
+        },
+        {
+          "key": "bracitos",
+          "es": "los bracitos",
+          "en": "the tiny arms"
+        },
+        {
+          "key": "patas",
+          "es": "las patas",
+          "en": "the legs"
+        },
+        {
+          "key": "cola",
+          "es": "la cola",
+          "en": "the tail"
+        },
+        {
+          "key": "placas",
+          "es": "las placas",
+          "en": "the back plates"
+        },
+        {
+          "key": "suelo",
+          "es": "el suelo y las hojas",
+          "en": "the ground and leaves"
+        }
+      ],
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "triceratops.svg",
+      "title": "Triceratops",
+      "title_en": "Triceratops",
+      "level": 3,
+      "steps": [
+        {
+          "key": "cabeza",
+          "es": "la cabeza",
+          "en": "the head"
+        },
+        {
+          "key": "gola",
+          "es": "la gola",
+          "en": "the frill"
+        },
+        {
+          "key": "cuernos",
+          "es": "los cuernos",
+          "en": "the horns"
+        },
+        {
+          "key": "ojo",
+          "es": "el ojo y la boca",
+          "en": "the eye and mouth"
+        },
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo",
+          "en": "the body"
+        },
+        {
+          "key": "patas",
+          "es": "las patas",
+          "en": "the legs"
+        },
+        {
+          "key": "cola",
+          "es": "la cola",
+          "en": "the tail"
+        },
+        {
+          "key": "manchas",
+          "es": "las manchas",
+          "en": "the spots"
+        },
+        {
+          "key": "suelo",
+          "es": "el suelo",
+          "en": "the ground"
+        }
+      ],
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "estegosaurio.svg",
+      "title": "Estegosaurio",
+      "title_en": "Stegosaurus",
+      "level": 3,
+      "steps": [
+        {
+          "key": "cabeza",
+          "es": "la cabeza",
+          "en": "the head"
+        },
+        {
+          "key": "ojo",
+          "es": "el ojo y la sonrisa",
+          "en": "the eye and smile"
+        },
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo",
+          "en": "the body"
+        },
+        {
+          "key": "placas",
+          "es": "las placas",
+          "en": "the plates"
+        },
+        {
+          "key": "patas",
+          "es": "las patas",
+          "en": "the legs"
+        },
+        {
+          "key": "cola",
+          "es": "la cola",
+          "en": "the tail"
+        },
+        {
+          "key": "puas",
+          "es": "las púas",
+          "en": "the tail spikes"
+        },
+        {
+          "key": "manchas",
+          "es": "las manchas",
+          "en": "the spots"
+        },
+        {
+          "key": "sol",
+          "es": "el sol",
+          "en": "the sun"
+        }
+      ],
+      "license": "Pintakids-Original"
+    }
+  ]
+}

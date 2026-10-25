@@ -1,76 +1,280 @@
 {
   "name": "Comida",
-  "version": 3,
+  "name_en": "Food",
+  "version": 4,
   "license": "Pintakids-Original",
   "files": [
     {
-      "file": "helado.svg",
-      "title": "Cono de helado",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "manzana.svg",
-      "title": "Manzana sonriente",
-      "license": "Pintakids-Original"
-    },
-    {
       "file": "fresa.svg",
-      "title": "Fresa dulce",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "pizza.svg",
-      "title": "Rebanada de pizza",
+      "title": "Fresa",
+      "title_en": "Strawberry",
+      "level": 1,
+      "steps": [
+        {
+          "key": "fresa",
+          "es": "la fresa",
+          "en": "the strawberry"
+        },
+        {
+          "key": "hojas",
+          "es": "las hojitas",
+          "en": "the leaves"
+        },
+        {
+          "key": "semillas",
+          "es": "las semillitas",
+          "en": "the seeds"
+        },
+        {
+          "key": "carita",
+          "es": "la carita",
+          "en": "the face"
+        }
+      ],
       "license": "Pintakids-Original"
     },
     {
       "file": "sandia.svg",
-      "title": "Rebanada de sandía",
+      "title": "Sandía",
+      "title_en": "Watermelon",
+      "level": 1,
+      "steps": [
+        {
+          "key": "tajada",
+          "es": "la tajada",
+          "en": "the slice"
+        },
+        {
+          "key": "corteza",
+          "es": "la cáscara",
+          "en": "the rind"
+        },
+        {
+          "key": "semillas",
+          "es": "las semillas",
+          "en": "the seeds"
+        },
+        {
+          "key": "carita",
+          "es": "la carita",
+          "en": "the face"
+        }
+      ],
       "license": "Pintakids-Original"
     },
     {
-      "file": "dona.svg",
-      "title": "Dona glaseada",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "galleta.svg",
-      "title": "Galleta",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "palomitas.svg",
-      "title": "Palomitas",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "zanahoria.svg",
-      "title": "Zanahoria",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "platano.svg",
-      "title": "Plátano",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "uvas.svg",
-      "title": "Uvas",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "taza.svg",
-      "title": "Taza con corazón",
+      "file": "helado.svg",
+      "title": "Helado",
+      "title_en": "Ice cream",
+      "level": 1,
+      "steps": [
+        {
+          "key": "cono",
+          "es": "el cono",
+          "en": "the cone"
+        },
+        {
+          "key": "bola",
+          "es": "la bola de abajo",
+          "en": "the bottom scoop"
+        },
+        {
+          "key": "bola2",
+          "es": "la bola de arriba",
+          "en": "the top scoop"
+        },
+        {
+          "key": "cereza",
+          "es": "la cereza",
+          "en": "the cherry"
+        },
+        {
+          "key": "chispitas",
+          "es": "las chispitas",
+          "en": "the sprinkles"
+        }
+      ],
       "license": "Pintakids-Original"
     },
     {
       "file": "cupcake.svg",
       "title": "Cupcake",
+      "title_en": "Cupcake",
+      "level": 1,
+      "steps": [
+        {
+          "key": "capacillo",
+          "es": "el capacillo",
+          "en": "the cup"
+        },
+        {
+          "key": "crema",
+          "es": "la crema",
+          "en": "the frosting"
+        },
+        {
+          "key": "cereza",
+          "es": "la cereza",
+          "en": "the cherry"
+        },
+        {
+          "key": "chispitas",
+          "es": "las chispitas",
+          "en": "the sprinkles"
+        },
+        {
+          "key": "plato",
+          "es": "el plato",
+          "en": "the plate"
+        }
+      ],
       "license": "Pintakids-Original"
     },
     {
-      "file": "cerezas.svg",
-      "title": "Cerezas",
+      "file": "pizza.svg",
+      "title": "Pizza",
+      "title_en": "Pizza",
+      "level": 2,
+      "steps": [
+        {
+          "key": "rebanada",
+          "es": "la rebanada",
+          "en": "the slice"
+        },
+        {
+          "key": "borde",
+          "es": "el borde",
+          "en": "the crust"
+        },
+        {
+          "key": "pepperoni",
+          "es": "el pepperoni",
+          "en": "the pepperoni"
+        },
+        {
+          "key": "aceitunas",
+          "es": "las aceitunas",
+          "en": "the olives"
+        },
+        {
+          "key": "hojas",
+          "es": "las hojitas",
+          "en": "the basil leaves"
+        },
+        {
+          "key": "plato",
+          "es": "el plato",
+          "en": "the plate"
+        }
+      ],
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "hamburguesa.svg",
+      "title": "Hamburguesa",
+      "title_en": "Burger",
+      "level": 2,
+      "steps": [
+        {
+          "key": "panarriba",
+          "es": "el pan de arriba",
+          "en": "the top bun"
+        },
+        {
+          "key": "semillas",
+          "es": "las semillitas",
+          "en": "the seeds"
+        },
+        {
+          "key": "lechuga",
+          "es": "la lechuga",
+          "en": "the lettuce"
+        },
+        {
+          "key": "tomate",
+          "es": "el tomate",
+          "en": "the tomato"
+        },
+        {
+          "key": "queso",
+          "es": "el queso",
+          "en": "the cheese"
+        },
+        {
+          "key": "carne",
+          "es": "la carne",
+          "en": "the patty"
+        },
+        {
+          "key": "panabajo",
+          "es": "el pan de abajo",
+          "en": "the bottom bun"
+        },
+        {
+          "key": "plato",
+          "es": "el plato",
+          "en": "the plate"
+        }
+      ],
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "pastel.svg",
+      "title": "Pastel de cumpleaños",
+      "title_en": "Birthday cake",
+      "level": 3,
+      "steps": [
+        {
+          "key": "pisoabajo",
+          "es": "el piso de abajo",
+          "en": "the bottom layer"
+        },
+        {
+          "key": "pisoarriba",
+          "es": "el piso de arriba",
+          "en": "the top layer"
+        },
+        {
+          "key": "crema",
+          "es": "la crema",
+          "en": "the frosting"
+        },
+        {
+          "key": "decoracion",
+          "es": "la decoración",
+          "en": "the decoration"
+        },
+        {
+          "key": "velas",
+          "es": "las velas",
+          "en": "the candles"
+        },
+        {
+          "key": "llamas",
+          "es": "las llamitas",
+          "en": "the flames"
+        },
+        {
+          "key": "cerezas",
+          "es": "las cerezas",
+          "en": "the cherries"
+        },
+        {
+          "key": "base",
+          "es": "la base",
+          "en": "the stand"
+        },
+        {
+          "key": "banderines",
+          "es": "los banderines",
+          "en": "the bunting"
+        },
+        {
+          "key": "globos",
+          "es": "los globos",
+          "en": "the balloons"
+        }
+      ],
       "license": "Pintakids-Original"
     }
   ]

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="7" data-name="parada">
+    <path d="M370 136 V322" fill="none"/>
+    <circle cx="370" cy="118" r="20"/>
+    <path d="M362 118 H378" fill="none"/>
+  </g>
+  <g data-step="1" data-name="carroceria">
+    <path d="M50 160 C50 148 60 138 74 138 L320 138 C334 138 344 148 344 162 L344 286 C344 292 340 296 334 296 L60 296 C54 296 50 292 50 286 Z"/>
+  </g>
+  <g data-step="6" data-name="franja">
+    <path d="M108 226 H344 V242 H108 Z"/>
+  </g>
+  <g data-step="2" data-name="ventanas">
+    <path d="M116 156 H162 V206 H116 Z"/>
+    <path d="M174 156 H220 V206 H174 Z"/>
+    <path d="M232 156 H278 V206 H232 Z"/>
+    <path d="M290 156 H336 V206 H290 Z"/>
+  </g>
+  <g data-step="3" data-name="puerta">
+    <path d="M62 156 H104 V282 H62 Z"/>
+    <path d="M83 156 V282 M68 166 H78 V214 H68 Z M88 166 H98 V214 H88 Z" fill="none"/>
+  </g>
+  <g data-step="5" data-name="luces">
+    <path d="M42 280 H66 V298 H42 Z"/>
+    <path d="M336 254 H346 V272 H336 Z"/>
+  </g>
+  <g data-step="4" data-name="ruedas">
+    <circle cx="110" cy="298" r="30"/>
+    <circle cx="110" cy="298" r="14"/>
+    <circle cx="110" cy="298" r="4" fill="#2b2d42"/>
+    <circle cx="284" cy="298" r="30"/>
+    <circle cx="284" cy="298" r="14"/>
+    <circle cx="284" cy="298" r="4" fill="#2b2d42"/>
+    <path d="M14 330 H386" fill="none"/>
+  </g>
+</svg>

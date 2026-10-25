@@ -1,2 +1,50 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><g fill="none" stroke="#2b2d42" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"><path d="M100 158 Q66 158 64 134 Q62 118 76 112 L84 66 Q88 48 100 48 Q112 48 116 66 L124 112 Q138 118 136 134 Q134 158 100 158 Z"/><ellipse cx="100" cy="176" rx="24" ry="10"/><path d="M80 164 L74 180 M120 164 L126 180"/><path d="M90 48 L86 28 M110 48 L114 28"/><circle cx="86" cy="24" r="6"/><circle cx="114" cy="24" r="6"/><ellipse cx="84" cy="56" rx="8" ry="5" transform="rotate(-20 84 56)"/><ellipse cx="116" cy="56" rx="8" ry="5" transform="rotate(20 116 56)"/><circle cx="90" cy="64" r="3"/><circle cx="110" cy="64" r="3"/><circle cx="91.05" cy="62.8" r="1.02"/><circle cx="111.05" cy="62.8" r="1.02"/><path d="M83 50 Q90 46 97 48"/><path d="M103 48 Q110 46 117 50"/><path d="M94 78 Q100 83.7 106 78"/><circle cx="84" cy="74" r="3.5"/><circle cx="116" cy="74" r="3.5"/><ellipse cx="82" cy="96" rx="8" ry="6.4" transform="rotate(15 82 96)"/><ellipse cx="118" cy="92" rx="7" ry="5.6000000000000005" transform="rotate(15 118 92)"/><ellipse cx="90" cy="124" rx="9" ry="7.2" transform="rotate(15 90 124)"/><ellipse cx="120" cy="128" rx="8" ry="6.4" transform="rotate(15 120 128)"/><ellipse cx="72" cy="140" rx="7" ry="5.6000000000000005" transform="rotate(15 72 140)"/><ellipse cx="132" cy="142" rx="6" ry="4.800000000000001" transform="rotate(15 132 142)"/><polygon points="30,54 31.8,58.2 36,60 31.8,61.8 30,66 28.2,61.8 24,60 28.2,58.2"/><polygon points="172,54 173.8,58.2 178,60 173.8,61.8 172,66 170.2,61.8 166,60 170.2,58.2"/><path d="M30 176 Q27.3 167 23.7 163.4"/><path d="M30 176 Q30 165.2 31.8 159.8"/><path d="M30 176 Q33.6 167.9 37.2 165.2"/><path d="M170 176 Q167.3 167 163.7 163.4"/><path d="M170 176 Q170 165.2 171.8 159.8"/><path d="M170 176 Q173.6 167.9 177.2 165.2"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="9" data-name="arbusto">
+    <path d="M18 366 H382" fill="none"/>
+    <path d="M28 364 C16 334 36 312 58 318 C64 296 98 296 104 318 C124 316 132 346 116 364 Z"/>
+  </g>
+  <g data-step="8" data-name="cola">
+    <path d="M114 214 C98 232 94 258 96 278" fill="none"/>
+    <path d="M90 276 C86 294 100 304 106 290 C108 282 102 272 96 272 Z"/>
+  </g>
+  <g data-step="6" data-name="patas">
+    <path d="M132 248 L130 350 L150 350 L152 248 Z"/>
+    <path d="M160 252 L160 350 L180 350 L180 252 Z"/>
+    <path d="M248 252 L248 350 L268 350 L268 252 Z"/>
+    <path d="M276 248 L278 350 L298 350 L296 248 Z"/>
+    <path d="M128 350 H152 L153 364 H127 Z M158 350 H182 L183 364 H157 Z M246 350 H270 L271 364 H245 Z M276 350 H300 L301 364 H275 Z"/>
+  </g>
+  <g data-step="5" data-name="cuerpo">
+    <path d="M110 220 C110 194 140 184 180 184 L252 184 C288 184 302 204 300 228 C298 252 282 262 252 262 L150 262 C122 262 110 246 110 220 Z"/>
+  </g>
+  <g data-step="4" data-name="cuello">
+    <path d="M240 202 C254 150 266 112 274 84 L308 92 C302 120 298 162 296 210 Z"/>
+  </g>
+  <g data-step="7" data-name="manchas">
+    <path d="M136 206 Q146 194 160 200 Q166 214 154 222 Q140 222 136 206 Z"/>
+    <path d="M178 196 Q192 190 202 200 Q200 214 186 216 Q174 210 178 196 Z"/>
+    <path d="M220 200 Q234 194 244 204 Q240 220 226 218 Q216 212 220 200 Z"/>
+    <path d="M160 232 Q172 226 182 236 Q178 250 166 248 Q156 242 160 232 Z"/>
+    <path d="M204 232 Q216 226 226 234 Q224 248 212 248 Q200 244 204 232 Z"/>
+    <path d="M252 228 Q264 222 274 232 Q270 246 258 244 Q248 238 252 228 Z"/>
+    <path d="M268 160 Q278 154 286 162 Q284 174 274 174 Q264 170 268 160 Z"/>
+    <path d="M276 116 Q286 112 292 120 Q290 130 282 130 Q274 126 276 116 Z"/>
+    <path d="M258 196 Q266 188 276 194 Q278 206 268 208 Q258 206 258 196 Z"/>
+  </g>
+  <g data-step="2" data-name="cuernitos">
+    <path d="M284 54 L280 32 M298 50 L298 28" fill="none"/>
+    <circle cx="280" cy="26" r="7"/>
+    <circle cx="298" cy="22" r="7"/>
+    <path d="M276 62 C260 54 250 60 252 68 C258 74 270 72 280 68 Z"/>
+  </g>
+  <g data-step="1" data-name="cabeza">
+    <path d="M268 72 C268 52 290 44 312 50 L348 60 C364 64 366 86 350 92 L318 98 C296 102 270 94 268 72 Z"/>
+    <circle cx="352" cy="74" r="2.5" fill="#2b2d42"/>
+    <path d="M334 90 Q343 94 350 89" fill="none"/>
+  </g>
+  <g data-step="3" data-name="ojo">
+    <circle cx="302" cy="68" r="7" fill="#2b2d42"/>
+    <circle cx="300" cy="65" r="2.5" stroke="none"/>
+    <path d="M296 58 l-3 -6 M303 57 l0 -7 M309 59 l3 -6" fill="none" stroke-width="3"/>
+  </g>
+</svg>

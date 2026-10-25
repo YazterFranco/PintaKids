@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="6" data-name="arena">
+    <path d="M14 326 Q200 304 386 326 L386 364 L14 364 Z"/>
+  </g>
+  <g data-step="7" data-name="concha">
+    <path d="M44 336 C44 312 86 312 86 336 Z"/>
+    <path d="M56 334 L58 322 M65 334 V318 M74 334 L72 322" fill="none"/>
+  </g>
+  <g data-step="5" data-name="patas">
+    <path d="M114 220 C94 222 76 232 66 250 L77 255 C86 240 98 234 116 232 Z"/>
+    <path d="M114 244 C94 246 76 256 66 274 L77 279 C86 264 98 258 116 256 Z"/>
+    <path d="M114 268 C94 270 76 280 66 298 L77 303 C86 288 98 282 116 280 Z"/>
+    <path d="M286 220 C306 222 324 232 334 250 L323 255 C314 240 302 234 284 232 Z"/>
+    <path d="M286 244 C306 246 324 256 334 274 L323 279 C314 264 302 258 284 256 Z"/>
+    <path d="M286 268 C306 270 324 280 334 298 L323 303 C314 288 302 282 284 280 Z"/>
+  </g>
+  <g data-step="4" data-name="pinzas">
+    <path d="M114 206 C92 196 82 178 86 160 L100 162 C100 178 110 188 124 194 Z"/>
+    <path d="M286 206 C308 196 318 178 314 160 L300 162 C300 178 290 188 276 194 Z"/>
+    <path d="M66 168 C50 132 78 102 106 116 L92 138 L114 146 C112 172 88 184 66 168 Z"/>
+    <path d="M334 168 C350 132 322 102 294 116 L308 138 L286 146 C288 172 312 184 334 168 Z"/>
+  </g>
+  <g data-step="2" data-name="ojos">
+    <path d="M176 176 V134 M224 176 V134" fill="none"/>
+    <circle cx="176" cy="124" r="17"/><circle cx="224" cy="124" r="17"/>
+    <circle cx="178" cy="126" r="7" fill="#2b2d42"/><circle cx="222" cy="126" r="7" fill="#2b2d42"/>
+  </g>
+  <g data-step="1" data-name="cuerpo">
+    <ellipse cx="200" cy="230" rx="102" ry="62"/>
+  </g>
+  <g data-step="3" data-name="sonrisa">
+    <path d="M178 238 Q200 256 222 238" fill="none"/>
+    <ellipse cx="156" cy="232" rx="11" ry="7"/>
+    <ellipse cx="244" cy="232" rx="11" ry="7"/>
+  </g>
+</svg>

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="9" data-name="pasto">
+    <path d="M14 360 H386" fill="none"/>
+    <path d="M40 358 l5 -16 l5 16 l5 -11 M200 358 l5 -14 l5 14 M346 358 l5 -16 l5 16 l5 -11" fill="none"/>
+  </g>
+  <g data-step="8" data-name="cola">
+    <path d="M312 192 C352 198 364 244 350 286 C344 302 328 302 330 288 C338 256 332 224 306 214 Z"/>
+  </g>
+  <g data-step="7" data-name="patas">
+    <path d="M140 236 V336 H160 V236 Z M172 240 V336 H192 V240 Z M254 240 V336 H274 V240 Z M286 236 V336 H306 V236 Z"/>
+    <path d="M138 336 H162 V352 H138 Z M170 336 H194 V352 H170 Z M252 336 H276 V352 H252 Z M284 336 H308 V352 H284 Z" fill="#2b2d42"/>
+  </g>
+  <g data-step="6" data-name="cuerpo">
+    <path d="M124 206 C124 180 152 168 192 168 L272 168 C302 168 320 186 318 212 C316 240 298 254 272 254 L162 254 C136 254 124 232 124 206 Z"/>
+  </g>
+  <g data-step="5" data-name="cuello">
+    <path d="M126 214 C114 178 98 140 88 108 L140 88 C152 128 170 158 198 176 Z"/>
+  </g>
+  <g data-step="4" data-name="crin">
+    <path d="M134 66 Q160 70 158 92 Q180 98 176 120 Q198 128 192 150 Q212 160 204 180 L188 184 C166 150 148 110 130 72 Z"/>
+  </g>
+  <g data-step="2" data-name="oreja">
+    <path d="M118 70 L128 38 L144 72 Z"/>
+  </g>
+  <g data-step="1" data-name="cabeza">
+    <path d="M70 100 C76 72 104 60 128 68 C146 74 152 94 146 110 L126 150 C120 164 100 170 84 162 C68 154 64 138 68 122 Z"/>
+  </g>
+  <g data-step="3" data-name="ojo">
+    <circle cx="116" cy="96" r="7" fill="#2b2d42"/>
+    <circle cx="114" cy="93" r="2.5" stroke="none"/>
+    <circle cx="82" cy="146" r="3.5" fill="#2b2d42"/>
+    <path d="M74 156 Q86 164 98 158" fill="none"/>
+  </g>
+</svg>

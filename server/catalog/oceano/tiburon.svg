@@ -1,2 +1,33 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><g fill="none" stroke="#2b2d42" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"><path d="M30 120 Q34 78 90 74 Q140 70 160 92 Q178 106 166 122 Q140 148 84 146 Q32 142 30 120 Z"/><path d="M96 74 Q92 44 108 36 Q122 46 112 72"/><path d="M164 94 Q186 70 196 86 Q198 106 172 112"/><circle cx="58" cy="100" r="4.5"/><circle cx="58" cy="100" r="2"/><path d="M43 86 Q50 82 57 84"/><path d="M59 84 Q66 82 73 86"/><path d="M46 114 Q64 128 86 116"/><path d="M52 118 L58 126 L66 116 L74 126 L82 116 L90 126 L96 116"/><circle cx="47" cy="110" r="3"/><circle cx="69" cy="110" r="3"/><path d="M100 88 Q112 98 100 108"/><path d="M120 92 Q127 83.6 134 92"/><path d="M134 92 Q141 83.6 148 92"/><path d="M127 106 Q134 97.6 141 106"/><path d="M141 106 Q148 97.6 155 106"/><path d="M10 174 Q28 166 46 174 Q64 182 82 174 Q100 166 118 174 Q136 182 154 174 Q172 166 190 174"/><path d="M18 186 Q36 178 54 186 Q72 194 90 186 Q108 178 126 186 Q144 194 162 186 Q176 180 186 184"/><polygon points="28,40 29.8,44.2 34,46 29.8,47.8 28,52 26.2,47.8 22,46 26.2,44.2"/><polygon points="178,44 179.8,48.2 184,50 179.8,51.8 178,56 176.2,51.8 172,50 176.2,48.2"/><circle cx="30" cy="150" r="5"/><circle cx="28.5" cy="148.5" r="1.25"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="9" data-name="algas">
+    <path d="M330 360 C310 320 350 292 328 252 C310 220 340 198 326 168 L340 166 C354 198 326 222 342 252 C364 292 326 320 346 360 Z"/>
+    <circle cx="30" cy="120" r="9"/><circle cx="46" cy="90" r="6"/>
+    <path d="M14 362 H386" fill="none"/>
+  </g>
+  <g data-step="3" data-name="cola">
+    <path d="M324 196 C342 170 350 140 344 112 C368 128 382 160 378 190 C382 220 370 252 348 270 C352 246 344 222 324 210 Z"/>
+  </g>
+  <g data-step="2" data-name="aleta">
+    <path d="M178 156 C188 112 214 94 238 92 C232 118 234 142 244 158 Z"/>
+  </g>
+  <g data-step="1" data-name="cuerpo">
+    <path d="M38 210 C68 160 160 140 250 152 C300 158 330 180 340 202 C330 224 300 244 250 250 C160 262 68 252 38 210 Z"/>
+  </g>
+  <g data-step="8" data-name="panza">
+    <path d="M50 220 C100 248 200 254 304 230" fill="none"/>
+  </g>
+  <g data-step="7" data-name="branquias">
+    <path d="M150 192 Q156 208 150 224 M166 190 Q172 208 166 226 M182 192 Q188 208 182 222" fill="none"/>
+  </g>
+  <g data-step="6" data-name="aleta2">
+    <path d="M160 238 C150 272 170 292 198 294 C196 272 190 254 182 242 Z"/>
+  </g>
+  <g data-step="4" data-name="ojo">
+    <circle cx="96" cy="190" r="10" fill="#2b2d42"/>
+    <circle cx="93" cy="186" r="3.5" stroke="none"/>
+  </g>
+  <g data-step="5" data-name="sonrisa">
+    <path d="M54 222 Q86 240 124 226" fill="none"/>
+    <path d="M66 228 L72 237 L78 231 M88 233 L94 241 L100 233 M108 232 L113 239 L118 230" fill="none"/>
+  </g>
+</svg>

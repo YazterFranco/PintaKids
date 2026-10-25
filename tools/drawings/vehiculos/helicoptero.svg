@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="7" data-name="nubes">
+    <path d="M70 340 c-17 0 -22 -24 -2 -29 c2 -19 29 -24 38 -10 c12 -14 38 -7 36 12 c17 2 17 26 0 26 Z"/>
+    <path d="M320 60 c-14 0 -18 -20 -2 -24 c2 -16 24 -20 32 -8 c10 -12 32 -6 30 10 c14 2 14 22 0 22 Z"/>
+  </g>
+  <g data-step="3" data-name="cola">
+    <path d="M280 182 L366 168 L368 186 L280 216 Z"/>
+    <path d="M350 172 L358 138 L372 138 L370 176 Z"/>
+  </g>
+  <g data-step="5" data-name="helicecola">
+    <circle cx="366" cy="180" r="16"/>
+    <path d="M366 166 V194 M352 180 H380" fill="none"/>
+  </g>
+  <g data-step="6" data-name="patines">
+    <path d="M156 256 L150 288 M256 256 L262 288" fill="none"/>
+    <path d="M110 286 H306 C314 286 318 280 314 274 L310 296 H110 Z"/>
+  </g>
+  <g data-step="1" data-name="cuerpo">
+    <path d="M120 200 C120 150 160 124 210 124 C260 124 292 160 292 200 C292 240 262 262 210 262 L160 262 C136 262 120 236 120 200 Z"/>
+  </g>
+  <g data-step="2" data-name="ventana">
+    <path d="M128 196 C130 160 156 140 192 138 L192 196 Z"/>
+  </g>
+  <g data-step="4" data-name="helice">
+    <path d="M206 124 V100" fill="none"/>
+    <path d="M70 90 H342 V100 H70 Z"/>
+    <ellipse cx="206" cy="96" rx="16" ry="9"/>
+  </g>
+</svg>

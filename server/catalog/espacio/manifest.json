@@ -1,66 +1,290 @@
 {
   "name": "Espacio",
-  "version": 3,
+  "name_en": "Space",
+  "version": 4,
   "license": "Pintakids-Original",
   "files": [
     {
+      "file": "luna.svg",
+      "title": "Luna dormilona",
+      "title_en": "Sleepy moon",
+      "level": 1,
+      "steps": [
+        {
+          "key": "luna",
+          "es": "la luna",
+          "en": "the moon"
+        },
+        {
+          "key": "carita",
+          "es": "la carita dormida",
+          "en": "the sleepy face"
+        },
+        {
+          "key": "estrellas",
+          "es": "las estrellas",
+          "en": "the stars"
+        },
+        {
+          "key": "nube",
+          "es": "la nube",
+          "en": "the cloud"
+        }
+      ],
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "cohete.svg",
+      "title": "Cohete",
+      "title_en": "Rocket",
+      "level": 1,
+      "steps": [
+        {
+          "key": "cuerpo",
+          "es": "el cohete",
+          "en": "the rocket"
+        },
+        {
+          "key": "punta",
+          "es": "la punta",
+          "en": "the nose"
+        },
+        {
+          "key": "ventana",
+          "es": "la ventana",
+          "en": "the window"
+        },
+        {
+          "key": "aletas",
+          "es": "las aletas",
+          "en": "the fins"
+        },
+        {
+          "key": "fuego",
+          "es": "el fuego y las estrellas",
+          "en": "the fire and stars"
+        }
+      ],
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "saturno.svg",
+      "title": "Saturno",
+      "title_en": "Saturn",
+      "level": 1,
+      "steps": [
+        {
+          "key": "planeta",
+          "es": "el planeta",
+          "en": "the planet"
+        },
+        {
+          "key": "anillo",
+          "es": "el anillo",
+          "en": "the ring"
+        },
+        {
+          "key": "anillo2",
+          "es": "el anillo por delante",
+          "en": "the front of the ring"
+        },
+        {
+          "key": "rayas",
+          "es": "las rayas",
+          "en": "the stripes"
+        },
+        {
+          "key": "estrellas",
+          "es": "las estrellas",
+          "en": "the stars"
+        }
+      ],
+      "license": "Pintakids-Original"
+    },
+    {
+      "file": "alien.svg",
+      "title": "Extraterrestre",
+      "title_en": "Alien",
+      "level": 2,
+      "steps": [
+        {
+          "key": "cabeza",
+          "es": "la cabeza",
+          "en": "the head"
+        },
+        {
+          "key": "ojos",
+          "es": "los tres ojos",
+          "en": "the three eyes"
+        },
+        {
+          "key": "antenas",
+          "es": "las antenas",
+          "en": "the antennas"
+        },
+        {
+          "key": "sonrisa",
+          "es": "la sonrisa",
+          "en": "the smile"
+        },
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo",
+          "en": "the body"
+        },
+        {
+          "key": "planeta",
+          "es": "el planeta",
+          "en": "the planet"
+        }
+      ],
+      "license": "Pintakids-Original"
+    },
+    {
       "file": "ovni.svg",
-      "title": "OVNI volador",
+      "title": "Platillo volador",
+      "title_en": "Flying saucer",
+      "level": 2,
+      "steps": [
+        {
+          "key": "platillo",
+          "es": "el platillo",
+          "en": "the saucer"
+        },
+        {
+          "key": "cupula",
+          "es": "la cúpula",
+          "en": "the dome"
+        },
+        {
+          "key": "alien",
+          "es": "el extraterrestre",
+          "en": "the alien"
+        },
+        {
+          "key": "luces",
+          "es": "las luces",
+          "en": "the lights"
+        },
+        {
+          "key": "rayo",
+          "es": "el rayo de luz",
+          "en": "the light beam"
+        },
+        {
+          "key": "estrellas",
+          "es": "las estrellas",
+          "en": "the stars"
+        }
+      ],
       "license": "Pintakids-Original"
     },
     {
-      "file": "planeta-anillos.svg",
-      "title": "Planeta con anillos",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "tierra.svg",
-      "title": "Planeta Tierra",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "satelite.svg",
-      "title": "Satélite",
+      "file": "robot.svg",
+      "title": "Robot",
+      "title_en": "Robot",
+      "level": 2,
+      "steps": [
+        {
+          "key": "cabeza",
+          "es": "la cabeza",
+          "en": "the head"
+        },
+        {
+          "key": "antena",
+          "es": "la antena",
+          "en": "the antenna"
+        },
+        {
+          "key": "ojos",
+          "es": "los ojos",
+          "en": "the eyes"
+        },
+        {
+          "key": "boca",
+          "es": "la boca",
+          "en": "the mouth"
+        },
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo",
+          "en": "the body"
+        },
+        {
+          "key": "panel",
+          "es": "el panel",
+          "en": "the panel"
+        },
+        {
+          "key": "brazos",
+          "es": "los brazos",
+          "en": "the arms"
+        },
+        {
+          "key": "piernas",
+          "es": "las piernas",
+          "en": "the legs"
+        }
+      ],
       "license": "Pintakids-Original"
     },
     {
       "file": "astronauta.svg",
       "title": "Astronauta",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "cometa.svg",
-      "title": "Cometa brillante",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "estrella-mayor.svg",
-      "title": "Estrella guía",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "luna-estrellas.svg",
-      "title": "Noche estrellada",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "nave-espacial.svg",
-      "title": "Nave espacial",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "marte.svg",
-      "title": "Planeta Marte",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "planeta-luna.svg",
-      "title": "Planeta y luna",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "planeta-feliz.svg",
-      "title": "Planeta sonriente",
+      "title_en": "Astronaut",
+      "level": 3,
+      "steps": [
+        {
+          "key": "casco",
+          "es": "el casco",
+          "en": "the helmet"
+        },
+        {
+          "key": "visor",
+          "es": "el visor",
+          "en": "the visor"
+        },
+        {
+          "key": "cara",
+          "es": "la carita",
+          "en": "the face"
+        },
+        {
+          "key": "antena",
+          "es": "la antena",
+          "en": "the antenna"
+        },
+        {
+          "key": "cuerpo",
+          "es": "el traje",
+          "en": "the suit"
+        },
+        {
+          "key": "panel",
+          "es": "el panel",
+          "en": "the panel"
+        },
+        {
+          "key": "brazos",
+          "es": "los brazos",
+          "en": "the arms"
+        },
+        {
+          "key": "guantes",
+          "es": "los guantes",
+          "en": "the gloves"
+        },
+        {
+          "key": "piernas",
+          "es": "las piernas y botas",
+          "en": "the legs and boots"
+        },
+        {
+          "key": "fondo",
+          "es": "el planeta y las estrellas",
+          "en": "the planet and stars"
+        }
+      ],
       "license": "Pintakids-Original"
     }
   ]

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="9" data-name="roca">
+    <path d="M66 362 C72 320 120 298 168 310 C200 296 252 306 272 336 C292 336 302 352 298 362 Z"/>
+    <path d="M14 362 H386" fill="none"/>
+    <circle cx="60" cy="120" r="10"/><circle cx="76" cy="88" r="6"/><circle cx="340" cy="140" r="9"/><circle cx="352" cy="110" r="5"/>
+  </g>
+  <g data-step="4" data-name="pelo">
+    <path d="M154 120 C146 62 182 50 206 52 C248 54 266 90 256 132 C264 164 266 200 258 236 C246 224 232 226 222 236 L178 236 C168 226 154 224 142 236 C134 200 136 164 154 120 Z"/>
+    <path d="M150 196 Q160 210 150 226 M250 196 Q240 210 250 226" fill="none"/>
+  </g>
+  <g data-step="8" data-name="aleta">
+    <path d="M294 292 C318 258 360 264 366 286 C356 300 340 304 330 300 C346 316 342 340 326 346 C316 326 306 312 294 306 Z"/>
+  </g>
+  <g data-step="7" data-name="cola">
+    <path d="M170 236 C164 280 182 310 222 318 C262 326 290 312 300 294 L310 304 C300 332 262 346 214 338 C162 328 144 290 150 240 Z"/>
+    <path d="M186 268 q8 8 16 0 M210 286 q8 8 16 0 M238 300 q8 8 16 0 M192 296 q8 8 16 0" fill="none"/>
+  </g>
+  <g data-step="5" data-name="cuerpo">
+    <path d="M178 162 C172 190 172 214 176 240 H224 C228 214 228 190 222 162 Z"/>
+    <ellipse cx="188" cy="196" rx="12" ry="10"/><ellipse cx="212" cy="196" rx="12" ry="10"/>
+    <path d="M188 188 V204 M212 188 V204" fill="none"/>
+  </g>
+  <g data-step="6" data-name="brazos">
+    <path d="M180 174 C162 190 154 214 160 238 L172 238 C168 218 172 200 186 190 Z"/>
+    <path d="M220 174 C238 190 246 214 240 238 L228 238 C232 218 228 200 214 190 Z"/>
+  </g>
+  <g data-step="1" data-name="cabeza">
+    <circle cx="200" cy="118" r="46"/>
+  </g>
+  <g data-step="2" data-name="fleco">
+    <path d="M156 112 C158 74 242 70 246 112 Q236 98 226 108 Q214 94 202 106 Q188 94 176 108 Q166 98 156 112 Z"/>
+  </g>
+  <g data-step="3" data-name="cara">
+    <ellipse cx="184" cy="130" rx="6.5" ry="8" fill="#2b2d42"/><ellipse cx="216" cy="130" rx="6.5" ry="8" fill="#2b2d42"/>
+    <circle cx="182" cy="126" r="2.4" stroke="none"/><circle cx="214" cy="126" r="2.4" stroke="none"/>
+    <path d="M190 148 Q200 156 210 148" fill="none"/>
+    <ellipse cx="170" cy="144" rx="7" ry="4.5"/><ellipse cx="230" cy="144" rx="7" ry="4.5"/>
+  </g>
+</svg>

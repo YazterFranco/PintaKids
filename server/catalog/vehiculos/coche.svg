@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="5" data-name="carretera">
+    <path d="M14 312 H386 V356 H14 Z"/>
+    <path d="M36 330 H76 V338 H36 Z M136 330 H176 V338 H136 Z M236 330 H276 V338 H236 Z M336 330 H376 V338 H336 Z"/>
+  </g>
+  <g data-step="1" data-name="carroceria">
+    <path d="M68 258 L68 222 C68 206 80 198 96 196 L130 192 L170 146 C176 140 184 136 194 136 L262 136 C276 136 286 142 292 152 L318 192 L334 196 C348 200 354 212 354 226 L354 258 C354 270 346 278 334 278 L88 278 C76 278 68 270 68 258 Z"/>
+    <path d="M226 198 V272 M240 214 H256" fill="none"/>
+  </g>
+  <g data-step="2" data-name="ventanas">
+    <path d="M186 154 L152 192 L218 192 V154 Z"/>
+    <path d="M234 154 V192 L304 192 L284 160 C280 156 276 154 270 154 Z"/>
+  </g>
+  <g data-step="4" data-name="luces">
+    <path d="M338 212 C352 212 354 228 348 236 L336 236 Z"/>
+    <path d="M70 214 H84 V234 H70 Z"/>
+  </g>
+  <g data-step="3" data-name="ruedas">
+    <circle cx="130" cy="278" r="34"/>
+    <circle cx="130" cy="278" r="15"/>
+    <circle cx="130" cy="278" r="4" fill="#2b2d42"/>
+    <circle cx="294" cy="278" r="34"/>
+    <circle cx="294" cy="278" r="15"/>
+    <circle cx="294" cy="278" r="4" fill="#2b2d42"/>
+  </g>
+</svg>

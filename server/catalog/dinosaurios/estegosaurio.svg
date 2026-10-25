@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="9" data-name="sol">
+    <path d="M14 352 H386" fill="none"/>
+    <circle cx="70" cy="76" r="28"/>
+    <path d="M70 30 V18 M70 122 V134 M24 76 H12 M116 76 H128 M38 44 L30 36 M102 108 L110 116 M102 44 L110 36 M38 108 L30 116" fill="none"/>
+  </g>
+  <g data-step="6" data-name="cola">
+    <path d="M326 244 C354 254 372 270 380 290 C358 290 340 286 320 280 Z"/>
+  </g>
+  <g data-step="7" data-name="puas">
+    <path d="M356 266 L364 238 L372 272 Z"/>
+    <path d="M340 260 L344 234 L354 264 Z"/>
+  </g>
+  <g data-step="4" data-name="placas">
+    <path d="M-1 0 L-16 -16 L0 -36 L16 -16 L1 0 Z" transform="translate(150 192) rotate(-50)"/>
+    <path d="M-1 0 L-21 -21 L0 -46 L21 -21 L1 0 Z" transform="translate(184 170) rotate(-25)"/>
+    <path d="M-1 0 L-23 -23 L0 -50 L23 -23 L1 0 Z" transform="translate(224 160) rotate(0)"/>
+    <path d="M-1 0 L-21 -21 L0 -46 L21 -21 L1 0 Z" transform="translate(264 164) rotate(20)"/>
+    <path d="M-1 0 L-18 -18 L0 -38 L18 -18 L1 0 Z" transform="translate(298 182) rotate(45)"/>
+    <path d="M-1 0 L-13 -13 L0 -29 L13 -13 L1 0 Z" transform="translate(322 212) rotate(65)"/>
+  </g>
+  <g data-step="5" data-name="patas">
+    <path d="M136 276 V344 H164 V276 Z M178 280 V344 H206 V280 Z M250 280 V344 H278 V280 Z M290 276 V344 H318 V276 Z"/>
+    <path d="M142 344 q4 -7 8 0 M184 344 q4 -7 8 0 M256 344 q4 -7 8 0 M296 344 q4 -7 8 0" fill="none"/>
+  </g>
+  <g data-step="3" data-name="cuerpo">
+    <path d="M110 262 C110 202 170 162 230 162 C290 162 330 202 336 250 C338 280 312 292 290 292 L150 292 C126 292 110 282 110 262 Z"/>
+  </g>
+  <g data-step="8" data-name="manchas">
+    <ellipse cx="200" cy="214" rx="14" ry="10"/><ellipse cx="248" cy="204" rx="12" ry="9"/><ellipse cx="290" cy="234" rx="11" ry="8"/><ellipse cx="166" cy="244" rx="10" ry="8"/>
+  </g>
+  <g data-step="1" data-name="cabeza">
+    <path d="M40 272 C40 250 60 240 82 244 L124 256 L122 286 L76 292 C56 294 40 288 40 272 Z"/>
+  </g>
+  <g data-step="2" data-name="ojo">
+    <circle cx="68" cy="262" r="6" fill="#2b2d42"/>
+    <circle cx="66" cy="259" r="2" stroke="none"/>
+    <path d="M46 280 Q58 288 72 282" fill="none"/>
+  </g>
+</svg>

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="6" data-name="algas">
+    <path d="M320 360 C300 320 340 292 318 252 C300 220 330 198 316 168 L330 166 C344 198 316 222 332 252 C354 292 316 320 336 360 Z"/>
+    <path d="M70 360 C50 320 90 292 68 252 C50 220 80 198 66 168 L80 166 C94 198 66 222 82 252 C104 292 66 320 86 360 Z"/>
+    <path d="M14 362 H386" fill="none"/>
+  </g>
+  <g data-step="4" data-name="aleta">
+    <path d="M246 188 C278 184 292 206 284 228 C274 224 262 222 250 224 Z"/>
+  </g>
+  <g data-step="3" data-name="corona">
+    <path d="M186 74 L190 50 L204 70 Z"/>
+    <path d="M206 76 L220 58 L224 82 Z"/>
+  </g>
+  <g data-step="1" data-name="cuerpo">
+    <path d="M92 106 L140 100 C148 76 186 62 210 74 C236 88 240 118 226 140 C258 162 270 210 256 250 C246 280 222 292 212 314 C204 334 212 352 228 350 C244 348 248 328 236 322 C226 318 218 326 224 334 C208 336 198 322 204 304 C210 290 212 280 202 272 C176 256 156 236 158 206 C160 182 172 166 168 152 C164 140 152 134 140 128 L92 126 Z"/>
+  </g>
+  <g data-step="5" data-name="rayitas">
+    <path d="M178 212 Q206 222 236 210 M184 236 Q210 244 238 232 M196 258 Q216 262 234 254" fill="none"/>
+  </g>
+  <g data-step="2" data-name="ojo">
+    <circle cx="194" cy="102" r="10"/>
+    <circle cx="196" cy="104" r="5" fill="#2b2d42"/>
+  </g>
+  <g data-step="7" data-name="burbujas">
+    <circle cx="64" cy="92" r="9"/><circle cx="48" cy="62" r="6"/><circle cx="70" cy="40" r="4"/>
+  </g>
+</svg>

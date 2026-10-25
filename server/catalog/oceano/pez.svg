@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="2" data-name="cola">
+    <path d="M284 200 L352 146 C364 178 364 222 352 254 Z"/>
+  </g>
+  <g data-step="3" data-name="aletas">
+    <path d="M156 152 C176 108 230 110 250 152 Z"/>
+    <path d="M182 246 C190 278 222 282 234 250 Z"/>
+  </g>
+  <g data-step="1" data-name="cuerpo">
+    <path d="M88 200 C108 140 200 120 270 160 C292 172 302 186 302 200 C302 214 292 228 270 240 C200 280 108 260 88 200 Z"/>
+    <path d="M196 132 Q214 200 196 266 M240 144 Q256 200 240 254" fill="none"/>
+    <path d="M150 208 C170 196 196 206 192 224 C178 232 158 226 150 208 Z"/>
+  </g>
+  <g data-step="4" data-name="ojo">
+    <circle cx="130" cy="186" r="13"/>
+    <circle cx="133" cy="188" r="7" fill="#2b2d42"/>
+    <circle cx="130" cy="184" r="2.5" stroke="none"/>
+    <path d="M96 210 Q104 216 112 210" fill="none"/>
+  </g>
+  <g data-step="5" data-name="burbujas">
+    <circle cx="62" cy="142" r="11"/>
+    <circle cx="74" cy="106" r="7"/>
+    <circle cx="54" cy="82" r="5"/>
+    <path d="M30 350 Q200 330 370 350" fill="none"/>
+  </g>
+</svg>

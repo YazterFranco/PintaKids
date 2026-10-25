@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="7" data-name="campo">
+    <path d="M14 330 H386" fill="none"/>
+    <path d="M30 346 L70 342 M110 350 L160 346 M220 348 L270 344 M310 350 L360 346" fill="none"/>
+  </g>
+  <g data-step="6" data-name="tubo">
+    <path d="M290 172 V112 H302 V172 Z"/>
+    <circle cx="300" cy="90" r="12"/><circle cx="318" cy="66" r="10"/><circle cx="340" cy="50" r="8"/>
+  </g>
+  <g data-step="1" data-name="cabina">
+    <path d="M128 100 H252 V114 H128 Z"/>
+    <path d="M140 114 H236 V234 H140 Z"/>
+  </g>
+  <g data-step="2" data-name="capo">
+    <path d="M120 232 H350 V256 H120 Z"/>
+    <path d="M236 170 H332 C342 170 350 178 350 188 V236 H236 Z"/>
+    <path d="M330 184 V226 M340 184 V226" fill="none"/>
+  </g>
+  <g data-step="3" data-name="ventana">
+    <path d="M156 128 H222 V186 H156 Z"/>
+  </g>
+  <g data-step="4" data-name="ruedagrande">
+    <circle cx="176" cy="264" r="62"/>
+    <circle cx="176" cy="264" r="28"/>
+    <circle cx="176" cy="264" r="7" fill="#2b2d42"/>
+  </g>
+  <g data-step="5" data-name="ruedachica">
+    <circle cx="318" cy="286" r="40"/>
+    <circle cx="318" cy="286" r="18"/>
+    <circle cx="318" cy="286" r="5" fill="#2b2d42"/>
+  </g>
+</svg>

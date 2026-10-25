@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="6" data-name="nubes">
+    <path d="M78 300 c-18 0 -23 -26 -3 -31 c3 -21 31 -26 42 -10 c13 -16 42 -8 39 13 c18 3 18 29 0 29 Z"/>
+    <path d="M300 96 c-15 0 -20 -22 -2 -26 c2 -18 26 -22 35 -9 c11 -13 35 -7 33 11 c15 2 15 24 0 24 Z"/>
+  </g>
+  <g data-step="5" data-name="cola">
+    <path d="M66 186 L48 118 C48 112 54 110 58 114 L112 174 Z"/>
+    <path d="M72 202 L34 218 L40 228 L86 216 Z"/>
+  </g>
+  <g data-step="1" data-name="fuselaje">
+    <path d="M58 200 C58 182 78 172 100 172 L300 172 C340 172 368 190 372 204 C368 220 340 232 300 232 L100 232 C78 232 58 220 58 200 Z"/>
+  </g>
+  <g data-step="2" data-name="cabina">
+    <path d="M318 180 C334 180 350 188 358 198 L318 198 Z"/>
+  </g>
+  <g data-step="3" data-name="ventanillas">
+    <circle cx="120" cy="196" r="9"/>
+    <circle cx="152" cy="196" r="9"/>
+    <circle cx="184" cy="196" r="9"/>
+    <circle cx="216" cy="196" r="9"/>
+    <circle cx="248" cy="196" r="9"/>
+    <circle cx="280" cy="196" r="9"/>
+  </g>
+  <g data-step="4" data-name="ala">
+    <path d="M204 210 L258 210 L184 292 L154 292 Z"/>
+  </g>
+</svg>

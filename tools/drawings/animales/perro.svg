@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="8" data-name="cola">
+    <path d="M262 300 C300 290 320 250 312 220 C308 208 296 210 298 222 C302 250 286 272 258 280 Z"/>
+  </g>
+  <g data-step="6" data-name="cuerpo">
+    <path d="M160 210 C126 240 118 300 132 340 L268 340 C282 300 274 240 240 210 Z"/>
+    <path d="M200 244 C180 254 176 300 184 338 L216 338 C224 300 220 254 200 244 Z"/>
+  </g>
+  <g data-step="7" data-name="patas">
+    <ellipse cx="200" cy="346" rx="118" ry="12"/>
+    <path d="M144 344 C140 320 156 308 172 310 C188 312 196 328 192 344 Z"/>
+    <path d="M208 344 C204 328 212 312 228 310 C244 308 260 320 256 344 Z"/>
+    <path d="M158 332 L158 343 M174 330 L174 343 M226 330 L226 343 M242 332 L242 343" fill="none"/>
+  </g>
+  <g data-step="5" data-name="collar">
+    <path d="M148 212 Q200 238 252 212 L254 230 Q200 258 146 230 Z"/>
+    <circle cx="200" cy="256" r="11"/>
+  </g>
+  <g data-step="1" data-name="cabeza">
+    <path d="M128 150 C126 102 160 78 200 78 C240 78 274 102 272 150 C270 196 240 222 200 222 C160 222 130 196 128 150 Z"/>
+  </g>
+  <g data-step="2" data-name="orejas">
+    <path d="M140 98 C108 92 88 130 96 178 C100 204 124 210 134 192 C142 166 152 126 154 106 Z"/>
+    <path d="M260 98 C292 92 312 130 304 178 C300 204 276 210 266 192 C258 166 248 126 246 106 Z"/>
+  </g>
+  <g data-step="3" data-name="ojos">
+    <path d="M160 118 Q172 111 184 118 M216 118 Q228 111 240 118" fill="none"/>
+    <circle cx="172" cy="142" r="12" fill="#2b2d42"/>
+    <circle cx="228" cy="142" r="12" fill="#2b2d42"/>
+    <circle cx="168" cy="137" r="4" stroke="none"/>
+    <circle cx="224" cy="137" r="4" stroke="none"/>
+  </g>
+  <g data-step="4" data-name="hocico">
+    <ellipse cx="200" cy="184" rx="40" ry="29"/>
+    <path d="M192 196 Q192 214 200 214 Q208 214 208 196 Z"/>
+    <path d="M200 182 L200 192 M200 192 Q190 202 180 196 M200 192 Q210 202 220 196" fill="none"/>
+    <path d="M186 168 Q200 160 214 168 Q210 180 200 182 Q190 180 186 168 Z" fill="#2b2d42"/>
+  </g>
+</svg>

@@ -1,71 +1,66 @@
 #!/usr/bin/env node
 /**
- * Genera los paquetes de dibujos para colorear del catálogo de Pintakids (v3 "detallado").
- * Todos los SVG son ORIGINALES del proyecto (licencia Pintakids-Original, costo $0).
+ * Genera el catálogo v4 de Pintakids desde tools/drawings/<paquete>/.
+ * Cada dibujo es un SVG ORIGINAL hecho a mano (Pintakids-Original) dividido en pasos
+ * <g data-step data-name>; pack.json da títulos ES/EN, nivel y nombres de los pasos.
  *
- * Estilo v3: siluetas cerradas con MÚLTIPLES regiones de color (barriga, patas, aletas),
- * texturas (rayas, escamas, manchas, pelaje), caras expresivas (cejas, bocas abiertas),
- * escenas con contexto (suelo, hierba, agua, nubes, estrellas) y trazo grueso 6.5.
- *
- * Uso: node tools/generar-catalogo.mjs   (desde la raíz del repo)
- * Los dibujos viven en tools/catalog-*.mjs; este runner solo empaqueta y escribe.
+ * Uso (desde la raíz del repo): node tools/generar-catalogo.mjs
+ * Falla si un dibujo no cuadra con su pack.json (pasos, nivel, licencia).
  */
-import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { LICENSE } from './catalog-lib.mjs';
+import { parseSteps } from '../server/web/core/svgsteps.js';
 
-import { animales } from './catalog-animales.mjs';
-import { naturaleza } from './catalog-naturaleza.mjs';
-import { comida } from './catalog-comida.mjs';
-import { vehiculos } from './catalog-vehiculos.mjs';
-import { fantasia } from './catalog-fantasia.mjs';
-import { espacio } from './catalog-espacio.mjs';
-import { granja } from './catalog-granja.mjs';
-import { oceano } from './catalog-oceano.mjs';
-import { flores, deportes, instrumentos } from './catalog-varios.mjs';
-
+const SRC = join(import.meta.dirname, 'drawings');
 const OUT = join(import.meta.dirname, '..', 'server', 'catalog');
+const LICENSE = 'Pintakids-Original';
+const LEVEL_STEPS = { 1: [4, 5], 2: [6, 8], 3: [9, 12] };
+const ORDER = ['animales', 'granja', 'oceano', 'dinosaurios', 'vehiculos', 'fantasia', 'espacio', 'comida'];
 
-/** Mapa pack-id → { name, items }. El id debe cumplir /^[a-z0-9][a-z0-9-]{0,38}$/ */
-const packs = {
-  animales: { name: 'Animales', items: animales },
-  naturaleza: { name: 'Naturaleza', items: naturaleza },
-  comida: { name: 'Comida', items: comida },
-  vehiculos: { name: 'Vehículos', items: vehiculos },
-  fantasia: { name: 'Fantasía', items: fantasia },
-  espacio: { name: 'Espacio', items: espacio },
-  granja: { name: 'Granja', items: granja },
-  oceano: { name: 'Océano', items: oceano },
-  flores: { name: 'Flores', items: flores },
-  deportes: { name: 'Deportes', items: deportes },
-  instrumentos: { name: 'Instrumentos', items: instrumentos },
-};
+const errors = [];
+const packs = readdirSync(SRC).filter((d) => existsSync(join(SRC, d, 'pack.json')));
+packs.sort((a, b) => (ORDER.indexOf(a) + 99) % 99 - (ORDER.indexOf(b) + 99) % 99);
 
-const VERSION = 3;
-const packTotals = {};
-let grand = 0;
+// El catálogo servido se regenera entero: lo viejo se borra.
+for (const d of existsSync(OUT) ? readdirSync(OUT) : []) rmSync(join(OUT, d), { recursive: true, force: true });
 
-for (const [pack, { name, items }] of Object.entries(packs)) {
-  const dir = join(OUT, pack);
-  rmSync(dir, { recursive: true, force: true });
-  mkdirSync(dir, { recursive: true });
-  const files = items.map(([file, title, body]) => {
-    const svg =
-      `<?xml version="1.0" encoding="UTF-8"?>\n` +
-      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">` +
-      `<g fill="none" stroke="#2b2d42" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round">${body}</g></svg>\n`;
-    writeFileSync(join(dir, file + '.svg'), svg);
-    return { file: file + '.svg', title, license: LICENSE };
-  });
+let total = 0;
+for (const id of packs) {
+  const pack = JSON.parse(readFileSync(join(SRC, id, 'pack.json'), 'utf8'));
+  const files = [];
+  for (const it of pack.items) {
+    const file = `${it.id}.svg`;
+    const path = join(SRC, id, file);
+    if (!existsSync(path)) {
+      errors.push(`${id}/${file}: falta el SVG`);
+      continue;
+    }
+    let parsed;
+    try {
+      parsed = parseSteps(readFileSync(path, 'utf8'));
+    } catch (e) {
+      errors.push(`${id}/${file}: ${e.message}`);
+      continue;
+    }
+    const keys = parsed.steps.map((s) => s.key).join(',');
+    const want = it.steps.map((s) => s.key).join(',');
+    if (keys !== want) errors.push(`${id}/${file}: pasos SVG [${keys}] ≠ pack.json [${want}]`);
+    const [lo, hi] = LEVEL_STEPS[it.level] ?? [0, -1];
+    if (it.steps.length < lo || it.steps.length > hi) errors.push(`${id}/${file}: nivel ${it.level} con ${it.steps.length} pasos`);
+    files.push({ file, title: it.title, title_en: it.title_en, level: it.level, steps: it.steps, license: LICENSE });
+  }
+  mkdirSync(join(OUT, id), { recursive: true });
+  for (const f of files) copyFileSync(join(SRC, id, f.file), join(OUT, id, f.file));
   writeFileSync(
-    join(dir, 'manifest.json'),
-    JSON.stringify({ name, version: VERSION, license: LICENSE, files }, null, 2) + '\n',
+    join(OUT, id, 'manifest.json'),
+    JSON.stringify({ name: pack.name, name_en: pack.name_en, version: 4, license: LICENSE, files }, null, 2) + '\n',
   );
-  packTotals[pack] = files.length;
-  grand += files.length;
+  total += files.length;
+  console.log(`  ${id}: ${files.length} dibujos`);
 }
 
-console.log(
-  `Catálogo v${VERSION} generado: ${Object.keys(packTotals).length} paquetes, ${grand} dibujos (todos ${LICENSE}, costo $0).`,
-);
-for (const [pack, n] of Object.entries(packTotals)) console.log(`  ${pack}: ${n}`);
+if (errors.length) {
+  console.error('\n✗ Errores:\n  ' + errors.join('\n  '));
+  process.exit(1);
+}
+console.log(`✓ catálogo v4: ${packs.length} paquetes, ${total} dibujos`);

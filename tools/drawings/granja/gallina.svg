@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="7" data-name="cola">
+    <path d="M268 198 C288 150 330 128 352 146 C340 172 320 192 298 208 Z"/>
+    <path d="M284 214 C318 182 356 184 366 202 C346 218 322 228 300 228 Z"/>
+    <path d="M290 236 C320 222 352 234 354 250 C332 258 310 256 292 252 Z"/>
+  </g>
+  <g data-step="5" data-name="cuerpo">
+    <path d="M150 172 C190 170 232 180 280 190 C322 200 332 250 302 290 C278 320 200 324 150 306 C108 292 100 250 110 214 C116 194 130 178 150 172 Z"/>
+  </g>
+  <g data-step="6" data-name="ala">
+    <path d="M182 230 C212 214 262 216 280 238 C270 268 228 282 196 270 C206 258 198 244 182 230 Z"/>
+    <path d="M212 254 Q238 262 264 248" fill="none"/>
+  </g>
+  <g data-step="8" data-name="nido">
+    <path d="M84 300 C110 280 300 280 326 300 C336 332 302 354 205 354 C108 354 74 332 84 300 Z"/>
+    <path d="M108 312 L148 320 M172 332 L212 324 M244 320 L292 312 M128 338 L168 344 M232 342 L272 336" fill="none"/>
+  </g>
+  <g data-step="2" data-name="cresta">
+    <path d="M112 126 C102 104 118 92 130 106 C130 86 152 84 154 104 C160 88 182 96 170 120 Z"/>
+  </g>
+  <g data-step="1" data-name="cabeza">
+    <circle cx="140" cy="150" r="40"/>
+  </g>
+  <g data-step="3" data-name="pico">
+    <path d="M102 146 L76 157 L102 166 Z"/>
+    <path d="M106 168 C96 178 100 194 112 190 C118 186 116 176 112 168 Z"/>
+  </g>
+  <g data-step="4" data-name="ojo">
+    <circle cx="130" cy="142" r="7" fill="#2b2d42"/>
+    <circle cx="128" cy="139" r="2.5" stroke="none"/>
+  </g>
+</svg>

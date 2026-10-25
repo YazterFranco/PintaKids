@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="6" data-name="arena">
+    <path d="M14 340 Q200 318 386 340 L386 370 L14 370 Z"/>
+    <path d="M60 78 Q61.8 88.2 72 90 Q61.8 91.8 60 102 Q58.2 91.8 48 90 Q58.2 88.2 60 78 Z"/>
+    <path d="M340 66 Q342.1 77.9 354 80 Q342.1 82.1 340 94 Q337.9 82.1 326 80 Q337.9 77.9 340 66 Z"/>
+    <path d="M310 142 Q311.2 148.8 318 150 Q311.2 151.2 310 158 Q308.8 151.2 302 150 Q308.8 148.8 310 142 Z"/>
+  </g>
+  <g data-step="2" data-name="tapa">
+    <path d="M92 220 L112 140 C150 120 250 120 288 140 L308 220 Z"/>
+    <path d="M102 180 H298" fill="none"/>
+  </g>
+  <g data-step="5" data-name="monedas">
+    <path d="M100 224 C120 182 160 172 200 178 C240 172 280 182 300 224 Z"/>
+    <circle cx="150" cy="198" r="14"/><circle cx="198" cy="186" r="16"/><circle cx="250" cy="198" r="14"/>
+    <path d="M222 168 L232 156 L242 168 L232 182 Z"/>
+  </g>
+  <g data-step="1" data-name="caja">
+    <path d="M90 220 H310 V330 H90 Z"/>
+  </g>
+  <g data-step="3" data-name="bandas">
+    <path d="M120 220 H140 V330 H120 Z M260 220 H280 V330 H260 Z"/>
+    <path d="M90 250 H120 M140 250 H186 M214 250 H260 M280 250 H310" fill="none"/>
+  </g>
+  <g data-step="4" data-name="cerradura">
+    <path d="M186 238 H214 V274 H186 Z"/>
+    <circle cx="200" cy="252" r="4" fill="#2b2d42"/>
+    <path d="M200 256 V264" fill="none"/>
+  </g>
+</svg>

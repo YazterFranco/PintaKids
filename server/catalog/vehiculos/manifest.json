@@ -1,86 +1,359 @@
 {
   "name": "Vehículos",
-  "version": 3,
+  "name_en": "Vehicles",
+  "version": 4,
   "license": "Pintakids-Original",
   "files": [
     {
-      "file": "carro.svg",
-      "title": "Carro divertido",
+      "file": "coche.svg",
+      "title": "Coche",
+      "title_en": "Car",
+      "level": 1,
+      "steps": [
+        {
+          "key": "carroceria",
+          "es": "la carrocería",
+          "en": "the car body"
+        },
+        {
+          "key": "ventanas",
+          "es": "las ventanas",
+          "en": "the windows"
+        },
+        {
+          "key": "ruedas",
+          "es": "las ruedas",
+          "en": "the wheels"
+        },
+        {
+          "key": "luces",
+          "es": "las luces",
+          "en": "the lights"
+        },
+        {
+          "key": "carretera",
+          "es": "la carretera",
+          "en": "the road"
+        }
+      ],
       "license": "Pintakids-Original"
     },
     {
-      "file": "autobus.svg",
-      "title": "Autobús escolar",
+      "file": "velero.svg",
+      "title": "Velero",
+      "title_en": "Sailboat",
+      "level": 1,
+      "steps": [
+        {
+          "key": "casco",
+          "es": "el barco",
+          "en": "the hull"
+        },
+        {
+          "key": "mastil",
+          "es": "el mástil",
+          "en": "the mast"
+        },
+        {
+          "key": "vela",
+          "es": "la vela grande",
+          "en": "the big sail"
+        },
+        {
+          "key": "vela2",
+          "es": "la vela chica y la bandera",
+          "en": "the small sail and flag"
+        },
+        {
+          "key": "olas",
+          "es": "las olas",
+          "en": "the waves"
+        }
+      ],
       "license": "Pintakids-Original"
     },
     {
       "file": "avion.svg",
-      "title": "Avión de papel",
+      "title": "Avión",
+      "title_en": "Airplane",
+      "level": 2,
+      "steps": [
+        {
+          "key": "fuselaje",
+          "es": "el cuerpo del avión",
+          "en": "the body"
+        },
+        {
+          "key": "cabina",
+          "es": "la cabina",
+          "en": "the cockpit"
+        },
+        {
+          "key": "ventanillas",
+          "es": "las ventanillas",
+          "en": "the windows"
+        },
+        {
+          "key": "ala",
+          "es": "el ala",
+          "en": "the wing"
+        },
+        {
+          "key": "cola",
+          "es": "la cola",
+          "en": "the tail"
+        },
+        {
+          "key": "nubes",
+          "es": "las nubes",
+          "en": "the clouds"
+        }
+      ],
       "license": "Pintakids-Original"
     },
     {
-      "file": "helicoptero.svg",
-      "title": "Helicóptero",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "barco.svg",
-      "title": "Barco en el mar",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "tren.svg",
-      "title": "Tren de juguete",
+      "file": "autobus.svg",
+      "title": "Autobús",
+      "title_en": "Bus",
+      "level": 2,
+      "steps": [
+        {
+          "key": "carroceria",
+          "es": "el autobús",
+          "en": "the bus"
+        },
+        {
+          "key": "ventanas",
+          "es": "las ventanas",
+          "en": "the windows"
+        },
+        {
+          "key": "puerta",
+          "es": "la puerta",
+          "en": "the door"
+        },
+        {
+          "key": "ruedas",
+          "es": "las ruedas",
+          "en": "the wheels"
+        },
+        {
+          "key": "luces",
+          "es": "las luces",
+          "en": "the lights"
+        },
+        {
+          "key": "franja",
+          "es": "la franja",
+          "en": "the stripe"
+        },
+        {
+          "key": "parada",
+          "es": "la parada",
+          "en": "the bus stop"
+        }
+      ],
       "license": "Pintakids-Original"
     },
     {
       "file": "tractor.svg",
       "title": "Tractor",
+      "title_en": "Tractor",
+      "level": 2,
+      "steps": [
+        {
+          "key": "cabina",
+          "es": "la cabina",
+          "en": "the cab"
+        },
+        {
+          "key": "capo",
+          "es": "el motor",
+          "en": "the engine"
+        },
+        {
+          "key": "ventana",
+          "es": "la ventana",
+          "en": "the window"
+        },
+        {
+          "key": "ruedagrande",
+          "es": "la rueda grande",
+          "en": "the big wheel"
+        },
+        {
+          "key": "ruedachica",
+          "es": "la rueda chica",
+          "en": "the small wheel"
+        },
+        {
+          "key": "tubo",
+          "es": "el tubo y el humo",
+          "en": "the pipe and smoke"
+        },
+        {
+          "key": "campo",
+          "es": "el campo",
+          "en": "the field"
+        }
+      ],
       "license": "Pintakids-Original"
     },
     {
-      "file": "bicicleta.svg",
-      "title": "Bicicleta",
+      "file": "helicoptero.svg",
+      "title": "Helicóptero",
+      "title_en": "Helicopter",
+      "level": 2,
+      "steps": [
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo",
+          "en": "the body"
+        },
+        {
+          "key": "ventana",
+          "es": "la ventana",
+          "en": "the window"
+        },
+        {
+          "key": "cola",
+          "es": "la cola",
+          "en": "the tail"
+        },
+        {
+          "key": "helice",
+          "es": "la hélice",
+          "en": "the rotor"
+        },
+        {
+          "key": "helicecola",
+          "es": "la hélice de la cola",
+          "en": "the tail rotor"
+        },
+        {
+          "key": "patines",
+          "es": "los patines",
+          "en": "the skids"
+        },
+        {
+          "key": "nubes",
+          "es": "las nubes",
+          "en": "the clouds"
+        }
+      ],
       "license": "Pintakids-Original"
     },
     {
-      "file": "patineta.svg",
-      "title": "Patineta",
+      "file": "tren.svg",
+      "title": "Tren",
+      "title_en": "Train",
+      "level": 3,
+      "steps": [
+        {
+          "key": "caldera",
+          "es": "la caldera",
+          "en": "the boiler"
+        },
+        {
+          "key": "cabina",
+          "es": "la cabina",
+          "en": "the cab"
+        },
+        {
+          "key": "ventana",
+          "es": "la ventana",
+          "en": "the window"
+        },
+        {
+          "key": "chimenea",
+          "es": "la chimenea",
+          "en": "the chimney"
+        },
+        {
+          "key": "humo",
+          "es": "el humo",
+          "en": "the smoke"
+        },
+        {
+          "key": "ruedas",
+          "es": "las ruedas",
+          "en": "the wheels"
+        },
+        {
+          "key": "trompa",
+          "es": "la trompa",
+          "en": "the cowcatcher"
+        },
+        {
+          "key": "domo",
+          "es": "el domo",
+          "en": "the dome"
+        },
+        {
+          "key": "vias",
+          "es": "las vías",
+          "en": "the tracks"
+        }
+      ],
       "license": "Pintakids-Original"
     },
     {
-      "file": "globo.svg",
-      "title": "Globo aerostático",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "ambulancia.svg",
-      "title": "Ambulancia",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "policia.svg",
-      "title": "Carro de policía",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "camion-bomberos.svg",
+      "file": "bomberos.svg",
       "title": "Camión de bomberos",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "cohete.svg",
-      "title": "Cohete espacial",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "submarino.svg",
-      "title": "Submarino",
-      "license": "Pintakids-Original"
-    },
-    {
-      "file": "globo-espacial.svg",
-      "title": "Globo espacial",
+      "title_en": "Fire truck",
+      "level": 3,
+      "steps": [
+        {
+          "key": "cabina",
+          "es": "la cabina",
+          "en": "the cab"
+        },
+        {
+          "key": "ventana",
+          "es": "la ventana",
+          "en": "the window"
+        },
+        {
+          "key": "caja",
+          "es": "la caja",
+          "en": "the body"
+        },
+        {
+          "key": "escalera",
+          "es": "la escalera",
+          "en": "the ladder"
+        },
+        {
+          "key": "ruedas",
+          "es": "las ruedas",
+          "en": "the wheels"
+        },
+        {
+          "key": "luces",
+          "es": "la sirena",
+          "en": "the siren"
+        },
+        {
+          "key": "manguera",
+          "es": "la manguera",
+          "en": "the hose"
+        },
+        {
+          "key": "puertas",
+          "es": "las puertas",
+          "en": "the doors"
+        },
+        {
+          "key": "parachoques",
+          "es": "el parachoques",
+          "en": "the bumper"
+        },
+        {
+          "key": "calle",
+          "es": "la calle",
+          "en": "the street"
+        }
+      ],
       "license": "Pintakids-Original"
     }
   ]

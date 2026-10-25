@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="3" data-name="vela">
+    <path d="M212 84 C270 130 300 200 304 254 L212 254 Z"/>
+  </g>
+  <g data-step="4" data-name="vela2">
+    <path d="M190 112 C150 152 122 210 114 254 L190 254 Z"/>
+    <path d="M206 70 L242 80 L206 92 Z"/>
+  </g>
+  <g data-step="2" data-name="mastil">
+    <path d="M196 66 H206 V272 H196 Z"/>
+  </g>
+  <g data-step="1" data-name="casco">
+    <path d="M76 268 L324 268 L292 320 C288 326 282 330 274 330 L128 330 C120 330 114 326 110 320 Z"/>
+    <circle cx="160" cy="294" r="8"/><circle cx="200" cy="294" r="8"/><circle cx="240" cy="294" r="8"/>
+  </g>
+  <g data-step="5" data-name="olas">
+    <path d="M14 318 Q44 302 74 318 T134 318 T194 318 T254 318 T314 318 T374 318 L386 318 V362 H14 Z"/>
+    <path d="M56 100 q10 -10 20 0 q10 -10 20 0 M300 70 q8 -8 16 0 q8 -8 16 0" fill="none"/>
+  </g>
+</svg>

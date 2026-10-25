@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="5" data-name="hierba">
+    <path d="M30 368 Q200 330 370 368 Z"/>
+    <path d="M62 360 l6 -20 l6 20 M80 356 l5 -14 l5 14 M316 356 l6 -18 l6 18 M334 360 l5 -14 l5 14" fill="none"/>
+  </g>
+  <g data-step="4" data-name="cuerpo">
+    <path d="M150 222 C118 250 116 320 140 350 L260 350 C284 320 282 250 250 222 Z"/>
+    <ellipse cx="200" cy="300" rx="38" ry="44"/>
+    <ellipse cx="160" cy="352" rx="32" ry="14"/>
+    <ellipse cx="240" cy="352" rx="32" ry="14"/>
+    <ellipse cx="174" cy="254" rx="14" ry="18"/>
+    <ellipse cx="226" cy="254" rx="14" ry="18"/>
+  </g>
+  <g data-step="2" data-name="orejas">
+    <ellipse cx="170" cy="72" rx="22" ry="54" transform="rotate(-10 170 72)"/>
+    <ellipse cx="230" cy="72" rx="22" ry="54" transform="rotate(10 230 72)"/>
+    <ellipse cx="171" cy="78" rx="9" ry="36" transform="rotate(-10 171 78)"/>
+    <ellipse cx="229" cy="78" rx="9" ry="36" transform="rotate(10 229 78)"/>
+  </g>
+  <g data-step="1" data-name="cabeza">
+    <path d="M130 172 C128 130 160 108 200 108 C240 108 272 130 270 172 C268 210 240 232 200 232 C160 232 132 210 130 172 Z"/>
+  </g>
+  <g data-step="3" data-name="cara">
+    <ellipse cx="174" cy="164" rx="9" ry="12" fill="#2b2d42"/>
+    <ellipse cx="226" cy="164" rx="9" ry="12" fill="#2b2d42"/>
+    <circle cx="171" cy="159" r="3.5" stroke="none"/>
+    <circle cx="223" cy="159" r="3.5" stroke="none"/>
+    <circle cx="156" cy="192" r="10"/>
+    <circle cx="244" cy="192" r="10"/>
+    <path d="M194 204 V215 H206 V204 M200 204 V215"/>
+    <path d="M200 194 Q200 203 189 205 M200 194 Q200 203 211 205" fill="none"/>
+    <path d="M191 184 Q200 178 209 184 Q205 193 200 194 Q195 193 191 184 Z"/>
+  </g>
+</svg>

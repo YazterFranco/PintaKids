@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="7" data-name="arena">
+    <path d="M14 318 Q200 300 386 318" fill="none"/>
+    <ellipse cx="60" cy="336" rx="18" ry="9"/><ellipse cx="340" cy="340" rx="14" ry="7"/>
+  </g>
+  <g data-step="6" data-name="cola">
+    <path d="M104 236 L66 252 L104 254 Z"/>
+  </g>
+  <g data-step="5" data-name="patas">
+    <path d="M120 252 V298 Q120 310 132 310 H152 Q164 310 164 298 V252 Z"/>
+    <path d="M262 252 V298 Q262 310 274 310 H294 Q306 310 306 298 V252 Z"/>
+    <path d="M134 310 V302 M150 310 V302 M276 310 V302 M292 310 V302" fill="none"/>
+  </g>
+  <g data-step="3" data-name="cabeza">
+    <path d="M306 222 C314 180 360 168 378 198 C390 224 374 248 346 248 L312 248 Z"/>
+  </g>
+  <g data-step="1" data-name="caparazon">
+    <path d="M98 240 C98 150 158 110 210 110 C262 110 322 150 322 240 Z"/>
+    <path d="M90 240 H330 Q338 256 322 262 H98 Q82 256 90 240 Z"/>
+  </g>
+  <g data-step="2" data-name="dibujo">
+    <path d="M180 156 L240 156 L262 196 L240 234 L180 234 L158 196 Z"/>
+    <path d="M180 156 L162 124 M240 156 L258 124 M158 196 L104 196 M262 196 L318 196 M180 234 L172 240 M240 234 L248 240" fill="none"/>
+  </g>
+  <g data-step="4" data-name="cara">
+    <circle cx="352" cy="202" r="8" fill="#2b2d42"/>
+    <circle cx="349" cy="198" r="3" stroke="none"/>
+    <path d="M344 228 Q358 236 372 224" fill="none"/>
+  </g>
+</svg>

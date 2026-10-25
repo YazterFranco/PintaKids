@@ -1,0 +1,360 @@
+{
+  "name": "Fantasía",
+  "name_en": "Fantasy",
+  "items": [
+    {
+      "id": "corona",
+      "title": "Corona",
+      "title_en": "Crown",
+      "level": 1,
+      "steps": [
+        {
+          "key": "corona",
+          "es": "la corona",
+          "en": "the crown"
+        },
+        {
+          "key": "joyas",
+          "es": "las joyas",
+          "en": "the jewels"
+        },
+        {
+          "key": "bolitas",
+          "es": "las bolitas",
+          "en": "the little balls"
+        },
+        {
+          "key": "cojin",
+          "es": "el cojín",
+          "en": "the cushion"
+        }
+      ]
+    },
+    {
+      "id": "arcoiris",
+      "title": "Arcoíris",
+      "title_en": "Rainbow",
+      "level": 1,
+      "steps": [
+        {
+          "key": "arcoiris",
+          "es": "el arcoíris",
+          "en": "the rainbow"
+        },
+        {
+          "key": "nubes",
+          "es": "las nubes",
+          "en": "the clouds"
+        },
+        {
+          "key": "sol",
+          "es": "el sol",
+          "en": "the sun"
+        },
+        {
+          "key": "estrellitas",
+          "es": "los brillitos",
+          "en": "the sparkles"
+        }
+      ]
+    },
+    {
+      "id": "cofre",
+      "title": "Cofre del tesoro",
+      "title_en": "Treasure chest",
+      "level": 2,
+      "steps": [
+        {
+          "key": "caja",
+          "es": "el cofre",
+          "en": "the chest"
+        },
+        {
+          "key": "tapa",
+          "es": "la tapa",
+          "en": "the lid"
+        },
+        {
+          "key": "bandas",
+          "es": "las bandas",
+          "en": "the straps"
+        },
+        {
+          "key": "cerradura",
+          "es": "la cerradura",
+          "en": "the lock"
+        },
+        {
+          "key": "monedas",
+          "es": "las monedas",
+          "en": "the coins"
+        },
+        {
+          "key": "arena",
+          "es": "la arena y los brillos",
+          "en": "the sand and sparkles"
+        }
+      ]
+    },
+    {
+      "id": "hongo",
+      "title": "Casita hongo",
+      "title_en": "Mushroom house",
+      "level": 2,
+      "steps": [
+        {
+          "key": "sombrero",
+          "es": "el sombrero",
+          "en": "the cap"
+        },
+        {
+          "key": "lunares",
+          "es": "los lunares",
+          "en": "the dots"
+        },
+        {
+          "key": "tallo",
+          "es": "la casita",
+          "en": "the little house"
+        },
+        {
+          "key": "puerta",
+          "es": "la puerta",
+          "en": "the door"
+        },
+        {
+          "key": "ventana",
+          "es": "las ventanas",
+          "en": "the windows"
+        },
+        {
+          "key": "hierba",
+          "es": "la hierba",
+          "en": "the grass"
+        },
+        {
+          "key": "flores",
+          "es": "las flores",
+          "en": "the flowers"
+        }
+      ]
+    },
+    {
+      "id": "castillo",
+      "title": "Castillo",
+      "title_en": "Castle",
+      "level": 2,
+      "steps": [
+        {
+          "key": "muro",
+          "es": "el muro",
+          "en": "the wall"
+        },
+        {
+          "key": "torres",
+          "es": "las torres",
+          "en": "the towers"
+        },
+        {
+          "key": "techos",
+          "es": "los techos",
+          "en": "the roofs"
+        },
+        {
+          "key": "torrecentral",
+          "es": "la torre central",
+          "en": "the middle tower"
+        },
+        {
+          "key": "puerta",
+          "es": "la puerta",
+          "en": "the door"
+        },
+        {
+          "key": "ventanas",
+          "es": "las ventanas",
+          "en": "the windows"
+        },
+        {
+          "key": "banderas",
+          "es": "las banderas",
+          "en": "the flags"
+        },
+        {
+          "key": "camino",
+          "es": "el camino",
+          "en": "the path"
+        }
+      ]
+    },
+    {
+      "id": "sirena",
+      "title": "Sirena",
+      "title_en": "Mermaid",
+      "level": 3,
+      "steps": [
+        {
+          "key": "cabeza",
+          "es": "la cabeza",
+          "en": "the head"
+        },
+        {
+          "key": "fleco",
+          "es": "el flequillo",
+          "en": "the bangs"
+        },
+        {
+          "key": "cara",
+          "es": "la carita",
+          "en": "the face"
+        },
+        {
+          "key": "pelo",
+          "es": "el pelo largo",
+          "en": "the long hair"
+        },
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo",
+          "en": "the body"
+        },
+        {
+          "key": "brazos",
+          "es": "los brazos",
+          "en": "the arms"
+        },
+        {
+          "key": "cola",
+          "es": "la cola",
+          "en": "the tail"
+        },
+        {
+          "key": "aleta",
+          "es": "la aleta",
+          "en": "the fin"
+        },
+        {
+          "key": "roca",
+          "es": "la roca y las burbujas",
+          "en": "the rock and bubbles"
+        }
+      ]
+    },
+    {
+      "id": "unicornio",
+      "title": "Unicornio",
+      "title_en": "Unicorn",
+      "level": 3,
+      "steps": [
+        {
+          "key": "cabeza",
+          "es": "la cabeza",
+          "en": "the head"
+        },
+        {
+          "key": "cuerno",
+          "es": "el cuerno",
+          "en": "the horn"
+        },
+        {
+          "key": "oreja",
+          "es": "la oreja",
+          "en": "the ear"
+        },
+        {
+          "key": "ojo",
+          "es": "el ojo",
+          "en": "the eye"
+        },
+        {
+          "key": "crin",
+          "es": "la crin",
+          "en": "the mane"
+        },
+        {
+          "key": "cuello",
+          "es": "el cuello",
+          "en": "the neck"
+        },
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo",
+          "en": "the body"
+        },
+        {
+          "key": "patas",
+          "es": "las patas",
+          "en": "the legs"
+        },
+        {
+          "key": "cola",
+          "es": "la cola",
+          "en": "the tail"
+        },
+        {
+          "key": "estrellas",
+          "es": "las estrellas",
+          "en": "the stars"
+        }
+      ]
+    },
+    {
+      "id": "dragon",
+      "title": "Dragón",
+      "title_en": "Dragon",
+      "level": 3,
+      "steps": [
+        {
+          "key": "cabeza",
+          "es": "la cabeza",
+          "en": "the head"
+        },
+        {
+          "key": "cuernos",
+          "es": "los cuernos",
+          "en": "the horns"
+        },
+        {
+          "key": "ojos",
+          "es": "los ojos",
+          "en": "the eyes"
+        },
+        {
+          "key": "hocico",
+          "es": "el hocico",
+          "en": "the snout"
+        },
+        {
+          "key": "cuerpo",
+          "es": "el cuerpo",
+          "en": "the body"
+        },
+        {
+          "key": "panza",
+          "es": "la panza",
+          "en": "the belly"
+        },
+        {
+          "key": "alas",
+          "es": "las alas",
+          "en": "the wings"
+        },
+        {
+          "key": "patas",
+          "es": "las patas",
+          "en": "the feet"
+        },
+        {
+          "key": "cola",
+          "es": "la cola",
+          "en": "the tail"
+        },
+        {
+          "key": "humo",
+          "es": "el humito",
+          "en": "the smoke puffs"
+        }
+      ]
+    }
+  ]
+}

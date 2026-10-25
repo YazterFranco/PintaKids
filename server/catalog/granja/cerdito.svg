@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="5" data-name="cuerpo">
+    <ellipse cx="200" cy="358" rx="150" ry="16"/>
+    <path d="M140 220 C108 250 104 320 128 352 L272 352 C296 320 292 250 260 220 Z"/>
+    <ellipse cx="200" cy="296" rx="48" ry="44"/>
+    <ellipse cx="128" cy="344" rx="30" ry="16"/>
+    <ellipse cx="272" cy="344" rx="30" ry="16"/>
+    <path d="M150 352 V318 Q150 304 166 304 H172 Q188 304 188 318 V352 Z"/>
+    <path d="M212 352 V318 Q212 304 228 304 H234 Q250 304 250 318 V352 Z"/>
+    <path d="M150 338 H188 M212 338 H250 M169 338 V352 M231 338 V352" fill="none"/>
+  </g>
+  <g data-step="2" data-name="orejas">
+    <path d="M138 110 L116 56 C150 58 172 74 180 94 Z"/>
+    <path d="M262 110 L284 56 C250 58 228 74 220 94 Z"/>
+  </g>
+  <g data-step="1" data-name="cabeza">
+    <path d="M120 160 C116 110 156 84 200 84 C244 84 284 110 280 160 C278 206 244 232 200 232 C156 232 122 206 120 160 Z"/>
+    <path d="M186 216 Q200 224 214 216" fill="none"/>
+  </g>
+  <g data-step="4" data-name="ojos">
+    <circle cx="160" cy="140" r="10" fill="#2b2d42"/>
+    <circle cx="240" cy="140" r="10" fill="#2b2d42"/>
+    <circle cx="157" cy="136" r="3.5" stroke="none"/>
+    <circle cx="237" cy="136" r="3.5" stroke="none"/>
+    <ellipse cx="140" cy="184" rx="13" ry="8"/>
+    <ellipse cx="260" cy="184" rx="13" ry="8"/>
+  </g>
+  <g data-step="3" data-name="hocico">
+    <ellipse cx="200" cy="176" rx="38" ry="27"/>
+    <ellipse cx="187" cy="176" rx="6" ry="9" fill="#2b2d42"/>
+    <ellipse cx="213" cy="176" rx="6" ry="9" fill="#2b2d42"/>
+  </g>
+</svg>

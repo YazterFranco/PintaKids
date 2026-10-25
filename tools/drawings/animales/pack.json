@@ -1,0 +1,70 @@
+{
+  "name": "Animales",
+  "name_en": "Animals",
+  "items": [
+    { "id": "conejo", "title": "Conejo", "title_en": "Bunny", "level": 1, "steps": [
+      { "key": "cabeza", "es": "la cabeza", "en": "the head" },
+      { "key": "orejas", "es": "las orejas largas", "en": "the long ears" },
+      { "key": "cara", "es": "la carita", "en": "the face" },
+      { "key": "cuerpo", "es": "el cuerpo y las patitas", "en": "the body and paws" },
+      { "key": "hierba", "es": "la hierba", "en": "the grass" } ] },
+    { "id": "panda", "title": "Panda", "title_en": "Panda", "level": 1, "steps": [
+      { "key": "cabeza", "es": "la cabeza redonda", "en": "the round head" },
+      { "key": "orejas", "es": "las orejas", "en": "the ears" },
+      { "key": "ojos", "es": "los ojos con manchas", "en": "the eye patches" },
+      { "key": "nariz", "es": "la nariz y la boca", "en": "the nose and mouth" },
+      { "key": "cuerpo", "es": "el cuerpo y las patas", "en": "the body and legs" } ] },
+    { "id": "buho", "title": "Búho", "title_en": "Owl", "level": 1, "steps": [
+      { "key": "cuerpo", "es": "el cuerpo con orejitas", "en": "the body with ear tufts" },
+      { "key": "ojos", "es": "los ojos grandes", "en": "the big eyes" },
+      { "key": "pico", "es": "el pico y las plumas", "en": "the beak and feathers" },
+      { "key": "alas", "es": "las alas", "en": "the wings" },
+      { "key": "rama", "es": "la rama", "en": "the branch" } ] },
+    { "id": "gato", "title": "Gato", "title_en": "Cat", "level": 2, "steps": [
+      { "key": "cabeza", "es": "la cabeza", "en": "the head" },
+      { "key": "orejas", "es": "las orejas", "en": "the ears" },
+      { "key": "ojos", "es": "los ojos", "en": "the eyes" },
+      { "key": "cara", "es": "la nariz y los bigotes", "en": "the nose and whiskers" },
+      { "key": "cuerpo", "es": "el cuerpo", "en": "the body" },
+      { "key": "patas", "es": "las patitas", "en": "the paws" },
+      { "key": "cola", "es": "la cola", "en": "the tail" },
+      { "key": "alfombra", "es": "la alfombra", "en": "the rug" } ] },
+    { "id": "perro", "title": "Perro", "title_en": "Dog", "level": 2, "steps": [
+      { "key": "cabeza", "es": "la cabeza", "en": "the head" },
+      { "key": "orejas", "es": "las orejas caídas", "en": "the floppy ears" },
+      { "key": "ojos", "es": "los ojos", "en": "the eyes" },
+      { "key": "hocico", "es": "el hocico y la lengua", "en": "the snout and tongue" },
+      { "key": "collar", "es": "el collar", "en": "the collar" },
+      { "key": "cuerpo", "es": "el cuerpo", "en": "the body" },
+      { "key": "patas", "es": "las patas", "en": "the paws" },
+      { "key": "cola", "es": "la cola", "en": "the tail" } ] },
+    { "id": "elefante", "title": "Elefante", "title_en": "Elephant", "level": 2, "steps": [
+      { "key": "cabeza", "es": "la cabeza", "en": "the head" },
+      { "key": "trompa", "es": "la trompa", "en": "the trunk" },
+      { "key": "ojos", "es": "los ojos", "en": "the eyes" },
+      { "key": "orejas", "es": "las orejas grandes", "en": "the big ears" },
+      { "key": "cuerpo", "es": "el cuerpo y las patas", "en": "the body and legs" },
+      { "key": "charco", "es": "el charco", "en": "the puddle" } ] },
+    { "id": "leon", "title": "León", "title_en": "Lion", "level": 3, "steps": [
+      { "key": "cara", "es": "la cara", "en": "the face" },
+      { "key": "hocico", "es": "el hocico", "en": "the muzzle" },
+      { "key": "ojos", "es": "los ojos", "en": "the eyes" },
+      { "key": "orejas", "es": "las orejas", "en": "the ears" },
+      { "key": "melena", "es": "la melena", "en": "the mane" },
+      { "key": "cuerpo", "es": "el cuerpo", "en": "the body" },
+      { "key": "patas", "es": "las patas", "en": "the paws" },
+      { "key": "cola", "es": "la cola", "en": "the tail" },
+      { "key": "suelo", "es": "el suelo", "en": "the ground" },
+      { "key": "sol", "es": "el sol", "en": "the sun" } ] },
+    { "id": "jirafa", "title": "Jirafa", "title_en": "Giraffe", "level": 3, "steps": [
+      { "key": "cabeza", "es": "la cabeza", "en": "the head" },
+      { "key": "cuernitos", "es": "los cuernitos y la oreja", "en": "the horns and ear" },
+      { "key": "ojo", "es": "el ojo", "en": "the eye" },
+      { "key": "cuello", "es": "el cuello largo", "en": "the long neck" },
+      { "key": "cuerpo", "es": "el cuerpo", "en": "the body" },
+      { "key": "patas", "es": "las patas", "en": "the legs" },
+      { "key": "manchas", "es": "las manchas", "en": "the spots" },
+      { "key": "cola", "es": "la cola", "en": "the tail" },
+      { "key": "arbusto", "es": "el arbusto", "en": "the bush" } ] }
+  ]
+}

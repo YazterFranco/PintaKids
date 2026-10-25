@@ -1,2 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><g fill="none" stroke="#2b2d42" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"><path d="M28 110 Q28 94 54 92 L144 86 Q178 86 186 102 Q178 118 144 120 L54 126 Q28 126 28 110 Z"/><polygon points="86,92 60,44 100,48 114,90"/><polygon points="90,120 68,158 106,154 116,118"/><polygon points="152,88 166,62 178,88"/><circle cx="58" cy="104" r="4.5"/><circle cx="80" cy="103" r="4.5"/><circle cx="102" cy="102" r="4.5"/><circle cx="124" cy="101" r="4.5"/><path d="M172 96 L188 102 L172 110"/><circle cx="50" cy="100" r="3.5"/><circle cx="50" cy="100" r="1.5"/><ellipse cx="40" cy="56" rx="22" ry="10"/><ellipse cx="162" cy="152" rx="20" ry="9"/><polygon points="122,34 123.8,38.2 128,40 123.8,41.8 122,46 120.2,41.8 116,40 120.2,38.2"/><path d="M21 34 Q14 34 14 28 Q14 22 22 22 Q25 16 33 18 Q38 13 45 17 Q54 17 54 25 Q60 26 58 33 Q56 34 49 34 Z"/><path d="M146 38 Q140.4 38 140.4 33.2 Q140.4 28.4 146.8 28.4 Q149.2 23.6 155.6 25.2 Q159.6 21.2 165.2 24.4 Q172.4 24.4 172.4 30.8 Q177.2 31.6 175.6 37.2 Q174 38 168.4 38 Z"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="6" data-name="nubes">
+    <path d="M78 300 c-18 0 -23 -26 -3 -31 c3 -21 31 -26 42 -10 c13 -16 42 -8 39 13 c18 3 18 29 0 29 Z"/>
+    <path d="M300 96 c-15 0 -20 -22 -2 -26 c2 -18 26 -22 35 -9 c11 -13 35 -7 33 11 c15 2 15 24 0 24 Z"/>
+  </g>
+  <g data-step="5" data-name="cola">
+    <path d="M66 186 L48 118 C48 112 54 110 58 114 L112 174 Z"/>
+    <path d="M72 202 L34 218 L40 228 L86 216 Z"/>
+  </g>
+  <g data-step="1" data-name="fuselaje">
+    <path d="M58 200 C58 182 78 172 100 172 L300 172 C340 172 368 190 372 204 C368 220 340 232 300 232 L100 232 C78 232 58 220 58 200 Z"/>
+  </g>
+  <g data-step="2" data-name="cabina">
+    <path d="M318 180 C334 180 350 188 358 198 L318 198 Z"/>
+  </g>
+  <g data-step="3" data-name="ventanillas">
+    <circle cx="120" cy="196" r="9"/>
+    <circle cx="152" cy="196" r="9"/>
+    <circle cx="184" cy="196" r="9"/>
+    <circle cx="216" cy="196" r="9"/>
+    <circle cx="248" cy="196" r="9"/>
+    <circle cx="280" cy="196" r="9"/>
+  </g>
+  <g data-step="4" data-name="ala">
+    <path d="M204 210 L258 210 L184 292 L154 292 Z"/>
+  </g>
+</svg>

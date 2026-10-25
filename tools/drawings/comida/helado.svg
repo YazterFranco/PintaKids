@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="1" data-name="cono">
+    <path d="M150 210 L200 360 L250 210 Z"/>
+    <path d="M162 246 H238 M174 282 H226 M186 318 H214 M152 216 L220 300 M248 216 L180 300" fill="none"/>
+  </g>
+  <g data-step="2" data-name="bola">
+    <path d="M134 214 C120 170 150 140 200 140 C250 140 280 170 266 214 C258 230 246 222 238 230 C232 244 220 244 214 232 C206 220 194 220 186 232 C180 244 168 244 162 230 C154 222 142 230 134 214 Z"/>
+  </g>
+  <g data-step="3" data-name="bola2">
+    <path d="M150 124 C144 88 170 60 200 60 C230 60 256 88 250 124 C246 140 230 146 200 146 C170 146 154 140 150 124 Z"/>
+  </g>
+  <g data-step="5" data-name="chispitas">
+    <path d="M168 96 l8 4 M186 82 l2 9 M222 88 l-6 6 M236 110 l8 -2 M196 118 l6 6 M164 122 l7 -3 M160 186 l8 3 M240 176 l-6 6 M206 166 l2 8" fill="none"/>
+  </g>
+  <g data-step="4" data-name="cereza">
+    <path d="M208 40 Q214 22 230 16" fill="none"/>
+    <circle cx="204" cy="52" r="14"/>
+  </g>
+</svg>

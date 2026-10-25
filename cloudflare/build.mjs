@@ -51,9 +51,13 @@ function loadCatalog() {
       if (!existsSync(filePath)) continue;
       const svg = readFileSync(filePath, 'utf8');
       if (!svgIsSafe(svg)) continue;
-      accepted.push({ file, title, license });
+      const entry = { file, title, license };
+      if (typeof raw.title_en === 'string') entry.title_en = raw.title_en;
+      if ([1, 2, 3].includes(raw.level)) entry.level = raw.level;
+      if (Array.isArray(raw.steps)) entry.steps = raw.steps;
+      accepted.push(entry);
     }
-    if (accepted.length) packs.push({ id, name: m.name, version: Number(m.version) || 1, files: accepted });
+    if (accepted.length) packs.push({ id, name: m.name, name_en: m.name_en, version: Number(m.version) || 1, files: accepted });
   }
   return packs;
 }
@@ -77,7 +81,7 @@ for (const pack of packs) {
     cpSync(join(CATALOG, pack.id, f.file), join(packDir, f.file));
   }
   writeFileSync(join(packDir, 'manifest.json'), JSON.stringify(pack));
-  summary.push({ id: pack.id, name: pack.name, version: pack.version, fileCount: pack.files.length });
+  summary.push({ id: pack.id, name: pack.name, name_en: pack.name_en, version: pack.version, fileCount: pack.files.length });
   total += pack.files.length;
 }
 writeFileSync(

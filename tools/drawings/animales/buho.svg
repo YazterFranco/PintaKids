@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="5" data-name="rama">
+    <path d="M18 350 C120 338 280 342 382 354 L382 374 C280 364 120 360 18 372 Z"/>
+    <ellipse cx="62" cy="334" rx="22" ry="10" transform="rotate(-25 62 334)"/>
+    <ellipse cx="340" cy="334" rx="22" ry="10" transform="rotate(20 340 334)"/>
+  </g>
+  <g data-step="1" data-name="cuerpo">
+    <path d="M120 300 C110 220 120 124 150 92 L140 52 L182 80 C194 76 206 76 218 80 L260 52 L250 92 C280 124 290 220 280 300 C270 338 240 350 200 350 C160 350 130 338 120 300 Z"/>
+    <path d="M160 252 C150 300 170 338 200 338 C230 338 250 300 240 252 C230 222 170 222 160 252 Z"/>
+    <path d="M173 346 L167 364 M180 348 L180 366 M187 346 L193 364 M213 346 L207 364 M220 348 L220 366 M227 346 L233 364" fill="none"/>
+  </g>
+  <g data-step="4" data-name="alas">
+    <path d="M128 196 C94 228 98 292 132 320 C142 290 148 248 142 206 Z"/>
+    <path d="M272 196 C306 228 302 292 268 320 C258 290 252 248 258 206 Z"/>
+  </g>
+  <g data-step="2" data-name="ojos">
+    <circle cx="164" cy="160" r="36"/>
+    <circle cx="236" cy="160" r="36"/>
+    <circle cx="166" cy="162" r="18"/>
+    <circle cx="234" cy="162" r="18"/>
+    <circle cx="168" cy="164" r="10" fill="#2b2d42"/>
+    <circle cx="232" cy="164" r="10" fill="#2b2d42"/>
+    <circle cx="164" cy="158" r="3.5" stroke="none"/>
+    <circle cx="228" cy="158" r="3.5" stroke="none"/>
+  </g>
+  <g data-step="3" data-name="pico">
+    <path d="M188 192 L212 192 L200 216 Z"/>
+    <path d="M182 262 l9 9 l9 -9 M200 262 l9 9 l9 -9 M191 290 l9 9 l9 -9" fill="none"/>
+  </g>
+</svg>

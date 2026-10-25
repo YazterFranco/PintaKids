@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="6" data-name="cola">
+    <path d="M300 216 C330 210 354 196 366 168 C370 160 380 164 376 174 C364 214 338 246 304 254 Z"/>
+  </g>
+  <g data-step="5" data-name="patas">
+    <path d="M14 352 H386" fill="none"/>
+    <path d="M166 268 V344 H196 V268 Z M206 272 V344 H236 V272 Z M250 270 V344 H280 V270 Z M286 264 V344 H316 V264 Z"/>
+    <path d="M172 344 q5 -8 10 0 M212 344 q5 -8 10 0 M256 344 q5 -8 10 0 M292 344 q5 -8 10 0" fill="none"/>
+  </g>
+  <g data-step="4" data-name="cuerpo">
+    <path d="M150 232 C150 182 200 162 250 168 C300 174 324 210 316 246 C308 276 272 288 232 288 L190 288 C162 286 150 264 150 232 Z"/>
+  </g>
+  <g data-step="3" data-name="cuello">
+    <path d="M156 226 C140 182 120 142 98 110 L132 94 C150 130 170 168 198 194 Z"/>
+  </g>
+  <g data-step="1" data-name="cabeza">
+    <path d="M68 98 C68 76 94 64 118 70 C138 74 146 92 140 106 C132 120 102 122 84 118 C74 116 68 108 68 98 Z"/>
+  </g>
+  <g data-step="2" data-name="ojo">
+    <circle cx="112" cy="88" r="7" fill="#2b2d42"/>
+    <circle cx="110" cy="85" r="2.5" stroke="none"/>
+    <path d="M78 106 Q90 114 104 108" fill="none"/>
+  </g>
+  <g data-step="7" data-name="manchas">
+    <circle cx="214" cy="200" r="12"/><circle cx="252" cy="194" r="9"/><circle cx="282" cy="214" r="11"/>
+    <circle cx="232" cy="232" r="8"/><circle cx="190" cy="234" r="9"/>
+  </g>
+</svg>

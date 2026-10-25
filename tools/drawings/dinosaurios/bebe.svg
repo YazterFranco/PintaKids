@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="#fff" stroke="#2b2d42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <g data-step="5" data-name="nido">
+    <path d="M40 354 Q200 330 360 354 L360 372 L40 372 Z"/>
+    <path d="M58 350 l5 -16 l5 16 l5 -11 M326 348 l5 -16 l5 16 l5 -11" fill="none"/>
+  </g>
+  <g data-step="3" data-name="crestas">
+    <path d="M146 124 L150 92 L174 110 Z"/>
+    <path d="M178 106 L190 74 L208 100 Z"/>
+    <path d="M216 104 L234 78 L242 108 Z"/>
+  </g>
+  <g data-step="1" data-name="cabeza">
+    <path d="M124 232 C114 162 150 104 206 104 C258 104 292 150 286 208 C284 230 270 242 250 242 Z"/>
+  </g>
+  <g data-step="2" data-name="cara">
+    <circle cx="178" cy="160" r="12" fill="#2b2d42"/>
+    <circle cx="234" cy="160" r="12" fill="#2b2d42"/>
+    <circle cx="174" cy="155" r="4" stroke="none"/>
+    <circle cx="230" cy="155" r="4" stroke="none"/>
+    <circle cx="198" cy="190" r="2.5" fill="#2b2d42"/><circle cx="214" cy="190" r="2.5" fill="#2b2d42"/>
+    <path d="M182 204 Q206 222 230 204" fill="none"/>
+    <ellipse cx="156" cy="196" rx="11" ry="7"/><ellipse cx="258" cy="196" rx="11" ry="7"/>
+  </g>
+  <g data-step="4" data-name="cascaron">
+    <path d="M96 232 L124 212 L154 238 L184 212 L214 238 L244 212 L274 238 L304 216 C312 290 274 350 200 350 C126 350 88 290 96 232 Z"/>
+    <circle cx="140" cy="290" r="13"/><circle cx="252" cy="298" r="11"/><circle cx="196" cy="328" r="8"/>
+  </g>
+</svg>
