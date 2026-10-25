@@ -154,5 +154,20 @@
   "draw.opacity": "Transparency",
   "draw.size": "Size",
   "draw.share": "Share",
-  "draw.zoomReset": "Fit to screen"
+  "draw.zoomReset": "Fit to screen",
+  "color.all": "All",
+  "color.level1": "Easy",
+  "color.level2": "Medium",
+  "color.level3": "Tricky",
+  "color.recent": "Recent",
+  "color.mine": "My drawings",
+  "color.mineEmpty": "Your converted photos and Draw-with-me drawings show up here.",
+  "color.recentEmpty": "Nothing colored yet. Pick a drawing!",
+  "color.fill.solid": "Solid",
+  "color.fill.gradient": "Gradient",
+  "color.fill.dots": "Dots",
+  "color.fill.stripes": "Stripes",
+  "color.fill.checks": "Checks",
+  "color.fill.stars": "Sparkles",
+  "color.fill.magic": "Magic"
 }

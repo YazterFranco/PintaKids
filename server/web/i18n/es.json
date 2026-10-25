@@ -154,5 +154,20 @@
   "draw.opacity": "Transparencia",
   "draw.size": "Grosor",
   "draw.share": "Compartir",
-  "draw.zoomReset": "Ver todo"
+  "draw.zoomReset": "Ver todo",
+  "color.all": "Todos",
+  "color.level1": "Fácil",
+  "color.level2": "Medio",
+  "color.level3": "Ingenioso",
+  "color.recent": "Recientes",
+  "color.mine": "Mis dibujos",
+  "color.mineEmpty": "Aquí aparecen tus fotos convertidas y los dibujos que hiciste en Dibuja conmigo.",
+  "color.recentEmpty": "Aún no has coloreado nada. ¡Elige un dibujo!",
+  "color.fill.solid": "Color liso",
+  "color.fill.gradient": "Degradado",
+  "color.fill.dots": "Puntitos",
+  "color.fill.stripes": "Rayas",
+  "color.fill.checks": "Cuadritos",
+  "color.fill.stars": "Brillitos",
+  "color.fill.magic": "Mágico"
 }

@@ -13,8 +13,8 @@ const SHELL_LIST = [
   '/', '/style.css', '/app.js', '/manifest.webmanifest', '/bootcheck.js',
   '/i18n/es.json', '/i18n/en.json',
   '/core/store.js', '/core/strokes.js', '/core/history.js', '/core/colorfill.js', '/core/lineart.js',
-  '/core/paint.js', '/core/brushes.js', '/core/viewport.js', '/core/svgsteps.js', '/core/story.js', '/core/i18n.js', '/core/tts.js', '/core/sfx.js',
-  '/ui/surface.js', '/ui/parts.js', '/ui/icons.js', '/ui/colorpicker.js', '/ui/share.js',
+  '/core/paint.js', '/core/brushes.js', '/core/viewport.js', '/core/svgsteps.js', '/core/fills.js', '/core/story.js', '/core/i18n.js', '/core/tts.js', '/core/sfx.js',
+  '/ui/surface.js', '/ui/parts.js', '/ui/icons.js', '/ui/colorpicker.js', '/ui/share.js', '/ui/celebrate.js',
   '/modes/home.js', '/modes/draw.js', '/modes/color.js', '/modes/learn.js', '/modes/photo.js',
   '/modes/story.js', '/modes/gallery.js', '/modes/parents.js',
 ];
