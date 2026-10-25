@@ -27,3 +27,4 @@ dist/
 **/.DS_Store
 .superpowers/
 tests-e2e/.scratch/
+__pycache__/
