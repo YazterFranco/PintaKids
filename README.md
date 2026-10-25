@@ -59,15 +59,17 @@ cd tests-e2e && npx playwright test      # e2e Chromium + móvil (servidor real 
 cd android && ./gradlew testDebugUnitTest # reglas de actualización (Kotlin)
 ```
 
-## Despliegue web en Cloudflare Pages (recomendado, gratis)
+## Despliegue web en Cloudflare (gratis)
 
-La PWA se puede publicar **sin servidor** en Cloudflare Pages (plan Free: assets ilimitados y
-100 000 invocaciones/día del Worker). El Worker incluido replica la API del catálogo (`/v1/*`).
+La PWA se publica como **Worker + Static Assets** en Cloudflare (plan Free: assets estáticos
+ilimitados y 100 000 peticiones/día). El Worker replica la API del catálogo (`/v1/*`).
+
+- Producción: **https://pintakids.pintakids.workers.dev**
 
 ```bash
 npx wrangler login          # una sola vez (abre el navegador)
 npm run cf:preview          # prueba local en http://localhost:8788
-npm run cf:deploy           # publica en https://pintakids.pages.dev
+npm run cf:deploy           # publica cambios
 ```
 
 - Build: `cloudflare/build.mjs` copia `server/web/` a `dist/` y valida el catálogo con las mismas
@@ -75,7 +77,7 @@ npm run cf:deploy           # publica en https://pintakids.pages.dev
 - API: `cloudflare/_worker.js` sirve `/v1/health`, `/v1/catalog`, `/v1/catalog/:pack` y los SVG.
 - El canal de APK (`/v1/app-version`, `/descargas/app.apk`) responde 404 en Cloudflare: para
   autoactualización Android usa Railway o un bucket R2.
-- `dist/` y `.wrangler/` quedan fuera de git.
+- `dist/`, `.wrangler/` y `node_modules/` quedan fuera de git.
 
 ## Despliegue (Railway)
 

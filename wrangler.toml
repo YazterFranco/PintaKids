@@ -1,3 +1,10 @@
 name = "pintakids"
-pages_build_output_dir = "dist"
+main = "cloudflare/_worker.js"
 compatibility_date = "2026-01-01"
+
+# Assets estáticos generados por `npm run cf:build` (PWA + catálogo validado).
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+# El Worker corre primero para aplicar CSP/seguridad y resolver /v1/*.
+run_worker_first = true

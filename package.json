@@ -8,7 +8,7 @@
     "start": "node --disable-warning=ExperimentalWarning server/src/server.ts",
     "test": "npm --prefix server test",
     "cf:build": "node cloudflare/build.mjs",
-    "cf:preview": "npm run cf:build && wrangler pages dev dist --port 8788",
-    "cf:deploy": "npm run cf:build && wrangler pages deploy dist --project-name pintakids"
+    "cf:preview": "npm run cf:build && wrangler dev --port 8788",
+    "cf:deploy": "npm run cf:build && wrangler deploy"
   }
 }

@@ -85,8 +85,7 @@ writeFileSync(
   JSON.stringify({ generatedAt: Date.now(), packs: summary, total, licenses: ['gratis-sin-condiciones'] }),
 );
 
-// 3. Worker + headers
-cpSync(join(HERE, '_worker.js'), join(DIST, '_worker.js'));
-cpSync(join(HERE, '_headers'), join(DIST, '_headers'));
+// 3. Assets auxiliares (el Worker vive fuera de dist; nunca se publica como asset)
+writeFileSync(join(DIST, '.assetsignore'), '_worker.js\n_headers\n');
 
 console.log(`✓ dist/ generado: ${packs.length} paquetes, ${total} dibujos`);
