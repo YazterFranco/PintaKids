@@ -1,9 +1,9 @@
 /** Modo Colorear: biblioteca gratuita + rellenar tocando sin salirse de la línea. */
 
-import { PALETTE, btn, paletteRow, sizesRow, toolbar, iconBtn, ACTION_ICONS } from '../ui/parts.js';
+import { PALETTE, iconBtn, paletteRow, sizesRow, ACTION_ICONS } from '../ui/parts.js';
 import { dilateMask, fillRegion, labelRegions, lineMaskFromRGBA } from '../core/colorfill.js';
 
-const RENDER = 900; // lienzo lógico para detectar regiones (rápido y suficiente en pantalla)
+const RENDER = 640; // lienzo lógico: suficiente para pantalla y rápido en móvil
 
 export async function mount(ctx) {
   const { app, toast, addStar, applyI18n, store } = ctx;
@@ -14,38 +14,117 @@ export async function mount(ctx) {
     root.replaceChildren();
   }
 
-  // Mantener la vista montada si ya estaba (navegación interna): reconstruir solo si está vacía.
-  if (!root.childElementCount) build();
+  // Mantener el dibujo si ya estaba montado (navegación interna).
+  if (root.childElementCount) {
+    if (incoming && root.__pkColorIncoming) await root.__pkColorIncoming(incoming);
+    return;
+  }
 
-  async function build() {
+  build();
+
+  function build() {
     root.replaceChildren();
+    root.classList.remove('color-mode');
+    root.scrollTop = 0;
+
+    /* ---------- estado ---------- */
+    let line = null; // ImageData de la línea (trazo sobre transparente)
+    let lineCanvas = null; // misma línea como canvas (para dibujar encima)
+    let labels = null; // Int32Array de regiones
+    let bgLabels = null; // regiones que tocan el borde (fondo: no se pintan)
+    let fillData = null; // Uint8ClampedArray capa de color
+    let fillImage = null; // ImageData que comparte/refleja fillData
+    let fillCanvas = null;
+    let fillCtx = null;
+    let undoFills = [];
+    let current = { pack: '', file: '', title: '' };
+    let color = PALETTE[0];
+    let mode = 'fill'; // 'fill' | 'brush'
+    let brushSize = 30;
+    let drawing = false;
+    let catalog = null; // caché del índice del catálogo
+    let busy = false;
+
+    /* ---------- DOM estable ---------- */
+    const picker = document.createElement('div');
+    picker.className = 'color-picker';
 
     const head = document.createElement('div');
-    head.className = 'panel';
-    root.appendChild(head);
+    head.className = 'color-head';
+    const pickerTitle = document.createElement('h2');
+    pickerTitle.id = 'color-title';
+    pickerTitle.textContent = app.t('color.pick');
+    const note = document.createElement('p');
+    note.className = 'note';
+    note.textContent = app.t('color.tap');
+    head.append(pickerTitle, note);
 
+    const chips = document.createElement('div');
+    chips.className = 'packrow';
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+    picker.append(head, chips, grid);
+
+    const paintView = document.createElement('div');
+    paintView.className = 'color-paint';
+    paintView.hidden = true;
+
+    const top = document.createElement('div');
+    top.className = 'color-top';
+    const back = iconBtn(ACTION_ICONS.back, app.t('color.another'), openPicker);
+    const titleEl = document.createElement('h2');
+    titleEl.id = 'color-paint-title';
+    const undoBtn = iconBtn(ACTION_ICONS.undo, app.t('draw.undo'), undo);
+    const saveBtn = iconBtn(ACTION_ICONS.save, app.t('draw.save'), () => saveItem('colored', current.title), 'toolbtn save');
+    top.append(back, titleEl, undoBtn, saveBtn);
+
+    const stage = document.createElement('div');
+    stage.className = 'color-stage';
     const canvasWrap = document.createElement('div');
     canvasWrap.className = 'canvas-wrap';
-    canvasWrap.style.flex = '1';
-
     const canvas = document.createElement('canvas');
     canvas.width = canvas.height = RENDER;
     canvas.style.touchAction = 'none';
     canvasWrap.appendChild(canvas);
+    stage.appendChild(canvasWrap);
+
     const ctx2 = canvas.getContext('2d', { willReadFrequently: true });
 
-    let line = null; // ImageData de la línea (trazo sobre transparente): fuente de máscara
-    let lineCanvas = null; // misma línea como canvas, para composiciones con drawImage (putImageData no mezcla alfa)
-    let labels = null; // Int32Array de regiones
-    let fillData = null; // Uint8ClampedArray color layer
-    let undoFills = [];
-    let current = { pack: '', file: '', title: '' };
-    let color = PALETTE[0];
-    let brush = false;
-    let brushSize = 30;
-
+    const tray = document.createElement('div');
+    tray.className = 'color-tray';
     const colorRow = paletteRow((c) => (color = c));
+    colorRow.classList.add('tray-palette');
 
+    const actions = document.createElement('div');
+    actions.className = 'color-actions';
+    const fillBtn = iconBtn(ACTION_ICONS.fill, app.t('color.fill'), () => setMode('fill'));
+    const brushBtn = iconBtn(ACTION_ICONS.brush, app.t('color.brush'), () => setMode('brush'));
+    const sizes = sizesRow((s) => (brushSize = s), 30);
+    const tip = document.createElement('span');
+    tip.className = 'color-tip';
+    const clearBtn = iconBtn(ACTION_ICONS.clear, app.t('color.clear'), clearFills);
+    const dl = iconBtn(ACTION_ICONS.download, app.t('color.download'), download);
+    actions.append(fillBtn, brushBtn, sizes, tip, clearBtn, dl);
+    tray.append(colorRow, actions);
+
+    const body = document.createElement('div');
+    body.className = 'color-body';
+    body.append(stage, tray);
+    paintView.append(top, body);
+    root.append(picker, paintView);
+
+    /* ---------- tamaño del lienzo (siempre cuadrado) ---------- */
+    function fitStage() {
+      const r = stage.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      const s = Math.max(140, Math.floor(Math.min(r.width, r.height)));
+      canvasWrap.style.width = s + 'px';
+      canvasWrap.style.height = s + 'px';
+    }
+    const ro = new ResizeObserver(fitStage);
+    ro.observe(stage);
+
+    /* ---------- carga de SVG ---------- */
     const loadSvg = (url) =>
       new Promise((resolve, reject) => {
         const img = new Image();
@@ -53,8 +132,8 @@ export async function mount(ctx) {
           const off = document.createElement('canvas');
           off.width = off.height = RENDER;
           const c = off.getContext('2d', { willReadFrequently: true });
-          // Sin fondo: la línea queda sobre transparente.
-          const scale = Math.min(RENDER / img.width, RENDER / img.height);
+          // 4 % de margen: el trazo nunca se corta en el borde.
+          const scale = Math.min((RENDER * 0.92) / img.width, (RENDER * 0.92) / img.height);
           const dw = img.width * scale;
           const dh = img.height * scale;
           c.drawImage(img, (RENDER - dw) / 2, (RENDER - dh) / 2, dw, dh);
@@ -64,34 +143,64 @@ export async function mount(ctx) {
         img.src = url;
       });
 
-    async function prepareFromLine({ canvas, imageData }, title, pack = '', file = '') {
+    /** Regiones que tocan el borde = fondo de la hoja (no deben rellenarse). */
+    function borderRegions(lbls, size, count) {
+      const bg = new Uint8Array(count);
+      const mark = (r) => {
+        if (r >= 0) bg[r] = 1;
+      };
+      for (let i = 0; i < size; i++) {
+        mark(lbls[i]);
+        mark(lbls[(size - 1) * size + i]);
+        mark(lbls[i * size]);
+        mark(lbls[i * size + size - 1]);
+      }
+      return bg;
+    }
+
+    async function prepareFromLine({ canvas: src, imageData }, title, pack = '', file = '') {
       line = imageData;
-      lineCanvas = canvas;
+      lineCanvas = src;
       const mask = dilateMask(lineMaskFromRGBA(imageData.data, RENDER, RENDER), RENDER, RENDER);
       const r = labelRegions(mask, RENDER, RENDER);
       labels = r.labels;
+      bgLabels = borderRegions(r.labels, RENDER, r.regionCount);
+
       fillData = new Uint8ClampedArray(RENDER * RENDER * 4);
+      fillImage = new ImageData(fillData, RENDER, RENDER);
+      fillCanvas = document.createElement('canvas');
+      fillCanvas.width = fillCanvas.height = RENDER;
+      fillCtx = fillCanvas.getContext('2d');
+
       undoFills = [];
       current = { pack, file, title };
+      titleEl.textContent = title;
       paint();
-      const titleEl = document.getElementById('color-title');
-      if (titleEl) titleEl.textContent = title;
+    }
+
+    function syncFillImage() {
+      if (fillImage.data !== fillData) fillImage.data.set(fillData);
     }
 
     function paint() {
-      const out = new ImageData(RENDER, RENDER);
-      // capa color sobre fondo blanco, luego la línea encima
-      const d = out.data;
-      for (let i = 0; i < RENDER * RENDER; i++) {
-        const o = i * 4;
-        const a = fillData[o + 3];
-        d[o] = (fillData[o] * a + 255 * (255 - a)) / 255;
-        d[o + 1] = (fillData[o + 1] * a + 255 * (255 - a)) / 255;
-        d[o + 2] = (fillData[o + 2] * a + 255 * (255 - a)) / 255;
-        d[o + 3] = 255;
-      }
-      ctx2.putImageData(out, 0, 0);
+      if (!lineCanvas || !fillImage) return;
+      syncFillImage();
+      fillCtx.putImageData(fillImage, 0, 0);
+      ctx2.fillStyle = '#ffffff';
+      ctx2.fillRect(0, 0, RENDER, RENDER);
+      ctx2.drawImage(fillCanvas, 0, 0);
       ctx2.drawImage(lineCanvas, 0, 0);
+    }
+
+    // Evita repintar más de una vez por frame al arrastrar el pincel.
+    let paintQueued = false;
+    function queuePaint() {
+      if (paintQueued) return;
+      paintQueued = true;
+      requestAnimationFrame(() => {
+        paintQueued = false;
+        paint();
+      });
     }
 
     function rgba(hex) {
@@ -99,21 +208,23 @@ export async function mount(ctx) {
       return [(n >> 16) & 255, (n >> 8) & 255, n & 255, 255];
     }
 
-    let lastPaint = null; // una sola entrada de undo por trazo de brocha
+    function pushUndo() {
+      undoFills.push(fillData.slice());
+      if (undoFills.length > 30) undoFills.shift();
+    }
+
     function stampAt(x, y, isStart) {
+      if (!labels) return;
       const px = Math.floor(x * RENDER);
       const py = Math.floor(y * RENDER);
+      if (px < 0 || py < 0 || px >= RENDER || py >= RENDER) return;
       const i = py * RENDER + px;
-      if (i < 0 || i >= labels.length) return;
       const region = labels[i];
-      if (region < 0) return; // sobre la línea: ignorar (los niños perdonan, las líneas mandan)
-      if (brush) {
-        // pincel dentro de la región: círculo recortado
-        if (isStart) {
-          undoFills.push(fillData.slice());
-          if (undoFills.length > 30) undoFills.shift();
-          lastPaint = performance.now();
-        }
+      if (region < 0 || bgLabels[region]) return; // línea o fondo: no se pinta
+
+      if (mode === 'brush') {
+        if (isStart) pushUndo();
+        const [r, g, b] = rgba(color);
         const rad = (brushSize / 400) * RENDER;
         for (let dy = -rad; dy <= rad; dy++) {
           for (let dx = -rad; dx <= rad; dx++) {
@@ -121,42 +232,51 @@ export async function mount(ctx) {
             const j = (py + Math.round(dy)) * RENDER + (px + Math.round(dx));
             if (j >= 0 && j < labels.length && labels[j] === region) {
               const o = j * 4;
-              fillData[o] = rgba(color)[0];
-              fillData[o + 1] = rgba(color)[1];
-              fillData[o + 2] = rgba(color)[2];
+              fillData[o] = r;
+              fillData[o + 1] = g;
+              fillData[o + 2] = b;
               fillData[o + 3] = 255;
             }
           }
         }
+        queuePaint();
       } else {
-        undoFills.push(fillData.slice());
-        if (undoFills.length > 30) undoFills.shift();
+        pushUndo();
         fillRegion(fillData, labels, region, rgba(color));
+        paint();
       }
-      paint();
     }
 
-    let drawing = false;
     canvas.addEventListener('pointerdown', (e) => {
       if (!labels) return;
+      e.preventDefault();
       drawing = true;
       canvas.setPointerCapture(e.pointerId);
       const r = canvas.getBoundingClientRect();
       stampAt((e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height, true);
     });
     canvas.addEventListener('pointermove', (e) => {
-      if (!drawing || !brush) return;
+      if (!drawing || mode !== 'brush') return;
       const r = canvas.getBoundingClientRect();
       stampAt((e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height, false);
     });
-    canvas.addEventListener('pointerup', () => (drawing = false));
+    const stop = () => (drawing = false);
+    canvas.addEventListener('pointerup', stop);
+    canvas.addEventListener('pointercancel', stop);
 
     function undo() {
       const prev = undoFills.pop();
-      if (prev) {
-        fillData = prev;
-        paint();
-      }
+      if (!prev) return;
+      fillData = prev;
+      fillImage = new ImageData(fillData, RENDER, RENDER);
+      paint();
+    }
+
+    function clearFills() {
+      if (!fillData) return;
+      pushUndo();
+      fillData.fill(0);
+      paint();
     }
 
     function mergedImageData() {
@@ -252,34 +372,42 @@ export async function mount(ctx) {
       return cropped;
     }
 
-    /* ---------- panel de elección ---------- */
-    async function openPicker() {
-      head.replaceChildren();
-      canvasWrap.hidden = true;
-      root.insertBefore(canvasWrap, null);
+    /* ---------- elegir dibujo ---------- */
+    function setMode(m) {
+      mode = m;
+      fillBtn.setAttribute('aria-pressed', String(m === 'fill'));
+      brushBtn.setAttribute('aria-pressed', String(m === 'brush'));
+      sizes.hidden = m !== 'brush';
+      tip.hidden = m === 'brush';
+      tip.textContent = app.t(m === 'brush' ? 'color.brushHint' : 'color.tap');
+    }
 
-      const title = document.createElement('h2');
-      title.id = 'color-title';
-      title.textContent = app.t('color.pick');
-      const hint = document.createElement('div');
-      hint.className = 'note';
-      hint.textContent = app.t('color.tap');
+    function openPicker() {
+      paintView.hidden = true;
+      picker.hidden = false;
+      root.classList.remove('color-mode');
+      root.scrollTop = 0;
+    }
 
-      const chips = document.createElement('div');
-      chips.className = 'packrow';
-      const grid = document.createElement('div');
-      grid.className = 'grid';
-      head.append(title, chips, grid);
-      if (incoming) {
-        // viene de foto→colorear: ya hay máscara, no hace falta elegir
-        chips.style.display = 'none';
-      }
+    function openCanvas() {
+      picker.hidden = true;
+      paintView.hidden = false;
+      root.classList.add('color-mode');
+      titleEl.textContent = current.title || app.t('color.pick');
+      requestAnimationFrame(() => {
+        fitStage();
+        paint();
+      });
+    }
 
-      const idx = await fetch('/v1/catalog?v=3').then((r) => r.json());
+    async function fillGrid() {
+      if (catalog) return;
+      catalog = await fetch('/v1/catalog?v=8').then((r) => r.json());
       let first = true;
-      for (const pack of idx.packs) {
+      for (const pack of catalog.packs) {
         const chip = document.createElement('button');
         chip.className = 'chip';
+        chip.type = 'button';
         chip.textContent = app.t('color.pack.' + pack.id) ?? pack.name;
         chip.addEventListener('click', () => loadPack(pack.id, chip));
         chips.appendChild(chip);
@@ -288,63 +416,59 @@ export async function mount(ctx) {
           loadPack(pack.id, chip);
         }
       }
+    }
 
-      async function loadPack(id, chipActive) {
-        chips.querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-pressed', String(c === chipActive)));
-        grid.replaceChildren();
-        const pack = await fetch('/v1/catalog/' + id + '?v=3').then((r) => r.json());
-        for (const f of pack.files) {
-          const card = document.createElement('button');
-          card.className = 'card';
-          const img = new Image();
-          img.src = `/v1/catalog/${id}/files/${f.file}?v=3`;
-          img.alt = f.title;
-          const lab = document.createElement('small');
-          lab.textContent = f.title;
-          card.append(img, lab);
-          card.addEventListener('click', async () => {
+    async function loadPack(id, chipActive) {
+      chips.querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-pressed', String(c === chipActive)));
+      grid.replaceChildren();
+      const pack = await fetch('/v1/catalog/' + id + '?v=8').then((r) => r.json());
+      for (const f of pack.files) {
+        const card = document.createElement('button');
+        card.className = 'card';
+        card.type = 'button';
+        const img = new Image();
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.src = `/v1/catalog/${id}/files/${f.file}?v=8`;
+        img.alt = f.title;
+        const lab = document.createElement('small');
+        lab.textContent = f.title;
+        card.append(img, lab);
+        card.addEventListener('click', async () => {
+          if (busy) return;
+          busy = true;
+          card.disabled = true;
+          try {
             const data = await loadSvg(img.src);
             await prepareFromLine(data, f.title, id, f.file);
             openCanvas();
-          });
-          grid.appendChild(card);
-        }
+          } catch {
+            toast(app.t('color.loadError') ?? 'No se pudo abrir el dibujo');
+          } finally {
+            busy = false;
+            card.disabled = false;
+          }
+        });
+        grid.appendChild(card);
       }
     }
 
-    function openCanvas() {
-      head.replaceChildren();
-      const title = document.createElement('h2');
-      title.id = 'color-title';
-      head.append(title);
-
-      const back = iconBtn(ACTION_ICONS.back, app.t('color.pick'), openPicker);
-      const brushBtn = document.createElement('button');
-      brushBtn.className = 'toolbtn';
-      brushBtn.innerHTML = ACTION_ICONS.brush;
-      brushBtn.title = app.t('color.brush');
-      brushBtn.setAttribute('aria-pressed', 'false');
-      brushBtn.addEventListener('click', () => {
-        brush = !brush;
-        brushBtn.setAttribute('aria-pressed', String(brush));
-      });
-      const undoBtn = iconBtn(ACTION_ICONS.undo, 'Deshacer', undo);
-      const dl = iconBtn(ACTION_ICONS.download, 'Descargar', download);
-      const save = iconBtn(ACTION_ICONS.save, 'Guardar', () => saveItem('colored', current.title), 'toolbtn big');
-      root.appendChild(canvasWrap);
-      canvasWrap.hidden = false;
-      head.appendChild(toolbar(back, brushBtn, undoBtn, colorRow, sizesRow((s) => (brushSize = s), 30), dl, save));
-      title.textContent = current.title;
-    }
-
-    if (incoming) {
-      current = { title: app.t('photo.title') };
-      await prepareFromLine(incoming, app.t('photo.title'), 'photo', 'photo');
+    /* ---------- foto → colorear ---------- */
+    root.__pkColorIncoming = async (mask) => {
+      await prepareFromLine(mask, app.t('photo.title'), 'photo', 'photo');
       openCanvas();
+    };
+
+    /* ---------- arranque ---------- */
+    setMode('fill');
+    if (incoming) {
+      root.__pkColorIncoming(incoming);
     } else {
-      await openPicker();
+      openPicker();
+      fillGrid().catch(() => {
+        pickerTitle.textContent = app.t('color.loadError') ?? 'No se pudo cargar';
+      });
     }
-    root.appendChild(canvasWrap);
     applyI18n(root);
   }
 }

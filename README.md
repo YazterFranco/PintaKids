@@ -1,5 +1,42 @@
 # Pintakids 🖍️
 
+[![CI](https://github.com/TU_USUARIO/TU_REPO/actions/workflows/ci.yml/badge.svg)](https://github.com/TU_USUARIO/TU_REPO/actions/workflows/ci.yml)
+[![Release APK](https://github.com/TU_USUARIO/TU_REPO/actions/workflows/release.yml/badge.svg)](https://github.com/TU_USUARIO/TU_REPO/actions/workflows/release.yml)
+[![Licencia: Pintakids-Original / CC0](https://img.shields.io/badge/licencia-Pintakids--Original%20%2F%20CC0-brightgreen)](LICENSE)
+[![Node ≥ 22.18](https://img.shields.io/badge/node-%E2%89%A522.18-339933?logo=node.js)](https://nodejs.org)
+[![PWA Ready](https://img.shields.io/badge/PWA-ready-5A0FC8?logo=pwa)](https://web.dev/progressive-web-apps/)
+
+> 🎨 **Dibuja, colorea, aprende y cuenta cuentos** — gratis, sin anuncios, sin cuentas, sin rastreo.
+> Todo vive en el dispositivo del niño. Siempre.
+
+---
+
+## ✨ Características destacadas
+
+- 🖌️ **7 modos de juego**: dibujo libre, colorear sin salirse, lecciones paso a paso, foto→colorear, cuentos con voz, galería y zona de padres.
+- 📴 **100 % offline** — Service Worker + IndexedDB, cero dependencias de red.
+- 🤖 **App Android nativa** — APK firmado, sin Google Play ni Firebase, con autoactualización propia.
+- 🔒 **Privacidad real** — sin analítica, sin cookies, sin rastreo. CSP estricta `default-src 'self'`.
+- 🆓 **Contenido libre** — todos los dibujos son `Pintakids-Original` o CC0; el servidor rechaza cualquier otra licencia en tiempo de prueba.
+- ⚡ **Sin build, sin dependencias** — Node.js 22 con TypeScript nativo; la PWA son ES modules puros.
+- 🌐 **Deploy gratis** — Cloudflare Workers (plan Free) o Railway con Docker.
+
+---
+
+## 📑 Tabla de contenidos
+
+1. [Descripción](#pintakids-️)
+2. [Estructura del proyecto](#estructura)
+3. [Ejecutar el servidor](#ejecutar-el-servidor-local)
+4. [Pruebas](#pruebas)
+5. [Despliegue en Cloudflare](#despliegue-web-en-cloudflare-gratis)
+6. [Despliegue en Railway](#despliegue-railway)
+7. [Publicar una versión del APK](#publicar-una-versión-del-apk-ci)
+8. [Regla de contenido](#regla-de-contenido-no-negociable)
+9. [Privacidad](#privacidad)
+
+---
+
 App infantil de **dibujo, coloreado, aprendizaje y cuentos**. Dibuja como en Simple Draw, pero con
 experiencia completa: pinceles, colorear sin salirse de la línea, lecciones paso a paso,
 foto→colorear, cuentos con su propia voz, galería y zona de padres.

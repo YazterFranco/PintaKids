@@ -6,7 +6,7 @@
  * - skipWaiting + clients.claim: el SW nuevo toma control inmediato.
  */
 
-const VERSION = 'pintakids-v6';
+const VERSION = 'pintakids-v8';
 
 const PRECACHE = [
   '/',

@@ -15,7 +15,7 @@ export function createSurface(wrap, opts = {}) {
 
   const state = {
     tool: 'crayon',
-    color: '#e63946',
+    color: '#ff8fab',
     size: 14,
     stamp: '⭐',
   };

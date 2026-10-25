@@ -2,6 +2,22 @@
 
 import { btn, toolbar, iconBtn, ACTION_ICONS } from '../ui/parts.js';
 
+/** Aplica el tema al documentElement según el valor guardado.
+ *  'light' → data-theme='light'
+ *  'dark'  → data-theme='dark'
+ *  'auto'  → elimina data-theme (deja que @media prefers-color-scheme decida)
+ */
+export function applyTheme(value) {
+  const root = document.documentElement;
+  if (value === 'dark') {
+    root.dataset.theme = 'dark';
+  } else if (value === 'light') {
+    root.dataset.theme = 'light';
+  } else {
+    delete root.dataset.theme;
+  }
+}
+
 export async function mount(ctx) {
   const { app, toast, applyI18n, store } = ctx;
   const root = document.getElementById('view-parents');
@@ -70,7 +86,22 @@ export async function mount(ctx) {
   });
   timeRow.append(timeLbl, timeSel);
 
-  p1.append(langRow, soundRow, timeRow);
+  const themeRow = document.createElement('div');
+  themeRow.className = 'row';
+  const themeLbl = document.createElement('span');
+  themeLbl.textContent = app.t('parents.theme');
+  const themeSel = document.createElement('select');
+  themeSel.innerHTML = `<option value="light">${app.t('parents.theme.light')}</option><option value="dark">${app.t('parents.theme.dark')}</option><option value="auto">${app.t('parents.theme.auto')}</option>`;
+  themeSel.value = app.settings.theme ?? 'auto';
+  themeSel.addEventListener('change', async () => {
+    const val = themeSel.value;
+    app.settings.theme = val;
+    await store.setSetting('theme', val);
+    applyTheme(val);
+  });
+  themeRow.append(themeLbl, themeSel);
+
+  p1.append(langRow, soundRow, timeRow, themeRow);
   root.appendChild(p1);
 
   /* respaldo */

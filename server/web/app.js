@@ -3,6 +3,7 @@
 import { store } from './core/store.js';
 import { DEFAULT_LANG, normalizeLang, t } from './core/i18n.js';
 import { starIcon, crayonLogo, tabColor, tabDraw, tabGallery, tabLearn, tabParents, tabPhoto, tabStory, clockIcon } from './ui/icons.js';
+import { applyTheme } from './modes/parents.js';
 
 const app = {
   lang: DEFAULT_LANG,
@@ -19,8 +20,8 @@ const app = {
 
 async function loadDicts() {
   const [es, en] = await Promise.all([
-    fetch('/i18n/es.json?v=6').then((r) => r.json()),
-    fetch('/i18n/en.json?v=6').then((r) => r.json()),
+    fetch('/i18n/es.json?v=8').then((r) => r.json()),
+    fetch('/i18n/en.json?v=8').then((r) => r.json()),
   ]);
   app.base = { es, en };
 }
@@ -104,7 +105,7 @@ async function showView(name) {
   }
 
   try {
-    if (!modules[name]) modules[name] = await import('./modes/' + name + '.js?v=6');
+    if (!modules[name]) modules[name] = await import('./modes/' + name + '.js?v=8');
     if (seq !== viewSeq) return;
     await modules[name].mount(ctx);
   } catch (err) {
@@ -148,6 +149,7 @@ async function boot() {
   app.settings = await store.getSettings();
   app.lang = normalizeLang(app.settings.lang ?? (navigator.language.startsWith('en') ? 'en' : 'es'));
   app.stars = Number(app.settings.stars ?? 0);
+  applyTheme(app.settings.theme ?? 'auto');
   document.getElementById('starScore').innerHTML = starIcon + ' ' + app.stars;
   injectTabIcons();
   await loadDicts();

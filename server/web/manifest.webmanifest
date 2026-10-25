@@ -1,18 +1,68 @@
 {
-  "name": "Pintakids",
+  "name": "Pintakids — Dibujar y Colorear",
   "short_name": "Pintakids",
-  "description": "Dibuja, colorea y cuenta historias — gratis, sin anuncios, todo en tu dispositivo.",
+  "description": "Dibuja, colorea y cuenta historias con tu imaginación. Gratis, sin anuncios y sin conexión a internet.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "orientation": "any",
-  "background_color": "#eff6ff",
-  "theme_color": "#2563eb",
+  "orientation": "portrait",
+  "background_color": "#fffbeb",
+  "theme_color": "#ff8fab",
   "lang": "es",
-  "categories": ["kids", "education", "entertainment"],
+  "dir": "ltr",
+  "categories": ["education", "kids", "games"],
   "icons": [
     { "src": "/assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
-    { "src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png" }
-  ]
+    { "src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/screenshot-draw.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Pantalla de dibujo libre"
+    },
+    {
+      "src": "/assets/screenshot-color.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Pantalla de colorear"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dibujar",
+      "short_name": "Dibujar",
+      "description": "Abre la pantalla de dibujo libre",
+      "url": "/#draw",
+      "icons": [{ "src": "/assets/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Colorear",
+      "short_name": "Colorear",
+      "description": "Abre la pantalla de colorear",
+      "url": "/#color",
+      "icons": [{ "src": "/assets/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "share_target": {
+    "action": "/#photo",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url",
+      "files": [
+        {
+          "name": "image",
+          "accept": ["image/png", "image/jpeg", "image/webp", "image/gif"]
+        }
+      ]
+    }
+  },
+  "prefer_related_applications": false
 }

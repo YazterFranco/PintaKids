@@ -56,7 +56,7 @@
 /* ── Font ──────────────────────────────────────────────────── */
 @font-face {
   font-family: 'Baloo 2';
-  src: url('/assets/fonts/Baloo2-Variable.ttf?v=6') format('truetype-variations');
+  src: url('/assets/fonts/Baloo2-Variable.ttf?v=8') format('truetype-variations');
   font-weight: 400 800;
   font-style: normal;
   font-display: swap;
@@ -119,13 +119,14 @@ body { display: flex; flex-direction: column; }
 #views { flex: 1; min-height: 0; position: relative; overflow: hidden; }
 .view {
   position: absolute; inset: 0; display: flex; flex-direction: column;
-  padding: 14px; gap: 12px; overflow: auto;
-  opacity: 0; transform: translateY(12px) scale(0.98);
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  padding: 14px; gap: 12px; overflow-y: auto; overflow-x: hidden;
+  scrollbar-gutter: stable;
+  opacity: 1;
 }
-.view-enter {
-  opacity: 1; transform: translateY(0) scale(1);
-}
+/* Solo un fundido corto: nada de transform/scale (evita el temblor y el
+   reflujo del área con scroll al cambiar de pestaña). */
+.view-enter { animation: view-fade 0.22s ease both; }
+@keyframes view-fade { from { opacity: 0.35; } to { opacity: 1; } }
 
 /* ── Tabbar ────────────────────────────────────────────────── */
 .tabbar {
@@ -156,9 +157,9 @@ body { display: flex; flex-direction: column; }
 }
 .tab .tab-icon svg { width: 24px; height: 24px; }
 .tab:active { transform: scale(0.94); }
-.tab[aria-selected="true"] { color: var(--c-primary); }
+.tab[aria-selected="true"] { color: var(--color-primary); }
 .tab[aria-selected="true"] .tab-icon {
-  background: var(--c-primary); color: var(--c-white);
+  background: var(--color-primary); color: var(--c-white);
   transform: translateY(-3px) scale(1.08) rotate(-5deg);
   box-shadow: 0 8px 16px rgba(255,139,171,0.35);
   border-color: var(--c-white);
@@ -178,6 +179,65 @@ body { display: flex; flex-direction: column; }
   position: absolute; inset: 0; width: 100%; height: 100%;
   touch-action: none; cursor: crosshair;
 }
+
+/* ── Colorear: lienzo cuadrado + bandeja (sin scroll) ──────── */
+.view.color-mode { overflow: hidden; }
+
+.color-picker { display: flex; flex-direction: column; gap: 12px; flex: 1 0 auto; }
+.color-head { display: flex; flex-direction: column; gap: 4px; padding: 2px 4px; flex: 0 0 auto; }
+.color-head h2 { margin: 0; font-size: 24px; }
+.color-head .note { margin: 0; color: var(--c-muted); font-size: 15px; font-weight: 700; }
+.color-picker .packrow {
+  position: sticky; top: -4px; z-index: 2; flex: 0 0 auto;
+  overflow-x: auto; overflow-y: hidden;
+  background: rgba(255, 251, 235, 0.96);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  border-radius: var(--radius-pill);
+}
+
+.color-paint { display: flex; flex-direction: column; gap: 10px; flex: 1; min-height: 0; }
+.color-top {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--c-white); border-radius: var(--radius-md);
+  padding: 8px 10px; box-shadow: var(--sticker);
+}
+.color-top h2 {
+  flex: 1; min-width: 0; margin: 0; font-size: 19px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.color-top .toolbtn { min-width: 46px; min-height: 46px; }
+.color-top .toolbtn.save {
+  background: linear-gradient(180deg, var(--c-mint-light), var(--c-mint));
+  color: var(--c-white);
+}
+
+.color-body { display: flex; flex-direction: column; gap: 10px; flex: 1; min-height: 0; }
+.color-stage { flex: 1; min-height: 0; display: grid; place-items: center; }
+.color-stage .canvas-wrap {
+  flex: none; min-height: 0; width: 300px; height: 300px;
+  box-shadow: var(--card);
+}
+
+.color-tray {
+  background: var(--c-white); border-radius: var(--radius-md);
+  box-shadow: var(--sticker); padding: 8px 10px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.color-tray .tray-palette {
+  flex-wrap: nowrap; overflow-x: auto; padding: 10px 8px 8px;
+  scrollbar-width: none; scroll-snap-type: x proximity;
+}
+.color-tray .tray-palette::-webkit-scrollbar { display: none; }
+.color-tray .swatch { width: 40px; height: 40px; flex: 0 0 auto; border-width: 3px; }
+.color-tray .swatch[aria-pressed="true"] { outline-offset: 1px; transform: scale(1.12); }
+.color-actions { display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; }
+.color-actions .sizes { flex: 1 1 110px; min-width: 100px; }
+.color-tip {
+  flex: 1 1 0; min-width: 0;
+  color: var(--c-muted); font-size: 14px; font-weight: 700;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+@media (max-width: 620px) { .color-tip { display: none; } .color-actions { justify-content: space-between; } }
 
 /* ── Estado vacío kawaii ───────────────────────────────────── */
 .empty-state {
@@ -214,8 +274,8 @@ body { display: flex; flex-direction: column; }
 .toolbtn:disabled { opacity: 0.4; }
 
 .toolbtn[aria-pressed="true"] {
-  background: var(--c-primary); color: var(--c-white);
-  box-shadow: var(--sticker), 0 3px 0 var(--c-primary-dark);
+  background: var(--color-primary); color: var(--c-white);
+  box-shadow: var(--sticker), 0 3px 0 var(--c-pink-dark);
   transform: translateY(1px);
   border-color: var(--c-white);
 }
@@ -281,7 +341,7 @@ body { display: flex; flex-direction: column; }
 }
 .card small { font-size: 13px; font-weight: 800; color: var(--c-ink-soft); text-align: center; }
 .card:active { transform: translateY(3px) scale(0.96); border-color: var(--c-yellow-dark); box-shadow: var(--sticker-pressed); }
-.card:hover { box-shadow: 0 12px 32px rgba(43,45,66,0.16); transform: translateY(-3px); }
+.card:hover { box-shadow: 0 12px 32px rgba(43,45,66,0.16); }
 
 /* ── Pack chips ────────────────────────────────────────────── */
 .packrow { display: flex; gap: 10px; overflow-x: auto; padding: 4px 4px 12px; scrollbar-width: none; }
@@ -348,7 +408,7 @@ select, input[type="text"] {
   box-shadow: var(--sticker);
 }
 select:focus, input:focus { outline: 4px solid rgba(76,201,240,0.35); border-color: var(--color-primary); }
-.gate-q { font-size: 28px; font-weight: 800; text-align: center; color: var(--c-primary); }
+.gate-q { font-size: 28px; font-weight: 800; text-align: center; color: var(--color-primary); }
 .gate-input { font-size: 28px; text-align: center; width: 150px; }
 .note { font-size: 14px; color: var(--c-muted); line-height: 1.6; }
 .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -410,20 +470,6 @@ input.caption { width: 100%; }
 
 [hidden] { display: none !important; }
 
-/* ── Stagger animation for grid items ──────────────────────── */
-@keyframes stagger-in {
-  from { opacity: 0; transform: translateY(14px) scale(0.94); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-.grid > .card { animation: stagger-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) backwards; }
-.grid > .card:nth-child(1) { animation-delay: 0.03s; }
-.grid > .card:nth-child(2) { animation-delay: 0.08s; }
-.grid > .card:nth-child(3) { animation-delay: 0.13s; }
-.grid > .card:nth-child(4) { animation-delay: 0.18s; }
-.grid > .card:nth-child(5) { animation-delay: 0.23s; }
-.grid > .card:nth-child(6) { animation-delay: 0.28s; }
-.grid > .card:nth-child(7) { animation-delay: 0.33s; }
-.grid > .card:nth-child(8) { animation-delay: 0.38s; }
 
 /* ── Washi tape decoración ─────────────────────────────────── */
 .washi {
@@ -468,3 +514,75 @@ body::before {
   .tab b { font-size: 9px; }
   .toolbtn { min-width: 54px; min-height: 52px; }
 }
+
+
+/* En pantallas anchas la bandeja pasa al lado: el dibujo ocupa el alto disponible. */
+@media (min-width: 900px) {
+  .color-body { flex-direction: row; align-items: stretch; gap: 14px; }
+  .color-stage { flex: 1 1 auto; }
+  .color-tray { flex: 0 0 300px; justify-content: flex-start; }
+  .color-tray .tray-palette { flex-wrap: wrap; overflow: visible; }
+  .color-tray .swatch { width: 44px; height: 44px; }
+  .color-actions { flex-wrap: wrap; }
+  .color-tip { flex: 1 1 100%; white-space: normal; }
+}
+
+/* ── Modo oscuro kawaii ────────────────────────────────────── */
+/* Redefine solo los semantic tokens; los primitive tokens (--c-pink, etc.)
+   permanecen vibrantes en ambos modos. */
+[data-theme='dark'] {
+  --color-background: #1a1a2e;
+  --color-foreground: #f0e6ff;
+  --color-card: #16213e;
+  --color-card-fg: #f0e6ff;
+  --color-primary: var(--c-pink);
+  --color-primary-fg: #ffffff;
+  --color-accent: var(--c-yellow);
+  --color-accent-fg: #1a1a2e;
+  --color-highlight: var(--c-mint);
+  --color-muted: #b0a8cc;
+  --color-border: #3d2e5a;
+  --c-cream: #1e1b2e;
+  --c-white: #1e1b2e;
+  --c-ink: #f0e6ff;
+  --c-ink-soft: #b0a8cc;
+  --c-border: #3d2e5a;
+  --sticker: 0 6px 0 #3d2e5a, 0 10px 24px rgba(0,0,0,0.40);
+  --sticker-pressed: 0 2px 0 #3d2e5a, 0 4px 12px rgba(0,0,0,0.30);
+  --card: 0 8px 0 #3d2e5a, 0 14px 32px rgba(0,0,0,0.35);
+}
+
+[data-theme='dark'] html,
+[data-theme='dark'] body {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,139,171,0.10), transparent 45%),
+    radial-gradient(circle at 80% 80%, rgba(76,201,240,0.08), transparent 45%),
+    radial-gradient(circle at 40% 70%, rgba(138,201,38,0.07), transparent 45%),
+    #1a1a2e;
+}
+
+/* Si data-theme no está seteado, seguir la preferencia del sistema */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-background: #1a1a2e;
+    --color-foreground: #f0e6ff;
+    --color-card: #16213e;
+    --color-card-fg: #f0e6ff;
+    --color-primary: var(--c-pink);
+    --color-primary-fg: #ffffff;
+    --color-accent: var(--c-yellow);
+    --color-accent-fg: #1a1a2e;
+    --color-highlight: var(--c-mint);
+    --color-muted: #b0a8cc;
+    --color-border: #3d2e5a;
+    --c-cream: #1e1b2e;
+    --c-white: #1e1b2e;
+    --c-ink: #f0e6ff;
+    --c-ink-soft: #b0a8cc;
+    --c-border: #3d2e5a;
+    --sticker: 0 6px 0 #3d2e5a, 0 10px 24px rgba(0,0,0,0.40);
+    --sticker-pressed: 0 2px 0 #3d2e5a, 0 4px 12px rgba(0,0,0,0.30);
+    --card: 0 8px 0 #3d2e5a, 0 14px 32px rgba(0,0,0,0.35);
+  }
+}
+/* ─────────────────────────────────────────────────────────── */

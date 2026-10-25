@@ -13,6 +13,22 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: '24' }
+      - name: Type-check (TypeScript)
+        run: |
+          node -e "
+            const fs = require('fs');
+            fs.writeFileSync('tsconfig.check.json', JSON.stringify({
+              compilerOptions: {
+                module: 'nodenext', moduleResolution: 'nodenext',
+                target: 'esnext', strict: true,
+                noEmit: true, allowImportingTsExtensions: true,
+                skipLibCheck: true
+              },
+              include: ['src/**/*.ts']
+            }));
+          "
+          npx --yes tsc -p tsconfig.check.json
+          rm -f tsconfig.check.json
       - name: Pruebas unitarias (servidor + lógica pura de la app)
         run: npm test
 

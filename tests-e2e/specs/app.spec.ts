@@ -70,16 +70,16 @@ test('colorear: catálogo carga y tocar rellena sin salirse', async ({ page }) =
   const box = await canvas.boundingBox();
   await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
   await page.waitForTimeout(300);
-  const filled = await page.evaluate(() => {
+  const { filled, area } = await page.evaluate(() => {
     const c = document.querySelector('#view-color canvas') as HTMLCanvasElement;
     const d = c.getContext('2d')!.getImageData(0, 0, c.width, c.height).data;
     let n = 0;
     for (let i = 0; i < d.length; i += 4) if (d[i] < 250 || d[i + 1] < 250 || d[i + 2] < 250) n++;
-    return n;
+    return { filled: n, area: c.width * c.height };
   });
   // el centro de "gato" es la cara: debe pintarse una zona razonable, no media tela
   expect(filled).toBeGreaterThan(2_000);
-  expect(filled).toBeLessThan(900 * 900 * 0.6);
+  expect(filled).toBeLessThan(area * 0.6);
 });
 
 test('zona de padres pide la puerta matemática', async ({ page }) => {
@@ -103,4 +103,21 @@ test('i18n: cambiar a inglés traduce la barra', async ({ page }) => {
   await sel.selectOption('en');
   await page.waitForLoadState();
   await expect(page.locator('.tab[data-view="draw"] b')).toHaveText('Draw');
+});
+
+test('colorear: lienzo cuadrado, completo en pantalla y sin scroll', async ({ page }) => {
+  await page.click('.tab[data-view="color"]');
+  await page.locator('#view-color .card').first().click();
+  const canvas = page.locator('#view-color canvas');
+  await expect(canvas).toBeVisible({ timeout: 8_000 });
+  const box = (await canvas.boundingBox())!;
+  const vp = page.viewportSize()!;
+  expect(Math.abs(box.width - box.height)).toBeLessThan(2);
+  expect(box.y).toBeGreaterThanOrEqual(0);
+  expect(box.y + box.height).toBeLessThanOrEqual(vp.height + 1);
+  const scroll = await page.evaluate(() => {
+    const v = document.getElementById('view-color')!;
+    return v.scrollHeight - v.clientHeight;
+  });
+  expect(scroll).toBeLessThanOrEqual(1);
 });

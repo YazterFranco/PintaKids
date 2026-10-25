@@ -3,10 +3,10 @@
 import { brushIcon, clearIcon, downloadIcon, eraserIcon, exportIcon, fillIcon, glitterIcon, lineIcon, markerIcon, mirrorIcon, pencilIcon, pickerIcon, rainbowIcon, rectIcon, redoIcon, saveIcon, stampIcon, starToolIcon, ellipseIcon, undoIcon, watercolorIcon, crayonIcon, sprayIcon, backIcon, nextIcon } from './icons.js';
 
 export const PALETTE = [
-  '#2b2d42', '#e63946', '#ff6b35', '#ff9f1c', '#ffd166', '#f4d35e',
-  '#8ac926', '#06d6a0', '#2a9d8f', '#4cc9f0', '#a2d2ff', '#118ab2',
-  '#3a86ff', '#7c4dff', '#b5179e', '#ef476f', '#ff8fab', '#8d5524',
-  '#d4a373', '#ffffff',
+  '#ff8fab', '#ffd166', '#4cc9f0', '#8ac926', '#e63946', '#ff9f1c',
+  '#7c4dff', '#b5179e', '#06d6a0', '#2a9d8f', '#118ab2', '#3a86ff',
+  '#a2d2ff', '#f4d35e', '#ef476f', '#ff6b35', '#d4a373', '#8d5524',
+  '#2b2d42', '#ffffff',
 ];
 
 export const STAMPS = ['⭐', '❤️', '🌸', '🦋', '😊', '🍎', '🚗', '🐟'];
@@ -138,6 +138,7 @@ export const ACTION_ICONS = {
   clear: clearIcon,
   save: saveIcon,
   brush: brushIcon,
+  fill: fillIcon,
   download: downloadIcon,
   back: backIcon,
   next: nextIcon,
