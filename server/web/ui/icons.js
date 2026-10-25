@@ -47,3 +47,7 @@ export const nextIcon = svg('<path d="M5 12h14"/><polyline points="12 5 19 12 12
 // ── Overlay ───────────────────────────────────────────────────
 export const clockIcon = svg('<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>', 80);
 export const crayonLogo = svg('<path d="M2 22l1-4L16.5 4.5a2.121 2.121 0 0 1 3 3L7 20l-4 1z"/><path d="M14 7l3 3"/><circle cx="19" cy="5" r="2" fill="currentColor" stroke="none"/>', 34);
+
+// ── v2: barra superior ────────────────────────────────────────
+export const homeIcon = svg('<path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/>', 26, 'none');
+export const lockIcon = svg('<rect x="4" y="11" width="16" height="10" rx="3"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>', 22, 'none');

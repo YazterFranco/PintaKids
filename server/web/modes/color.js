@@ -402,7 +402,7 @@ export async function mount(ctx) {
 
     async function fillGrid() {
       if (catalog) return;
-      catalog = await fetch('/v1/catalog?v=8').then((r) => r.json());
+      catalog = await fetch('/v1/catalog?v=9').then((r) => r.json());
       let first = true;
       for (const pack of catalog.packs) {
         const chip = document.createElement('button');
@@ -421,7 +421,7 @@ export async function mount(ctx) {
     async function loadPack(id, chipActive) {
       chips.querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-pressed', String(c === chipActive)));
       grid.replaceChildren();
-      const pack = await fetch('/v1/catalog/' + id + '?v=8').then((r) => r.json());
+      const pack = await fetch('/v1/catalog/' + id + '?v=9').then((r) => r.json());
       for (const f of pack.files) {
         const card = document.createElement('button');
         card.className = 'card';
@@ -429,7 +429,7 @@ export async function mount(ctx) {
         const img = new Image();
         img.loading = 'lazy';
         img.decoding = 'async';
-        img.src = `/v1/catalog/${id}/files/${f.file}?v=8`;
+        img.src = `/v1/catalog/${id}/files/${f.file}?v=9`;
         img.alt = f.title;
         const lab = document.createElement('small');
         lab.textContent = f.title;

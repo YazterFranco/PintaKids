@@ -3,75 +3,49 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-  <meta name="theme-color" content="#ff8fab">
-  <meta name="description" content="Pintakids: dibuja, colorea y cuenta historias. Gratis y sin anuncios.">
+  <meta name="theme-color" content="#6c5ce7">
+  <meta name="description" content="Pintakids: dibuja, colorea y aprende a dibujar paso a paso. Gratis y sin anuncios.">
   <title>Pintakids — Dibujar y Colorear para Niños</title>
 
-  <!-- Canonical -->
   <link rel="canonical" href="https://pintakids.app/">
-
-  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Pintakids">
   <meta property="og:title" content="Pintakids — Dibujar y Colorear para Niños">
-  <meta property="og:description" content="Dibuja, colorea y cuenta historias con tu imaginación. Gratis, sin anuncios y sin conexión a internet.">
+  <meta property="og:description" content="Dibuja, colorea y aprende a dibujar paso a paso. Gratis, sin anuncios y sin conexión a internet.">
   <meta property="og:image" content="/assets/og-cover.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:url" content="https://pintakids.app/">
   <meta property="og:locale" content="es_ES">
-
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Pintakids — Dibujar y Colorear para Niños">
-  <meta name="twitter:description" content="Dibuja, colorea y cuenta historias con tu imaginación. Gratis, sin anuncios y sin conexión a internet.">
-  <meta name="twitter:image" content="/assets/og-cover.png">
 
-  <!-- iOS PWA -->
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Pintakids">
 
-  <!-- PWA / Web App -->
-  <link rel="manifest" href="/manifest.webmanifest?v=8">
-  <link rel="icon" href="/assets/icon.svg?v=8" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/assets/icon-192.png?v=8">
-  <link rel="stylesheet" href="/style.css?v=8">
-  <script src="/bootcheck.js?v=8"></script>
-  <script type="module" src="/app.js?v=8"></script>
+  <link rel="manifest" href="/manifest.webmanifest?v=9">
+  <link rel="icon" href="/assets/icon.svg?v=9" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/icon-192.png?v=9">
+  <link rel="stylesheet" href="/style.css?v=9">
+  <script src="/bootcheck.js?v=9"></script>
+  <script type="module" src="/app.js?v=9"></script>
 </head>
-<body>
-  <!-- Decoración washi tape superior -->
-  <div class="washi washi-top"></div>
-
-  <header class="topbar">
-    <span class="logo" id="logo-icon"></span>
-    <h1 data-i18n="app.name">Pintakids</h1>
+<body data-view="home">
+  <header id="appbar" class="appbar">
+    <button class="appbar-home" data-testid="home" type="button" data-i18n-title="common.home" aria-label="Inicio"></button>
+    <span class="appbar-logo" id="logo-icon" aria-hidden="true"></span>
+    <h1 id="appbar-title" data-i18n="app.name">Pintakids</h1>
     <span id="starScore" class="stars" aria-live="polite">0</span>
+    <button class="appbar-lock" data-testid="parents" type="button" data-i18n-title="tab.parents" aria-label="Padres"></button>
   </header>
 
   <main id="views">
-    <section id="view-draw" class="view" aria-label="Dibujar"></section>
+    <section id="view-home" class="view" aria-label="Inicio"></section>
+    <section id="view-draw" class="view" hidden aria-label="Dibujar"></section>
+    <section id="view-learn" class="view" hidden aria-label="Dibuja conmigo"></section>
     <section id="view-color" class="view" hidden aria-label="Colorear"></section>
-    <section id="view-learn" class="view" hidden aria-label="Aprender"></section>
     <section id="view-photo" class="view" hidden aria-label="Foto"></section>
     <section id="view-story" class="view" hidden aria-label="Cuentos"></section>
     <section id="view-gallery" class="view" hidden aria-label="Galería"></section>
     <section id="view-parents" class="view" hidden aria-label="Padres"></section>
   </main>
-
-  <!-- Decoración washi tape inferior -->
-  <div class="washi washi-bottom"></div>
-
-  <nav class="tabbar" role="tablist" aria-label="secciones">
-    <button class="tab" data-view="draw" role="tab"><span class="tab-icon"></span><b data-i18n="tab.draw">Dibujar</b></button>
-    <button class="tab" data-view="color" role="tab"><span class="tab-icon"></span><b data-i18n="tab.color">Colorear</b></button>
-    <button class="tab" data-view="learn" role="tab"><span class="tab-icon"></span><b data-i18n="tab.learn">Aprender</b></button>
-    <button class="tab" data-view="photo" role="tab"><span class="tab-icon"></span><b data-i18n="tab.photo">Foto</b></button>
-    <button class="tab" data-view="story" role="tab"><span class="tab-icon"></span><b data-i18n="tab.story">Cuentos</b></button>
-    <button class="tab" data-view="gallery" role="tab"><span class="tab-icon"></span><b data-i18n="tab.gallery">Galería</b></button>
-    <button class="tab" data-view="parents" role="tab"><span class="tab-icon"></span><b data-i18n="tab.parents">Padres</b></button>
-  </nav>
 
   <footer>
     <div id="timeUp" class="overlay" hidden>
@@ -80,7 +54,7 @@
         <p data-i18n="parents.timeUp"></p>
       </div>
     </div>
-    <div id="toast" class="toast" hidden></div>
+    <div id="toast" class="toast" role="status" hidden></div>
     <div id="offline" class="pill pill-offline" hidden data-i18n="offline.note"></div>
   </footer>
 </body>

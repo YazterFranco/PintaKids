@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 /** Flujos completos: cuentos con PDF, aprender con estrellas, foto→colorear, offline y axe. */
 
 async function unlockParents(page) {
-  await page.click('.tab[data-view="parents"]');
+  await page.evaluate(() => (location.hash = '#/parents'));
   const q = await page.locator('#view-parents .gate-q').textContent();
   const m = /(\d+)\s*[×x]\s*(\d+)/.exec(q!);
   await page.fill('#view-parents .gate-input', String(Number(m![1]) * Number(m![2])));
@@ -13,9 +13,9 @@ async function unlockParents(page) {
 
 test('cuento completo: crear, dibujar, caption, página nueva y exportar PDF', async ({ page }) => {
   await page.goto('/');
-  await page.waitForSelector('#view-draw canvas');
+  await page.waitForSelector('[data-testid="home-card-draw"]');
 
-  await page.click('.tab[data-view="story"]');
+  await page.evaluate(() => (location.hash = '#/story'));
   page.once('dialog', (d) => d.accept('El robot pintor')); // ANTES del clic
   await page.click('[data-testid="story-new"]');
   await expect(page.locator('#view-story .page-card')).toHaveCount(1, { timeout: 5_000 });
@@ -48,8 +48,8 @@ test('cuento completo: crear, dibujar, caption, página nueva y exportar PDF', a
 
 test('aprender: pasar los pasos de una lección da una estrella', async ({ page }) => {
   await page.goto('/');
-  await page.waitForSelector('#view-draw canvas');
-  await page.click('.tab[data-view="learn"]');
+  await page.waitForSelector('[data-testid="home-card-draw"]');
+  await page.evaluate(() => (location.hash = '#/learn'));
   await page.locator('[data-testid="learn-card"]').first().click();
   await page.waitForSelector('#view-learn .canvas-wrap canvas');
   await expect(page.locator('#view-learn .dot-step')).not.toHaveCount(0);
@@ -64,8 +64,8 @@ test('aprender: pasar los pasos de una lección da una estrella', async ({ page 
 
 test('foto → colorear: subir imagen, ver máscara y entrar al colorear', async ({ page }) => {
   await page.goto('/');
-  await page.waitForSelector('#view-draw canvas');
-  await page.click('.tab[data-view="photo"]');
+  await page.waitForSelector('[data-testid="home-card-draw"]');
+  await page.evaluate(() => (location.hash = '#/photo'));
   const b64 = await page.evaluate(() => {
     const c = document.createElement('canvas');
     c.width = c.height = 200;
@@ -107,19 +107,18 @@ test('foto → colorear: subir imagen, ver máscara y entrar al colorear', async
 
 test('offline: la app y el catálogo siguen funcionando sin red', async ({ page, context }) => {
   await page.goto('/');
-  await page.waitForSelector('#view-draw canvas');
+  await page.waitForSelector('[data-testid="home-card-draw"]');
   await page.evaluate(() => navigator.serviceWorker.ready);
-  await page.click('.tab[data-view="color"]');
+  await page.evaluate(() => (location.hash = '#/color'));
   await expect(page.locator('#view-color .card').first()).toBeVisible({ timeout: 8_000 });
 
   await context.setOffline(true);
   await page.goto('/');
-  await page.waitForSelector('#view-draw canvas', { timeout: 10_000 });
-  await expect(page.locator('.tabbar')).toBeVisible();
-  await page.click('.tab[data-view="color"]');
+  await expect(page.locator('[data-testid="home-card-draw"]')).toBeVisible({ timeout: 10_000 });
+  await page.evaluate(() => (location.hash = '#/color'));
   await expect(page.locator('#view-color .card').first()).toBeVisible({ timeout: 8_000 });
   // dibujar offline y comprobar persistencia IndexedDB
-  await page.click('.tab[data-view="draw"]');
+  await page.evaluate(() => (location.hash = '#/draw'));
   await expect(page.locator('#view-draw canvas')).toBeVisible({ timeout: 8_000 });
   const box2 = await page.locator('#view-draw canvas').boundingBox();
   await page.mouse.move(box2.x + 30, box2.y + 30);
@@ -134,7 +133,7 @@ test('offline: la app y el catálogo siguen funcionando sin red', async ({ page,
 test('accesibilidad: sin violaciones críticas en la vista principal', async ({ page }) => {
   const AxeBuilder = (await import('@axe-core/playwright')).default;
   await page.goto('/');
-  await page.waitForSelector('#view-draw canvas');
+  await page.waitForSelector('[data-testid="home-card-draw"]');
   const results = await new AxeBuilder({ page }).analyze();
   const critical = results.violations.filter((v) => v.impact === 'critical');
   expect(critical.map((v) => `${v.id} x${v.nodes.length}`)).toEqual([]);
@@ -142,20 +141,20 @@ test('accesibilidad: sin violaciones críticas en la vista principal', async ({ 
 
 test('zona de padres se abre con la multiplicación correcta', async ({ page }) => {
   await page.goto('/');
-  await page.waitForSelector('#view-draw canvas');
+  await page.waitForSelector('[data-testid="home-card-draw"]');
   await unlockParents(page);
 });
 
 test('recarga con caché: un 304 nunca deja la vista en blanco', async ({ page }) => {
   await page.goto('/');
-  await page.waitForSelector('#view-draw canvas');
+  await page.waitForSelector('[data-testid="home-card-draw"]');
   await page.evaluate(() => navigator.serviceWorker.ready);
   await page.reload();
-  await page.waitForSelector('#view-draw canvas');
+  await page.waitForSelector('[data-testid="home-card-draw"]');
 
   // Simula el 304 que devolvía el CDN: el SW debe servir la copia cacheada.
   await page.route('**/modes/color.js*', (r) => r.fulfill({ status: 304 }));
-  await page.click('.tab[data-view="color"]');
+  await page.evaluate(() => (location.hash = '#/color'));
   await expect(page.locator('#view-color img').first()).toBeVisible({ timeout: 8_000 });
   await page.locator('#view-color img').first().click();
   await expect(page.locator('#view-color canvas')).toBeVisible({ timeout: 8_000 });
@@ -164,10 +163,10 @@ test('recarga con caché: un 304 nunca deja la vista en blanco', async ({ page }
 
 test('las vistas quedan visibles de verdad (opacidad 1, no solo en el DOM)', async ({ page }) => {
   await page.goto('/');
-  await page.waitForSelector('#view-draw canvas');
+  await page.waitForSelector('[data-testid="home-card-draw"]');
   await expect(page.locator('#view-draw')).toHaveCSS('opacity', '1');
-  await page.click('.tab[data-view="color"]');
+  await page.evaluate(() => (location.hash = '#/color'));
   await expect(page.locator('#view-color')).toHaveCSS('opacity', '1');
-  await page.click('.tab[data-view="learn"]');
+  await page.evaluate(() => (location.hash = '#/learn'));
   await expect(page.locator('#view-learn')).toHaveCSS('opacity', '1');
 });

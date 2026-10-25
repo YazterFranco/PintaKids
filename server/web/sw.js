@@ -6,40 +6,23 @@
  * - skipWaiting + clients.claim: el SW nuevo toma control inmediato.
  */
 
-const VERSION = 'pintakids-v8';
+const VERSION = 'pintakids-v9';
+
+/** Shell y módulos: red primero, caché solo como respaldo offline. Lista única: añadir aquí cada módulo nuevo. */
+const SHELL_LIST = [
+  '/', '/style.css', '/app.js', '/manifest.webmanifest', '/bootcheck.js',
+  '/i18n/es.json', '/i18n/en.json',
+  '/core/store.js', '/core/strokes.js', '/core/history.js', '/core/colorfill.js', '/core/lineart.js',
+  '/core/paint.js', '/core/story.js', '/core/i18n.js', '/core/tts.js', '/core/sfx.js',
+  '/ui/surface.js', '/ui/parts.js', '/ui/icons.js',
+  '/modes/home.js', '/modes/draw.js', '/modes/color.js', '/modes/learn.js', '/modes/photo.js',
+  '/modes/story.js', '/modes/gallery.js', '/modes/parents.js',
+];
 
 const PRECACHE = [
-  '/',
-  '/style.css',
-  '/app.js',
-  '/manifest.webmanifest',
-  '/bootcheck.js',
-  '/assets/icon.svg',
-  '/assets/icon-192.png',
-  '/assets/icon-512.png',
-  '/i18n/es.json',
-  '/i18n/en.json',
-  '/core/store.js',
-  '/core/strokes.js',
-  '/core/history.js',
-  '/core/colorfill.js',
-  '/core/lineart.js',
-  '/core/paint.js',
-  '/core/story.js',
-  '/core/i18n.js',
-  '/core/tts.js',
-  '/ui/surface.js',
-  '/ui/parts.js',
-  '/ui/icons.js',
-  '/assets/fonts/Baloo2-Variable.ttf',
-  '/assets/fonts/OFL.txt',
-  '/modes/draw.js',
-  '/modes/color.js',
-  '/modes/learn.js',
-  '/modes/photo.js',
-  '/modes/story.js',
-  '/modes/gallery.js',
-  '/modes/parents.js',
+  ...SHELL_LIST,
+  '/assets/icon.svg', '/assets/icon-192.png', '/assets/icon-512.png',
+  '/assets/fonts/Baloo2-Variable.ttf', '/assets/fonts/OFL.txt',
 ];
 
 self.addEventListener('install', (e) => {
@@ -60,18 +43,7 @@ self.addEventListener('activate', (e) => {
   );
 });
 
-/** Shell y módulos: siempre red primero. Caché solo como respaldo offline. */
-const SHELL = new Set([
-  '/', '/index.html', '/style.css', '/app.js', '/sw.js', '/bootcheck.js',
-  '/manifest.webmanifest',
-  '/core/store.js', '/core/strokes.js', '/core/history.js',
-  '/core/colorfill.js', '/core/lineart.js', '/core/paint.js',
-  '/core/story.js', '/core/i18n.js', '/core/tts.js',
-  '/ui/surface.js', '/ui/parts.js', '/ui/icons.js',
-  '/modes/draw.js', '/modes/color.js', '/modes/learn.js',
-  '/modes/photo.js', '/modes/story.js', '/modes/gallery.js',
-  '/modes/parents.js',
-]);
+const SHELL = new Set([...SHELL_LIST, '/index.html', '/sw.js']);
 
 /** Pide a la red sin validación condicional: evita respuestas 304 sin cuerpo. */
 function freshFetch(request) {

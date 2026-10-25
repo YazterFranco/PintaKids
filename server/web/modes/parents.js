@@ -26,7 +26,7 @@ export async function mount(ctx) {
   if (!sessionStorage.getItem('pk-parents')) {
     const gate = await openGate();
     if (!gate) {
-      app.go('draw');
+      app.go('home');
       return;
     }
     sessionStorage.setItem('pk-parents', '1');
@@ -69,6 +69,20 @@ export async function mount(ctx) {
   });
   soundRow.append(soundLbl, soundSel);
 
+  const sfxRow = document.createElement('div');
+  sfxRow.className = 'row';
+  const sfxLbl = document.createElement('span');
+  sfxLbl.textContent = app.t('parents.sfx');
+  const sfxSel = document.createElement('select');
+  sfxSel.innerHTML = `<option value="on">${app.t('parents.on')}</option><option value="off">${app.t('parents.off')}</option>`;
+  sfxSel.value = app.settings.sfx === false ? 'off' : 'on';
+  sfxSel.addEventListener('change', async () => {
+    app.settings.sfx = sfxSel.value === 'on';
+    await store.setSetting('sfx', app.settings.sfx);
+    ctx.sfx.setEnabled(app.settings.sfx);
+  });
+  sfxRow.append(sfxLbl, sfxSel);
+
   const timeRow = document.createElement('div');
   timeRow.className = 'row';
   const timeLbl = document.createElement('span');
@@ -81,8 +95,7 @@ export async function mount(ctx) {
     app.settings.timeUsedMs = 0;
     await store.setSetting('timeLimit', app.settings.timeLimit);
     await store.setSetting('timeUsedMs', 0);
-    const { armTimeLimit } = await import('../app.js');
-    armTimeLimit();
+    ctx.armTimeLimit();
   });
   timeRow.append(timeLbl, timeSel);
 
@@ -101,7 +114,7 @@ export async function mount(ctx) {
   });
   themeRow.append(themeLbl, themeSel);
 
-  p1.append(langRow, soundRow, timeRow, themeRow);
+  p1.append(langRow, soundRow, sfxRow, timeRow, themeRow);
   root.appendChild(p1);
 
   /* respaldo */

@@ -7,26 +7,31 @@ test.beforeEach(async ({ page }) => {
   page.on('pageerror', (e) => errors.push(String(e)));
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
   await page.goto('/');
-  await expect(page.locator('.tabbar .tab')).toHaveCount(7);
+  await expect(page.locator('#view-home [data-testid^="home-card-"]')).toHaveCount(6);
   (page as any).__errors = errors;
 });
 
 test('carga inicial sin errores JS', async ({ page }) => {
+  await expect(page.locator('#view-home')).toBeVisible();
+  await page.click('[data-testid="home-card-draw"]');
   await expect(page.locator('#view-draw .canvas-wrap canvas')).toBeVisible({ timeout: 8_000 });
   await expect(page.locator('#view-draw .toolbtn')).not.toHaveCount(0);
   expect((page as any).__errors).toEqual([]);
 });
 
-test('cambiar de pestaña monta cada modo sin errores', async ({ page }) => {
-  for (const v of ['color', 'learn', 'photo', 'story', 'gallery', 'parents']) {
-    await page.click(`.tab[data-view="${v}"]`);
+test('desde inicio se abre cada modo y se vuelve sin errores', async ({ page }) => {
+  for (const v of ['draw', 'learn', 'color', 'photo', 'story', 'gallery']) {
+    await page.click(`[data-testid="home-card-${v}"]`);
     await expect(page.locator(`#view-${v}`)).toBeVisible();
-    await page.waitForTimeout(400);
+    await page.waitForTimeout(300);
+    await page.click(`#appbar [data-testid="home"]`);
+    await expect(page.locator('#view-home')).toBeVisible();
   }
   expect((page as any).__errors).toEqual([]);
 });
 
 test('dibujar deja trazo en el lienzo y deshacer lo quita', async ({ page }) => {
+  await page.click('[data-testid="home-card-draw"]');
   const canvas = page.locator('#view-draw canvas');
   const box = await canvas.boundingBox();
   await page.mouse.move(box.x + box.width * 0.3, box.y + box.height * 0.4);
@@ -49,6 +54,7 @@ test('dibujar deja trazo en el lienzo y deshacer lo quita', async ({ page }) => 
 });
 
 test('guardar dibujo sube estrellas y aparece en galería', async ({ page }) => {
+  await page.click('[data-testid="home-card-draw"]');
   const canvas = page.locator('#view-draw canvas');
   const box = await canvas.boundingBox();
   await page.mouse.move(box.x + 40, box.y + 40);
@@ -57,12 +63,12 @@ test('guardar dibujo sube estrellas y aparece en galería', async ({ page }) => 
   await page.mouse.up();
   await page.click('#view-draw .toolbtn.big');
   await expect(page.locator('#starScore')).toContainText('1', { timeout: 5_000 });
-  await page.click('.tab[data-view="gallery"]');
+  await page.evaluate(() => (location.hash = '#/gallery'));
   await expect(page.locator('#view-gallery .card img')).toHaveCount(1, { timeout: 5_000 });
 });
 
 test('colorear: catálogo carga y tocar rellena sin salirse', async ({ page }) => {
-  await page.click('.tab[data-view="color"]');
+  await page.evaluate(() => (location.hash = '#/color'));
   await expect(page.locator('#view-color .card')).toHaveCount(21, { timeout: 8_000 });
   await page.locator('#view-color .card').first().click();
   const canvas = page.locator('#view-color canvas');
@@ -83,7 +89,7 @@ test('colorear: catálogo carga y tocar rellena sin salirse', async ({ page }) =
 });
 
 test('zona de padres pide la puerta matemática', async ({ page }) => {
-  await page.click('.tab[data-view="parents"]');
+  await page.evaluate(() => (location.hash = '#/parents'));
   await expect(page.locator('#view-parents .gate-q')).toBeVisible({ timeout: 5_000 });
   const text = await page.locator('#view-parents .gate-q').textContent();
   const m = /(\d+)\s*×\s*(\d+)/.exec(text!);
@@ -93,20 +99,20 @@ test('zona de padres pide la puerta matemática', async ({ page }) => {
 });
 
 test('i18n: cambiar a inglés traduce la barra', async ({ page }) => {
-  await page.click('.tab[data-view="parents"]');
+  await page.evaluate(() => (location.hash = '#/parents'));
   await expect(page.locator('#view-parents .gate-q')).toBeVisible();
   const t = await page.locator('#view-parents .gate-q').textContent();
   const m = /(\d+)\s*×\s*(\d+)/.exec(t!);
   await page.fill('#view-parents .gate-input', String(Number(m![1]) * Number(m![2])));
   await page.click('#view-parents .toolbtn.big');
   const sel = page.locator('#view-parents select').first();
-  await sel.selectOption('en');
-  await page.waitForLoadState();
-  await expect(page.locator('.tab[data-view="draw"] b')).toHaveText('Draw');
+  await Promise.all([page.waitForEvent('load'), sel.selectOption('en')]);
+  await page.goto('/#/home');
+  await expect(page.locator('[data-testid="home-card-draw"] b')).toHaveText('Free drawing');
 });
 
 test('colorear: lienzo cuadrado, completo en pantalla y sin scroll', async ({ page }) => {
-  await page.click('.tab[data-view="color"]');
+  await page.evaluate(() => (location.hash = '#/color'));
   await page.locator('#view-color .card').first().click();
   const canvas = page.locator('#view-color canvas');
   await expect(canvas).toBeVisible({ timeout: 8_000 });

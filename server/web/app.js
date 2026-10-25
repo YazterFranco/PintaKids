@@ -2,8 +2,9 @@
 
 import { store } from './core/store.js';
 import { DEFAULT_LANG, normalizeLang, t } from './core/i18n.js';
-import { starIcon, crayonLogo, tabColor, tabDraw, tabGallery, tabLearn, tabParents, tabPhoto, tabStory, clockIcon } from './ui/icons.js';
+import { starIcon, crayonLogo, homeIcon, lockIcon, clockIcon } from './ui/icons.js';
 import { applyTheme } from './modes/parents.js';
+import { sfx } from './core/sfx.js';
 
 const app = {
   lang: DEFAULT_LANG,
@@ -20,8 +21,8 @@ const app = {
 
 async function loadDicts() {
   const [es, en] = await Promise.all([
-    fetch('/i18n/es.json?v=8').then((r) => r.json()),
-    fetch('/i18n/en.json?v=8').then((r) => r.json()),
+    fetch('/i18n/es.json?v=9').then((r) => r.json()),
+    fetch('/i18n/en.json?v=9').then((r) => r.json()),
   ]);
   app.base = { es, en };
 }
@@ -42,7 +43,12 @@ export function toast(msg) {
 
 export function addStar() {
   app.stars++;
-  document.getElementById('starScore').innerHTML = starIcon + ' ' + app.stars;
+  const el = document.getElementById('starScore');
+  el.innerHTML = starIcon + ' ' + app.stars;
+  el.classList.remove('bump');
+  void el.offsetWidth;
+  el.classList.add('bump');
+  sfx.play('star');
   store.setSetting('stars', app.stars);
 }
 
@@ -74,15 +80,16 @@ export function armTimeLimit() {
 }
 
 /* ---------- navegación ---------- */
-const VIEWS = ['draw', 'color', 'learn', 'photo', 'story', 'gallery', 'parents'];
+const VIEWS = ['home', 'draw', 'learn', 'color', 'photo', 'story', 'gallery', 'parents'];
+const TITLES = { home: 'app.name', draw: 'tab.draw', learn: 'tab.learn', color: 'tab.color', photo: 'tab.photo', story: 'tab.story', gallery: 'tab.gallery', parents: 'tab.parents' };
 const modules = {};
 // Contexto compartido: los modos pueden pasarse datos (p. ej. foto→colorear) sin recargar.
-const ctx = { app, toast, addStar, applyI18n, store };
+const ctx = { app, toast, addStar, applyI18n, store, sfx, armTimeLimit };
 let viewSeq = 0; // la última navegación pedida gana (evita que el boot pise un toque)
 let shownView = null; // se inicializa en la primera vista para aplicar .view-enter
 
 async function showView(name) {
-  if (!VIEWS.includes(name)) name = 'draw';
+  if (!VIEWS.includes(name)) name = 'home';
   const seq = ++viewSeq;
   const prev = shownView;
   shownView = name;
@@ -94,7 +101,10 @@ async function showView(name) {
     el.hidden = v !== name;
     if (v !== name) el.classList.remove('view-enter');
   }
-  document.querySelectorAll('.tab').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.view === name)));
+  document.body.dataset.view = name;
+  const title = document.getElementById('appbar-title');
+  title.dataset.i18n = TITLES[name];
+  title.textContent = app.t(TITLES[name]);
   document.getElementById('timeUp').hidden = true;
 
   const el = document.getElementById('view-' + name);
@@ -105,7 +115,7 @@ async function showView(name) {
   }
 
   try {
-    if (!modules[name]) modules[name] = await import('./modes/' + name + '.js?v=8');
+    if (!modules[name]) modules[name] = await import('./modes/' + name + '.js?v=9');
     if (seq !== viewSeq) return;
     await modules[name].mount(ctx);
   } catch (err) {
@@ -120,21 +130,19 @@ async function showView(name) {
 }
 
 function currentView() {
-  return (location.hash.replace('#/', '') || 'draw').split('/')[0];
+  return (location.hash.replace('#/', '') || 'home').split('/')[0];
 }
 
 window.addEventListener('hashchange', () => showView(currentView()));
-document.querySelectorAll('.tab').forEach((b) => b.addEventListener('click', () => app.go(b.dataset.view)));
+document.querySelector('.appbar-home').addEventListener('click', () => app.go('home'));
+document.querySelector('.appbar-lock').addEventListener('click', () => app.go('parents'));
 window.addEventListener('offline', () => (document.getElementById('offline').hidden = false));
 window.addEventListener('online', () => (document.getElementById('offline').hidden = true));
 
 /* ---------- boot ---------- */
-function injectTabIcons() {
-  const icons = { draw: tabDraw, color: tabColor, learn: tabLearn, photo: tabPhoto, story: tabStory, gallery: tabGallery, parents: tabParents };
-  document.querySelectorAll('.tab').forEach((b) => {
-    const span = b.querySelector('.tab-icon');
-    if (span) span.innerHTML = icons[b.dataset.view] || '';
-  });
+function injectIcons() {
+  document.querySelector('.appbar-home').innerHTML = homeIcon;
+  document.querySelector('.appbar-lock').innerHTML = lockIcon;
   const logo = document.getElementById('logo-icon');
   if (logo) logo.innerHTML = crayonLogo;
   const clock = document.getElementById('clock-icon');
@@ -150,8 +158,9 @@ async function boot() {
   app.lang = normalizeLang(app.settings.lang ?? (navigator.language.startsWith('en') ? 'en' : 'es'));
   app.stars = Number(app.settings.stars ?? 0);
   applyTheme(app.settings.theme ?? 'auto');
+  sfx.setEnabled(app.settings.sfx);
   document.getElementById('starScore').innerHTML = starIcon + ' ' + app.stars;
-  injectTabIcons();
+  injectIcons();
   await loadDicts();
   applyI18n();
   if (navigator.onLine === false) document.getElementById('offline').hidden = false;
