@@ -19,5 +19,9 @@ tests-e2e/test-results/
 tests-e2e/playwright-report/
 tests-e2e/.tmp-releases/
 
+# Cloudflare
+dist/
+.wrangler/
+
 .DS_Store
 **/.DS_Store
