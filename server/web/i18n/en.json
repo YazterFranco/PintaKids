@@ -184,5 +184,8 @@
   "learn.colorMine": "Color your drawing!",
   "learn.colorModel": "Color the model",
   "learn.save": "Save",
-  "learn.again": "Another drawing"
+  "learn.again": "Another drawing",
+  "photo.detail": "Detail",
+  "photo.thickness": "Line thickness",
+  "photo.move": "Drag the picture to choose which part to use"
 }

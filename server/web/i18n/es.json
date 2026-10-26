@@ -184,5 +184,8 @@
   "learn.colorMine": "¡Colorea tu dibujo!",
   "learn.colorModel": "Colorear el modelo",
   "learn.save": "Guardar",
-  "learn.again": "Otro dibujo"
+  "learn.again": "Otro dibujo",
+  "photo.detail": "Detalle",
+  "photo.thickness": "Grosor de línea",
+  "photo.move": "Arrastra la imagen para elegir qué parte usar"
 }

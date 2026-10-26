@@ -101,11 +101,107 @@ export function denoiseMask(mask, width, height) {
   return out;
 }
 
-/** Pipeline completo: RGBA de la foto → máscara de línea lista para colorear. */
-export function photoToLineart(rgba, width, height, manualThreshold = null) {
+/** Umbral de Otsu sobre la magnitud de bordes (con piso: en imágenes limpias Otsu baja demasiado). */
+function otsu(mag) {
+  return threshold(mag, mag.length, 1, null).threshold;
+}
+
+/** Histéresis: se queda con lo fuerte (≥ high) y con lo débil (≥ low) que toca algo fuerte. */
+export function hysteresis(mag, width, height, high, low) {
+  const out = new Uint8Array(mag.length);
+  const stack = [];
+  for (let i = 0; i < mag.length; i++) {
+    if (mag[i] >= high && !out[i]) {
+      out[i] = 1;
+      stack.push(i);
+      while (stack.length) {
+        const j = stack.pop();
+        const x = j % width;
+        const y = (j / width) | 0;
+        for (let dy = -1; dy <= 1; dy++) {
+          for (let dx = -1; dx <= 1; dx++) {
+            const nx = x + dx;
+            const ny = y + dy;
+            if (nx < 0 || ny < 0 || nx >= width || ny >= height) continue;
+            const k = ny * width + nx;
+            if (!out[k] && mag[k] >= low) {
+              out[k] = 1;
+              stack.push(k);
+            }
+          }
+        }
+      }
+    }
+  }
+  return out;
+}
+
+/** Engrosa la línea `times` píxeles (cierra huecos pequeños para que las zonas queden cerradas). */
+export function thicken(mask, width, height, times) {
+  let cur = mask;
+  for (let t = 0; t < times; t++) {
+    const out = cur.slice();
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        const i = y * width + x;
+        if (cur[i]) continue;
+        if ((x > 0 && cur[i - 1]) || (x < width - 1 && cur[i + 1]) || (y > 0 && cur[i - width]) || (y < height - 1 && cur[i + width])) out[i] = 1;
+      }
+    }
+    cur = out;
+  }
+  return cur;
+}
+
+/** Quita trocitos de línea más pequeños que `minSize` píxeles (polvo, textura de papel). */
+export function removeSmall(mask, width, height, minSize) {
+  const out = mask.slice();
+  const seen = new Uint8Array(mask.length);
+  const comp = [];
+  for (let i = 0; i < mask.length; i++) {
+    if (!mask[i] || seen[i]) continue;
+    comp.length = 0;
+    const stack = [i];
+    seen[i] = 1;
+    while (stack.length) {
+      const j = stack.pop();
+      comp.push(j);
+      const x = j % width;
+      const y = (j / width) | 0;
+      for (let dy = -1; dy <= 1; dy++) {
+        for (let dx = -1; dx <= 1; dx++) {
+          const nx = x + dx;
+          const ny = y + dy;
+          if (nx < 0 || ny < 0 || nx >= width || ny >= height) continue;
+          const k = ny * width + nx;
+          if (mask[k] && !seen[k]) {
+            seen[k] = 1;
+            stack.push(k);
+          }
+        }
+      }
+    }
+    if (comp.length < minSize) for (const j of comp) out[j] = 0;
+  }
+  return out;
+}
+
+/**
+ * Pipeline completo: RGBA de la foto → máscara de línea lista para colorear.
+ * Opciones: { detail 0..1 (más = más líneas), thickness 1..4 }. Un número se acepta como umbral fijo (v1).
+ */
+export function photoToLineart(rgba, width, height, opts = null) {
   const g = grayscale(rgba, width, height);
   const b = blur(g, width, height);
   const m = sobel(b, width, height);
-  const { mask, threshold: t } = threshold(m, width, height, manualThreshold);
-  return { mask: denoiseMask(mask, width, height), threshold: t };
+  if (opts === null || typeof opts === 'number') {
+    const { mask, threshold: t } = threshold(m, width, height, opts);
+    return { mask: denoiseMask(mask, width, height), threshold: t };
+  }
+  const detail = Math.min(1, Math.max(0, opts.detail ?? 0.5));
+  const thickness = Math.min(4, Math.max(1, Math.round(opts.thickness ?? 2)));
+  const high = Math.max(20, Math.round(otsu(m) * (1.6 - detail)));
+  const strong = hysteresis(m, width, height, high, high * 0.5);
+  const clean = removeSmall(strong, width, height, Math.max(24, Math.round(width * height * 0.0008)));
+  return { mask: thicken(clean, width, height, thickness - 1), threshold: high };
 }

@@ -1,168 +1,188 @@
-/** Modo Foto: foto o dibujo propio → máscara de líneas → se abre en Colorear. Todo local. */
+/** Modo Foto: una foto o un dibujo en papel → líneas limpias para colorear. Todo en el dispositivo. */
 
-import { btn, toolbar, iconBtn, ACTION_ICONS } from '../ui/parts.js';
-import { photoToLineart } from '../core/lineart.js';
+import { iconBtn, ACTION_ICONS } from '../ui/parts.js';
 import { tabColor } from '../ui/icons.js';
+import { photoToLineart } from '../core/lineart.js';
 
-const RENDER = 900;
+const PROC = 400; // resolución de proceso (rápida en móvil)
+const VIEW = 600; // vista previa
+const INK = [45, 52, 54];
 
 export async function mount(ctx) {
   const { app, toast, applyI18n, store } = ctx;
   const root = document.getElementById('view-photo');
   if (root.childElementCount) return;
 
-  root.replaceChildren();
   const panel = document.createElement('div');
-  panel.className = 'panel';
-  root.appendChild(panel);
-
-  const preview = document.createElement('div');
-  preview.className = 'canvas-wrap';
-  const canvas = document.createElement('canvas');
-  canvas.width = canvas.height = RENDER;
-  canvas.style.touchAction = 'none';
-  preview.appendChild(canvas);
-  const c = canvas.getContext('2d');
+  panel.className = 'panel photo-panel';
+  const h = document.createElement('h2');
+  h.textContent = app.t('photo.title');
+  const note = document.createElement('p');
+  note.className = 'note';
+  note.textContent = app.t('photo.hint');
 
   const file = document.createElement('input');
   file.type = 'file';
   file.accept = 'image/*';
-  file.capture = 'environment';
   file.hidden = true;
+  const take = iconBtn(ACTION_ICONS.export + '<small>' + app.t('photo.take') + '</small>', app.t('photo.take'), () => file.click(), 'toolbtn big');
+  take.dataset.testid = 'photo-take';
 
-  const slider = document.createElement('input');
-  slider.type = 'range';
-  slider.min = '10';
-  slider.max = '120';
-  slider.value = '40';
-  slider.id = 'intensity';
+  const slider = (key, testid, min, max, value) => {
+    const label = document.createElement('label');
+    label.className = 'sheet-slider';
+    label.innerHTML = `<span>${app.t(key)}</span>`;
+    const input = document.createElement('input');
+    input.type = 'range';
+    input.min = String(min);
+    input.max = String(max);
+    input.value = String(value);
+    input.dataset.testid = testid;
+    input.addEventListener('input', schedule);
+    label.appendChild(input);
+    return { label, input };
+  };
+  const detail = slider('photo.detail', 'photo-detail', 0, 100, 50);
+  const thick = slider('photo.thickness', 'photo-thickness', 1, 4, 2);
+  const controls = document.createElement('div');
+  controls.className = 'photo-controls';
+  controls.hidden = true;
+  controls.append(detail.label, thick.label);
 
-  let currentSrc = null;
-  let currentMask = null;
-  let drawing = false;
-  let erase = false;
+  const use = iconBtn(tabColor + '<small>' + app.t('photo.use') + '</small>', app.t('photo.use'), toColor, 'toolbtn big');
+  use.dataset.testid = 'photo-use';
+  use.disabled = true;
+  panel.append(h, note, take, controls);
 
-  function render() {
-    if (!currentSrc) return;
-    const { mask, threshold } = photoToLineart(currentSrc.rgba, currentSrc.w, currentSrc.h, Number(slider.value) || null);
-    currentMask = mask;
-    const scale = RENDER / currentSrc.w;
-    c.fillStyle = '#fff';
-    c.fillRect(0, 0, RENDER, RENDER);
-    c.strokeStyle = '#234';
-    c.lineWidth = Math.max(1, scale);
-    for (let y = 0; y < currentSrc.h; y++) {
-      let run = -1;
-      for (let x = 0; x <= currentSrc.w; x++) {
-        const on = x < currentSrc.w && mask[y * currentSrc.w + x];
-        if (on && run < 0) run = x;
-        if (!on && run >= 0) {
-          c.beginPath();
-          c.moveTo((run + 0.5) * scale, (y + 0.5) * scale);
-          c.lineTo((x - 0.5) * scale, (y + 0.5) * scale);
-          c.stroke();
-          run = -1;
-        }
-      }
-    }
-    document.getElementById('thr').textContent = String(threshold);
+  const stageBox = document.createElement('div');
+  stageBox.className = 'color-stage photo-stage';
+  const preview = document.createElement('div');
+  preview.className = 'canvas-wrap';
+  const canvas = document.createElement('canvas');
+  canvas.width = canvas.height = VIEW;
+  canvas.style.touchAction = 'none';
+  preview.appendChild(canvas);
+  stageBox.appendChild(preview);
+  const moveHint = document.createElement('p');
+  moveHint.className = 'note photo-move';
+  moveHint.textContent = app.t('photo.move');
+  moveHint.hidden = true;
+  const c = canvas.getContext('2d', { willReadFrequently: true });
+  root.append(panel, stageBox, moveHint, use, file);
+
+  function fit() {
+    const r = stageBox.getBoundingClientRect();
+    if (!r.width) return;
+    const s = Math.max(160, Math.floor(Math.min(r.width, Math.max(r.height, 260))));
+    preview.style.width = preview.style.height = s + 'px';
   }
+  new ResizeObserver(fit).observe(stageBox);
 
-  function toColorView() {
-    if (!currentMask) return;
-    // Convertir máscara a ImageData de línea transparente para Colorear.
-    const off = document.createElement('canvas');
-    off.width = off.height = RENDER;
-    const oc = off.getContext('2d');
-    oc.fillStyle = '#fff';
-    oc.fillRect(0, 0, RENDER, RENDER);
-    const src = currentSrc.rgba;
-    oc.drawImage(currentSrc.canvas, 0, 0, RENDER, RENDER);
-    const imgData = oc.getImageData(0, 0, RENDER, RENDER);
-    for (let i = 0; i < currentMask.length; i++) {
-      const o = i * 4;
-      if (currentMask[i]) {
-        imgData.data[o] = 34;
-        imgData.data[o + 1] = 51;
-        imgData.data[o + 2] = 68;
-        imgData.data[o + 3] = 255;
-      } else {
-        imgData.data[o + 3] = 0;
-      }
-    }
-    oc.clearRect(0, 0, RENDER, RENDER);
-    oc.putImageData(imgData, 0, 0);
-    store.putItem({
-      id: 'l_' + Date.now().toString(36),
-      kind: 'lineart',
-      name: app.t('photo.title'),
-      strokes: '[]',
-      thumb: off.toDataURL('image/png'),
-      png: off.toDataURL('image/png'),
-    });
-    toast('✨');
-    ctx.pendingLineart = { canvas: off, imageData: imgData };
-    app.go('color');
-  }
+  /* ---------- foto y recorte cuadrado ---------- */
+  let img = null;
+  let crop = { x: 0, y: 0, side: 0 }; // en píxeles de la foto
+  let mask = null;
 
   file.addEventListener('change', async () => {
     const f = file.files[0];
     if (!f) return;
     const url = URL.createObjectURL(f);
-    const img = new Image();
-    await new Promise((res, rej) => {
-      img.onload = res;
-      img.onerror = rej;
-      img.src = url;
-    });
-    const maxSide = 600;
-    const scale = Math.min(1, maxSide / Math.max(img.width, img.height));
-    const w = Math.round(img.width * scale);
-    const h = Math.round(img.height * scale);
-    const off = document.createElement('canvas');
-    off.width = w;
-    off.height = h;
-    const oc = off.getContext('2d', { willReadFrequently: true });
-    oc.drawImage(img, 0, 0, w, h);
-    currentSrc = { canvas: off, w, h, rgba: oc.getImageData(0, 0, w, h).data };
-    URL.revokeObjectURL(url);
+    try {
+      img = await new Promise((res, rej) => {
+        const i = new Image();
+        i.onload = () => res(i);
+        i.onerror = rej;
+        i.src = url;
+      });
+    } catch {
+      toast(app.t('color.loadError'));
+      return;
+    } finally {
+      URL.revokeObjectURL(url);
+    }
+    const side = Math.min(img.naturalWidth, img.naturalHeight);
+    crop = { side, x: (img.naturalWidth - side) / 2, y: (img.naturalHeight - side) / 2 };
+    controls.hidden = false;
+    moveHint.hidden = img.naturalWidth === img.naturalHeight;
+    use.disabled = false;
     render();
   });
 
-  slider.addEventListener('input', render);
+  let queued = false;
+  function schedule() {
+    if (queued || !img) return;
+    queued = true;
+    requestAnimationFrame(() => {
+      queued = false;
+      render();
+    });
+  }
 
-  const take = iconBtn(ACTION_ICONS.export + '<small>' + app.t('photo.take') + '</small>', app.t('photo.take'), () => file.click(), 'toolbtn big'); take.dataset.testid='photo-take';
-  const use = iconBtn(tabColor + '<small>' + app.t('photo.use') + '</small>', app.t('photo.use'), toColorView); use.dataset.testid='photo-use';
-  panel.append(
-    (() => {
-      const h = document.createElement('h2');
-      h.textContent = app.t('photo.title');
-      return h;
-    })(),
-    (() => {
-      const n = document.createElement('div');
-      n.className = 'note';
-      n.textContent = app.t('photo.hint');
-      return n;
-    })(),
-    toolbar(take),
-    toolbar(
-      (() => {
-        const s = document.createElement('span');
-        s.className = 'note';
-        s.textContent = app.t('photo.intensity') + ' ';
-        return s;
-      })(),
-      slider,
-      (() => {
-        const s = document.createElement('span');
-        s.id = 'thr';
-        return s;
-      })(),
-    ),
-    toolbar(use),
-  );
-  root.appendChild(preview);
-  root.appendChild(file);
+  function render() {
+    if (!img) return;
+    const proc = document.createElement('canvas');
+    proc.width = proc.height = PROC;
+    const pc = proc.getContext('2d', { willReadFrequently: true });
+    pc.fillStyle = '#fff';
+    pc.fillRect(0, 0, PROC, PROC);
+    pc.drawImage(img, crop.x, crop.y, crop.side, crop.side, 0, 0, PROC, PROC);
+    const rgba = pc.getImageData(0, 0, PROC, PROC).data;
+    mask = photoToLineart(rgba, PROC, PROC, { detail: Number(detail.input.value) / 100, thickness: Number(thick.input.value) }).mask;
+
+    // vista: foto muy tenue (para encuadrar) + líneas
+    c.fillStyle = '#fff';
+    c.fillRect(0, 0, VIEW, VIEW);
+    c.globalAlpha = 0.16;
+    c.drawImage(proc, 0, 0, VIEW, VIEW);
+    c.globalAlpha = 1;
+    c.drawImage(maskCanvas(PROC), 0, 0, VIEW, VIEW);
+  }
+
+  function maskCanvas(size) {
+    const out = document.createElement('canvas');
+    out.width = out.height = size;
+    const oc = out.getContext('2d');
+    const d = oc.createImageData(size, size);
+    for (let i = 0; i < mask.length; i++) {
+      if (!mask[i]) continue;
+      const o = i * 4;
+      d.data[o] = INK[0];
+      d.data[o + 1] = INK[1];
+      d.data[o + 2] = INK[2];
+      d.data[o + 3] = 255;
+    }
+    oc.putImageData(d, 0, 0);
+    return out;
+  }
+
+  /* arrastrar para mover el recorte cuando la foto no es cuadrada */
+  let drag = null;
+  canvas.addEventListener('pointerdown', (e) => {
+    if (!img) return;
+    canvas.setPointerCapture(e.pointerId);
+    drag = { x: e.clientX, y: e.clientY, crop: { ...crop } };
+  });
+  canvas.addEventListener('pointermove', (e) => {
+    if (!drag) return;
+    const r = canvas.getBoundingClientRect();
+    const k = crop.side / r.width;
+    crop.x = Math.min(img.naturalWidth - crop.side, Math.max(0, drag.crop.x - (e.clientX - drag.x) * k));
+    crop.y = Math.min(img.naturalHeight - crop.side, Math.max(0, drag.crop.y - (e.clientY - drag.y) * k));
+    schedule();
+  });
+  const stop = () => (drag = null);
+  canvas.addEventListener('pointerup', stop);
+  canvas.addEventListener('pointercancel', stop);
+
+  async function toColor() {
+    if (!mask) return;
+    const out = maskCanvas(PROC);
+    const png = out.toDataURL('image/png');
+    await store.putItem({ id: 'l_' + Date.now().toString(36), kind: 'lineart', name: app.t('photo.title'), png, thumb: png });
+    toast('✨');
+    ctx.pendingLineart = { canvas: out, title: app.t('photo.title') };
+    app.go('color');
+  }
+
   applyI18n(root);
 }

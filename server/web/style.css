@@ -528,3 +528,15 @@ input.caption { width: 100%; }
 @keyframes guide-draw { to { stroke-dashoffset: 0; } }
 .marching { animation: march 1.2s linear infinite; }
 @keyframes march { to { stroke-dashoffset: -25; } }
+
+/* ── Foto ──────────────────────────────────────────────────── */
+.photo-panel { gap: 10px; }
+.photo-panel .toolbtn.big, #view-photo > .toolbtn.big { flex-direction: row; gap: 8px; min-height: 52px; align-self: flex-start; padding: 6px 20px; border-radius: var(--r-pill); }
+.photo-controls { display: flex; flex-direction: column; gap: 2px; }
+.photo-controls .sheet-slider { margin-top: 4px; }
+.photo-controls .sheet-slider span { min-width: 120px; font-size: 15px; }
+.photo-stage { flex: 0 0 auto; min-height: 260px; }
+.photo-stage .canvas-wrap { flex: none; min-height: 0; }
+.photo-stage canvas { cursor: grab; }
+.photo-move { margin: 0; text-align: center; }
+#view-photo > .toolbtn.big { align-self: center; }
