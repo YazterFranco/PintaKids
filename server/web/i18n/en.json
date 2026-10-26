@@ -83,7 +83,7 @@
   "story.export": "Save as PDF",
   "story.delete": "Delete story",
   "gallery.title": "My gallery",
-  "gallery.empty": "No drawings yet. Go draw!",
+  "gallery.empty": "No drawings yet. Let's make the first one!",
   "gallery.openItem": "Open",
   "gallery.delete": "Delete",
   "gallery.share": "Share",
@@ -187,5 +187,16 @@
   "learn.again": "Another drawing",
   "photo.detail": "Detail",
   "photo.thickness": "Line thickness",
-  "photo.move": "Drag the picture to choose which part to use"
+  "photo.move": "Drag the picture to choose which part to use",
+  "story.hint": "Draw each page and tell what happens",
+  "story.empty": "No stories yet. Create your first one!",
+  "story.pages": "{n} pages",
+  "story.deleteConfirm": "Delete this story?",
+  "story.caption1": "Once upon a time…",
+  "story.captionN": "And then…",
+  "story.record": "Record voice",
+  "story.deletePage": "Delete page",
+  "story.prev": "Previous page",
+  "story.next": "Next page",
+  "gallery.deleteConfirm": "Delete this drawing?"
 }

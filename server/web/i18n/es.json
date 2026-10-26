@@ -83,7 +83,7 @@
   "story.export": "Guardar como PDF",
   "story.delete": "Borrar cuento",
   "gallery.title": "Mi galería",
-  "gallery.empty": "Aún no hay dibujos. ¡Ve a Dibujar!",
+  "gallery.empty": "Aún no hay dibujos. ¡Vamos a crear el primero!",
   "gallery.openItem": "Abrir",
   "gallery.delete": "Borrar",
   "gallery.share": "Compartir",
@@ -187,5 +187,16 @@
   "learn.again": "Otro dibujo",
   "photo.detail": "Detalle",
   "photo.thickness": "Grosor de línea",
-  "photo.move": "Arrastra la imagen para elegir qué parte usar"
+  "photo.move": "Arrastra la imagen para elegir qué parte usar",
+  "story.hint": "Dibuja cada página y cuenta qué pasa",
+  "story.empty": "Aún no tienes cuentos. ¡Crea el primero!",
+  "story.pages": "{n} páginas",
+  "story.deleteConfirm": "¿Borrar este cuento?",
+  "story.caption1": "Había una vez…",
+  "story.captionN": "Y entonces…",
+  "story.record": "Grabar voz",
+  "story.deletePage": "Borrar página",
+  "story.prev": "Página anterior",
+  "story.next": "Página siguiente",
+  "gallery.deleteConfirm": "¿Borrar este dibujo?"
 }

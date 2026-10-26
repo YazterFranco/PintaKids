@@ -80,6 +80,7 @@ export async function mount(ctx) {
     if (surface.strokes.length && !confirm(app.t('draw.confirmClear'))) return;
     surface.clear();
   });
+  clearBtn.dataset.testid = 'clear';
   const shareBtn = iconBtn(shareIcon, app.t('draw.share'), share);
   const spacer = document.createElement('span');
   spacer.className = 'spacer';

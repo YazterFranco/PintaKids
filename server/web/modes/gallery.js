@@ -1,109 +1,146 @@
-/** Galería: todo lo que el niño ha creado, con abrir/compartir/borrar. */
+/** Galería: todo lo que el niño ha creado. Abrir para seguir, compartir o borrar. */
 
-import { btn, toolbar, iconBtn, ACTION_ICONS } from '../ui/parts.js';
+import { ACTION_ICONS, iconBtn } from '../ui/parts.js';
+import { shareIcon, tabColor, tabDraw, tabPhoto, tabStory, tabGallery } from '../ui/icons.js';
+import { shareBlob } from '../ui/share.js';
 import { deserializeStrokes } from '../core/strokes.js';
 import { renderToCanvas } from '../core/paint.js';
-import { tabColor, tabDraw, tabPhoto, tabStory } from '../ui/icons.js';
+import { pageImage } from './story.js';
 
 const KIND_ICON = { drawing: tabDraw, colored: tabColor, lineart: tabPhoto, story: tabStory };
+
+const loadImg = (src) =>
+  new Promise((res, rej) => {
+    const i = new Image();
+    i.onload = () => res(i);
+    i.onerror = rej;
+    i.src = src;
+  });
 
 export async function mount(ctx) {
   const { app, toast, applyI18n, store } = ctx;
   const root = document.getElementById('view-gallery');
   root.replaceChildren();
 
-  const head = document.createElement('h2');
-  head.textContent = app.t('gallery.title');
+  const head = document.createElement('div');
+  head.className = 'color-head';
+  head.innerHTML = '<h2></h2>';
+  head.querySelector('h2').textContent = app.t('gallery.title');
   root.appendChild(head);
 
   const items = (await store.getItems()).sort((a, b) => (b.updatedAt ?? 0) - (a.updatedAt ?? 0));
   if (!items.length) {
     const empty = document.createElement('div');
-    empty.className = 'panel note';
-    empty.textContent = app.t('gallery.empty');
+    empty.className = 'empty-state';
+    empty.innerHTML = `<div class="empty-art">${tabGallery}</div><p></p>`;
+    empty.querySelector('p').textContent = app.t('gallery.empty');
+    const go = document.createElement('button');
+    go.type = 'button';
+    go.className = 'btn primary';
+    go.textContent = app.t('home.draw');
+    go.addEventListener('click', () => app.go('draw'));
+    empty.appendChild(go);
     root.appendChild(empty);
     applyI18n(root);
     return;
   }
 
   const grid = document.createElement('div');
-  grid.className = 'grid';
+  grid.className = 'grid gallery-grid';
   root.appendChild(grid);
 
   for (const it of items) {
     const card = document.createElement('div');
     card.className = 'card thumb';
+    const open = document.createElement('button');
+    open.type = 'button';
+    open.className = 'thumb-open';
+    open.dataset.testid = 'gallery-open';
+    open.setAttribute('aria-label', app.t('gallery.openItem'));
     const img = document.createElement('img');
     img.alt = it.name ?? '';
-    if (it.thumb) img.src = it.thumb;
-    else if (it.png) img.src = it.png;
-    else {
-      const st = deserializeStrokes(it.strokes ?? '[]');
-      img.src = st.ok ? renderToCanvas(st.strokes, 220, 220).toDataURL() : '';
-    }
-    const label = document.createElement('small');
-    label.innerHTML = `<span style="display:inline-flex;vertical-align:middle;width:16px;height:16px">${KIND_ICON[it.kind] ?? tabDraw}</span> ${(it.name ?? '')}`;
-    const actions = document.createElement('div');
-    actions.className = 'btn-row';
+    img.src = it.thumb || it.png || (it.kind === 'story' ? storyCover(it) : preview(it));
+    open.appendChild(img);
+    open.addEventListener('click', () => openItem(it));
 
-    if (it.kind === 'story') {
-      actions.appendChild(iconBtn(tabStory, 'Abrir cuento', () => app.go('story')));
-    }
-    actions.appendChild(iconBtn(ACTION_ICONS.export, 'Compartir', () => share(it), 'toolbtn'));
-    const del = iconBtn(ACTION_ICONS.clear, 'Borrar', async () => {
-      if (!confirm(app.t('gallery.delete') + '?')) return;
+    const label = document.createElement('small');
+    label.innerHTML = `<span class="kind-icon">${KIND_ICON[it.kind] ?? tabDraw}</span>`;
+    label.append(document.createTextNode(it.name ?? ''));
+
+    const actions = document.createElement('div');
+    actions.className = 'btn-row thumb-actions';
+    actions.appendChild(iconBtn(shareIcon, app.t('gallery.share'), () => share(it), 'toolbtn slim'));
+    const del = iconBtn(ACTION_ICONS.clear, app.t('gallery.delete'), async () => {
+      if (!confirm(app.t('gallery.deleteConfirm'))) return;
       await store.deleteItem(it.id);
       mount(ctx);
-    });
-    del.classList.add('del');
-    del.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>';
+    }, 'toolbtn slim');
     actions.appendChild(del);
-
-    card.append(img, label, actions);
+    card.append(open, label, actions);
     grid.appendChild(card);
+  }
+  applyI18n(root);
+
+  function storyCover(it) {
+    const pg = it.story?.pages?.find((p) => pageImage(p));
+    return pg ? pageImage(pg) : '';
+  }
+
+  function preview(it) {
+    const st = deserializeStrokes(it.strokes ?? '[]');
+    return st.ok ? renderToCanvas(st.strokes, 220, 220, it.bg || '#ffffff').toDataURL() : '';
+  }
+
+  async function openItem(it) {
+    if (it.kind === 'drawing') {
+      // Dibujar recoge el borrador al montarse (o al volver, si ya estaba montado).
+      const draft = { strokes: it.strokes ?? '[]', bg: it.bgKey ?? 'white', page: it.page ?? null };
+      app.settings.drawDraft = draft;
+      app.settings.drawOpenRequest = true;
+      await store.setSetting('drawDraft', draft);
+      return app.go('draw');
+    }
+    if (it.kind === 'lineart' && it.png) {
+      const im = await loadImg(it.png);
+      const c = document.createElement('canvas');
+      c.width = c.height = 640;
+      c.getContext('2d').drawImage(im, 0, 0, 640, 640);
+      ctx.pendingLineart = { canvas: c, title: it.name };
+      return app.go('color');
+    }
+    if (it.kind === 'story') return app.go('story');
+    viewer(it);
+  }
+
+  function viewer(it) {
+    const layer = document.createElement('div');
+    layer.className = 'overlay';
+    layer.innerHTML = `<div class="overlay-card viewer-card"><img alt=""><div class="btn-row"></div></div>`;
+    layer.querySelector('img').src = it.png || it.thumb;
+    const row = layer.querySelector('.btn-row');
+    const close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'btn';
+    close.textContent = app.t('common.close');
+    close.addEventListener('click', () => layer.remove());
+    const sh = document.createElement('button');
+    sh.type = 'button';
+    sh.className = 'btn primary';
+    sh.textContent = app.t('gallery.share');
+    sh.addEventListener('click', () => share(it));
+    row.append(sh, close);
+    layer.addEventListener('click', (e) => e.target === layer && layer.remove());
+    document.body.appendChild(layer);
   }
 
   async function share(it) {
-    const blob = await itemBlob(it);
-    if (!blob) return;
-    const file = new File([blob], (it.name || 'pintakids') + '.png', { type: 'image/png' });
-    if (navigator.canShare?.({ files: [file] })) {
-      try {
-        await navigator.share({ files: [file], title: 'Pintakids' });
-        return;
-      } catch {
-        /* el niño canceló: seguir al fallback */
-      }
+    let blob = null;
+    const src = it.png || (it.kind === 'story' ? storyCover(it) : '');
+    if (src) blob = await (await fetch(src)).blob();
+    else {
+      const st = deserializeStrokes(it.strokes ?? '[]');
+      if (st.ok) blob = await new Promise((res) => renderToCanvas(st.strokes, 1024, 1024, it.bg || '#ffffff').toBlob(res, 'image/png'));
     }
-    // Fallback Android: puente nativo (guarda a la galería del teléfono).
-    if (window.PintakidsBridge?.saveImage) {
-      const dataUrl = await new Promise((res) => {
-        const r = new FileReader();
-        r.onload = () => res(r.result);
-        r.readAsDataURL(blob);
-      });
-      window.PintakidsBridge.saveImage(String(dataUrl), (it.name || 'pintakids') + '.png');
-      toast('📲');
-      return;
-    }
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = (it.name || 'pintakids') + '.png';
-    a.click();
-    setTimeout(() => URL.revokeObjectURL(url), 30_000);
+    if (blob) await shareBlob(blob, it.name || 'pintakids', toast);
   }
-
-  async function itemBlob(it) {
-    if (it.png) {
-      const r = await fetch(it.png);
-      return r.blob();
-    }
-    const st = deserializeStrokes(it.strokes ?? '[]');
-    if (!st.ok) return null;
-    const canvas = renderToCanvas(st.strokes, 1024, 1024, it.bg || "#ffffff");
-    return new Promise((res) => canvas.toBlob(res, 'image/png'));
-  }
-
-  applyI18n(root);
 }
