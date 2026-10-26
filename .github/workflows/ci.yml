@@ -27,7 +27,7 @@ jobs:
               include: ['src/**/*.ts']
             }));
           "
-          npx --yes tsc -p tsconfig.check.json
+          npx --yes -p typescript@5.6.3 tsc -p tsconfig.check.json
           rm -f tsconfig.check.json
       - name: Pruebas unitarias (servidor + lógica pura de la app)
         run: npm test
