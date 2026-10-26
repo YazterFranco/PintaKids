@@ -154,3 +154,24 @@ test('las vistas quedan visibles de verdad (opacidad 1, no solo en el DOM)', asy
   await page.evaluate(() => (location.hash = '#/learn'));
   await expect(page.locator('#view-learn')).toHaveCSS('opacity', '1');
 });
+
+test('offline desde la primera visita: Dibuja conmigo y Colorear tienen sus dibujos', async ({ page, context }) => {
+  await page.goto('/');
+  await page.waitForSelector('[data-testid="home-card-draw"]');
+  await page.evaluate(() => navigator.serviceWorker.ready);
+  // esperar a que el SW termine de guardar el catálogo (sin abrir antes ningún modo)
+  await expect.poll(() => page.evaluate(async () => {
+    const keys = await caches.keys();
+    let n = 0;
+    for (const k of keys) n += (await (await caches.open(k)).keys()).filter((r) => r.url.includes('/v1/catalog/') && r.url.endsWith('.svg')).length;
+    return n;
+  }), { timeout: 15_000 }).toBeGreaterThanOrEqual(56);
+  await context.setOffline(true);
+  await page.evaluate(() => (location.hash = '#/learn'));
+  await expect(page.locator('#view-learn [data-testid="learn-card"]').first()).toBeVisible({ timeout: 8_000 });
+  await page.locator('#view-learn [data-testid="learn-card"]').first().click();
+  await expect(page.locator('#view-learn .guide-svg svg')).toBeVisible();
+  await page.evaluate(() => (location.hash = '#/color'));
+  await expect(page.locator('#view-color .card').first()).toBeVisible({ timeout: 8_000 });
+  await context.setOffline(false);
+});

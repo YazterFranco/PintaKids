@@ -7,6 +7,36 @@ y el proyecto usa [Versionado Semántico](https://semver.org/lang/es/).
 
 ---
 
+## [2.0.0] — 2026-10-25
+
+### Añadido
+- **Dibuja conmigo**: cada dibujo del catálogo se aprende paso a paso con demostración animada,
+  voz, puntuación de 0–3 estrellas por paso (nunca bloquea) y, al final, colorear tu propio dibujo
+  o el modelo. Letras A–Z, Ñ y 0–9 con punto de inicio y flecha de sentido.
+- **Catálogo v4**: 61 dibujos nuevos hechos a mano en 8 paquetes (animales, granja, océano,
+  dinosaurios, vehículos, fantasía, espacio, comida) y 3 niveles. Disponibles sin internet desde la
+  primera visita.
+- **Pantalla de inicio** con tarjetas ilustradas (sustituye a la barra de 7 pestañas).
+- **Motor de pinceles realistas**: crayón, lápiz de color, marcador, acuarela, tiza, neón,
+  brillantina, spray, arcoíris y sellos propios; ancho según velocidad; espejos vertical,
+  horizontal, cuádruple y caleidoscopio; zoom con dos dedos.
+- **Dibujar estilo Simple Draw**: barra lateral de pinceles, selector de color con mezclador y
+  recientes, fondos (papel, pizarra, cuadritos, puntitos, dibujo para pintar encima), autoguardado.
+- **Colorear v2**: rellenos degradado, puntitos, rayas, cuadritos, brillitos y mágico; pincel que
+  no se sale de la zona; rehacer; filtros por nivel; recientes; confeti al guardar.
+- **Foto → colorear v2**: bordes limpios (histéresis), recorte cuadrado arrastrable, deslizadores
+  de detalle y grosor.
+- **Cuentos v2**: portada, modo lectura con paso de página y voz; cada página guarda su imagen.
+- Efectos de sonido (desactivables en Padres), modo oscuro real, capturas para la tienda.
+
+### Corregido
+- El aviso "sin internet" tapaba el botón Guardar.
+- Padres volvía a cargar la app al cambiar el límite de tiempo.
+- Borrar un cuento o una página no funcionaba.
+- Miniaturas y PDF de cuentos salían con el grosor de línea equivocado.
+- Accesos directos del manifiesto apuntaban a rutas inexistentes; se quitó un `share_target` que
+  no podía funcionar en un servidor estático.
+
 ## [Sin publicar]
 
 ### Añadido

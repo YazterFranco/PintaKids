@@ -13,7 +13,10 @@
 
 ## ✨ Características destacadas
 
-- 🖌️ **7 modos de juego**: dibujo libre, colorear sin salirse, lecciones paso a paso, foto→colorear, cuentos con voz, galería y zona de padres.
+- ✏️ **Dibuja conmigo**: 61 dibujos hechos a mano que se aprenden paso a paso (demostración animada, voz y estrellas), más letras A–Z, Ñ y números.
+- 🖌️ **Pinceles realistas** estilo Simple Draw: crayón, lápiz de color, marcador, acuarela, tiza, neón, brillantina, espejos y caleidoscopio.
+- 🎨 **Colorear sin salirse**: balde con degradados y texturas, pincel recortado a la zona, zoom con dos dedos.
+- 📷 Foto → colorear, 📚 cuentos con voz y modo lectura, 🖼️ galería y 🔒 zona de padres.
 - 📴 **100 % offline** — Service Worker + IndexedDB, cero dependencias de red.
 - 🤖 **App Android nativa** — APK firmado, sin Google Play ni Firebase, con autoactualización propia.
 - 🔒 **Privacidad real** — sin analítica, sin cookies, sin rastreo. CSP estricta `default-src 'self'`.
@@ -61,12 +64,12 @@ Tres entregables, un mismo servidor:
 .
 ├── server/
 │   ├── src/         server.ts (HTTP) · catalog.ts (licencias) · static.ts · releases.ts · json.ts
-│   ├── catalog/     paquetes de dibujos (manifest.json + SVG gratuitos) — generar: tools/generar-catalogo.mjs
-│   ├── web/         LA app: core/ (lógica pura), ui/, modes/ (7 modos), i18n/ (es/en), sw.js
-│   └── test/        node:test — 43 pruebas (servidor + core de la app)
+│   ├── catalog/     8 paquetes, 61 dibujos por pasos (generado desde tools/drawings/ con tools/generar-catalogo.mjs)
+│   ├── web/         LA app: core/ (lógica pura), ui/, modes/ (inicio + 7 modos), i18n/ (es/en), sw.js
+│   └── test/        node:test — 78 pruebas (servidor + core de la app)
 ├── android/         shell Kotlin (WebView); Gradle copia server/web → assets en cada build
-├── tests-e2e/       Playwright: 26 pruebas (Chromium + móvil emulado, incluye offline y axe)
-├── tools/           generar-catalogo.mjs · generar-iconos.mjs
+├── tests-e2e/       Playwright: 34 pruebas (Chromium + móvil emulado, incluye offline y axe)
+├── tools/           drawings/ (SVG fuente por paquete) · generar-catalogo.mjs · generar-iconos.mjs
 └── docs/            API.md (contrato servidor ↔ clientes)
 ```
 
@@ -76,7 +79,7 @@ Requiere **Node 22.18+**. Sin `npm install`.
 
 ```bash
 cd server
-npm test          # 43 pruebas, sin red
+npm test          # 78 pruebas, sin red
 PORT=8080 npm start
 ```
 
@@ -136,6 +139,15 @@ git tag v1.0.1 && git push origin v1.0.1
 ```
 
 GitHub Actions compila el APK firmado, la sube al servidor y los teléfonos avisan solos.
+
+## Dibujos del catálogo
+
+Cada dibujo es un SVG 400×400 escrito a mano en `tools/drawings/<paquete>/`, dividido en pasos
+`<g data-step="N" data-name="clave">`. **El orden en el archivo es el de pintado** (lo de atrás
+primero; los rellenos blancos tapan) y **`data-step` es el orden de dibujo** del tutorial, así la
+guía de cada paso muestra solo la parte visible. `pack.json` da títulos ES/EN, nivel (1: 4–5 pasos,
+2: 6–8, 3: 9–12) y el nombre de cada paso para la voz. `node tools/generar-catalogo.mjs` valida y
+regenera `server/catalog/`; las pruebas exigen pasos coherentes y ≥5 zonas cerradas por dibujo.
 
 ## Regla de contenido (no negociable)
 

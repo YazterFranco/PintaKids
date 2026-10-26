@@ -1,6 +1,6 @@
 {
   "name": "pintakids-server",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "description": "Pintakids: servidor de la app de dibujo infantil (Node 22, sin dependencias: TypeScript nativo). Sirve la PWA, el catálogo de dibujos gratuitos y el canal de autoactualización del APK.",

@@ -25,11 +25,39 @@ const PRECACHE = [
   '/assets/fonts/Baloo2-Variable.ttf', '/assets/fonts/OFL.txt',
 ];
 
+/**
+ * Catálogo de dibujos para usar sin internet desde la primera visita: índice, manifiestos y SVG.
+ * Se guarda por ruta (sin ?v=): el manejador de /v1/ cae a la ruta cuando no hay red.
+ * Si falla (sin red al instalar), no bloquea la instalación: se cachea al usarlo.
+ */
+async function precacheCatalog(cache) {
+  const index = await fetch('/v1/catalog', { cache: 'no-store' });
+  if (!index.ok) return;
+  await cache.put('/v1/catalog', index.clone());
+  const { packs } = await index.json();
+  for (const p of packs) {
+    const res = await fetch(`/v1/catalog/${p.id}`, { cache: 'no-store' });
+    if (!res.ok) continue;
+    await cache.put(`/v1/catalog/${p.id}`, res.clone());
+    const { files } = await res.json();
+    await Promise.all(
+      files.map(async (f) => {
+        const path = `/v1/catalog/${p.id}/files/${f.file}`;
+        const r = await fetch(path, { cache: 'no-store' });
+        if (r.ok) await cache.put(path, r);
+      }),
+    );
+  }
+}
+
 self.addEventListener('install', (e) => {
   e.waitUntil(
     caches
       .open(VERSION)
-      .then((c) => c.addAll(PRECACHE))
+      .then(async (c) => {
+        await c.addAll(PRECACHE);
+        await precacheCatalog(c).catch(() => {});
+      })
       .then(() => self.skipWaiting()),
   );
 });
