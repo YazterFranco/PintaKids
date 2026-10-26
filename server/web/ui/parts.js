@@ -146,3 +146,27 @@ export const ACTION_ICONS = {
   back: backIcon,
   next: nextIcon,
 };
+
+/**
+ * Mantiene `el` cuadrado y lo más grande posible dentro de `box`.
+ * byWidth: la altura de `box` depende de su contenido (no se usa para medir: evita el bucle de ResizeObserver).
+ * Solo cambia el tamaño si es distinto y lo aplica en el siguiente frame.
+ */
+export function fitSquare(box, el, { min = 140, max = Infinity, byWidth = false } = {}) {
+  let last = 0;
+  let frame = 0;
+  const apply = () => {
+    frame = 0;
+    const r = box.getBoundingClientRect();
+    if (!r.width || (!byWidth && !r.height)) return;
+    const s = Math.max(min, Math.floor(Math.min(max, byWidth ? r.width : Math.min(r.width, r.height))));
+    if (s === last) return;
+    last = s;
+    el.style.width = el.style.height = s + 'px';
+  };
+  const ro = new ResizeObserver(() => {
+    if (!frame) frame = requestAnimationFrame(apply);
+  });
+  ro.observe(box);
+  return { refit: apply, disconnect: () => ro.disconnect() };
+}

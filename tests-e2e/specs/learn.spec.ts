@@ -42,9 +42,9 @@ test('repasar la guía del paso da estrellas', async ({ page }) => {
   }
   await page.mouse.up();
   await page.click('#view-learn [data-testid="learn-next"]');
-  // la puntuación es asíncrona (rasteriza la guía): esperar a que aparezca
-  await expect(page.locator('#view-learn [data-testid="step-stars"]')).not.toHaveAttribute('data-stars', '');
-  const stars = await page.locator('#view-learn [data-testid="step-stars"]').getAttribute('data-stars');
+  // la puntuación es asíncrona (rasteriza la guía): esperar el resultado persistente del paso
+  await expect(page.locator('#view-learn')).toHaveAttribute('data-last-stars', /\d/);
+  const stars = await page.locator('#view-learn').getAttribute('data-last-stars');
   expect(Number(stars)).toBeGreaterThanOrEqual(2);
 });
 

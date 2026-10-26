@@ -71,6 +71,8 @@
       show('No se pudo cargar ' + String(t.src || t.href || '').split('/').pop());
       return;
     }
+    // Aviso inofensivo del navegador (no es un fallo de la app): nunca mostrar "Reparar" por él.
+    if (e && e.message && /ResizeObserver loop/i.test(e.message)) return;
     if (e && e.message) show(e.message);
   }, true);
 

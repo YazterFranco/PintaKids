@@ -27,6 +27,8 @@ test('desde inicio se abre cada modo y se vuelve sin errores', async ({ page }) 
     await page.click(`#appbar [data-testid="home"]`);
     await expect(page.locator('#view-home')).toBeVisible();
   }
+  // el aviso de "Reparar" nunca debe salir por avisos inofensivos del navegador
+  await expect(page.locator('#pk-repair')).toHaveCount(0);
   expect((page as any).__errors).toEqual([]);
 });
 
@@ -88,4 +90,13 @@ test('i18n: cambiar a inglés traduce la barra', async ({ page }) => {
   await Promise.all([page.waitForEvent('load'), sel.selectOption('en')]);
   await page.goto('/#/home');
   await expect(page.locator('[data-testid="home-card-draw"] b')).toHaveText('Free drawing');
+});
+
+test('el aviso inofensivo "ResizeObserver loop" no abre la caja de Reparar', async ({ page }) => {
+  await page.waitForTimeout(1200); // la app ya arrancó: el autodiagnóstico ya no limpia la caja
+  await page.evaluate(() =>
+    window.dispatchEvent(new ErrorEvent('error', { message: 'ResizeObserver loop completed with undelivered notifications.' })),
+  );
+  await page.waitForTimeout(200);
+  await expect(page.locator('#pk-repair')).toHaveCount(0);
 });

@@ -1,6 +1,6 @@
 /** Modo Foto: una foto o un dibujo en papel → líneas limpias para colorear. Todo en el dispositivo. */
 
-import { iconBtn, ACTION_ICONS } from '../ui/parts.js';
+import { iconBtn, ACTION_ICONS, fitSquare } from '../ui/parts.js';
 import { tabColor } from '../ui/icons.js';
 import { photoToLineart } from '../core/lineart.js';
 
@@ -70,13 +70,7 @@ export async function mount(ctx) {
   const c = canvas.getContext('2d', { willReadFrequently: true });
   root.append(panel, stageBox, moveHint, use, file);
 
-  function fit() {
-    const r = stageBox.getBoundingClientRect();
-    if (!r.width) return;
-    const s = Math.max(160, Math.floor(Math.min(r.width, Math.max(r.height, 260))));
-    preview.style.width = preview.style.height = s + 'px';
-  }
-  new ResizeObserver(fit).observe(stageBox);
+  fitSquare(stageBox, preview, { min: 160, max: 560, byWidth: true });
 
   /* ---------- foto y recorte cuadrado ---------- */
   let img = null;

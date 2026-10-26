@@ -5,7 +5,7 @@
  */
 
 import { createSurface } from '../ui/surface.js';
-import { ACTION_ICONS, iconBtn } from '../ui/parts.js';
+import { ACTION_ICONS, fitSquare, iconBtn } from '../ui/parts.js';
 import { checkIcon, starIcon } from '../ui/icons.js';
 import { celebrate } from '../ui/celebrate.js';
 import { parseSteps, svgUpTo } from '../core/svgsteps.js';
@@ -188,13 +188,7 @@ export async function mount(ctx) {
     inks.appendChild(d);
   }
 
-  function fit() {
-    const r = stageBox.getBoundingClientRect();
-    if (!r.width || !r.height) return;
-    const s = Math.max(160, Math.floor(Math.min(r.width, r.height)));
-    stage.style.width = stage.style.height = s + 'px';
-  }
-  new ResizeObserver(fit).observe(stageBox);
+  const fit = fitSquare(stageBox, stage, { min: 160 }).refit;
 
   /* estado de la lección */
   let parsed = null;
@@ -208,6 +202,7 @@ export async function mount(ctx) {
     meta = m;
     n = 1;
     results = [];
+    delete root.dataset.lastStars;
     surface.clear();
     picker.hidden = true;
     endCard.hidden = true;
@@ -298,6 +293,7 @@ export async function mount(ctx) {
       const stars = await scoreStep();
       results.push(stars);
       stepStars.dataset.stars = String(stars);
+      root.dataset.lastStars = String(stars); // persiste aunque el siguiente paso limpie la vista
       stepStars.innerHTML = [1, 2, 3].map((k) => `<span class="${k <= stars ? 'on' : ''}">${starIcon}</span>`).join('');
       sfx.play(stars ? 'star' : 'pop');
       if (n < parsed.steps.length) {

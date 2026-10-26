@@ -1,6 +1,6 @@
 /** Modo Colorear: biblioteca por paquete y nivel + balde con estilos + pinceles que no se salen de la zona. */
 
-import { ACTION_ICONS, iconBtn } from '../ui/parts.js';
+import { ACTION_ICONS, fitSquare, iconBtn } from '../ui/parts.js';
 import { RAIL_ART, zoomResetIcon, checkIcon, shareIcon } from '../ui/icons.js';
 import { KID_COLORS, openColorPicker, pushRecent } from '../ui/colorpicker.js';
 import { celebrate } from '../ui/celebrate.js';
@@ -210,13 +210,7 @@ export async function mount(ctx) {
   }
 
   /* ---------- lienzo cuadrado que llena el espacio ---------- */
-  function fitStage() {
-    const r = stage.getBoundingClientRect();
-    if (!r.width || !r.height) return;
-    const s = Math.max(140, Math.floor(Math.min(r.width, r.height)));
-    canvasWrap.style.width = canvasWrap.style.height = s + 'px';
-  }
-  new ResizeObserver(fitStage).observe(stage);
+  const fitStage = fitSquare(stage, canvasWrap).refit;
 
   /* ---------- preparar un dibujo ---------- */
   const loadImage = (url) =>
