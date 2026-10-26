@@ -489,3 +489,42 @@ input.caption { width: 100%; }
   .draw-top { gap: 4px; }
 }
 .draw-bottom .sizes { max-width: 320px; }
+
+/* ── Dibuja conmigo ────────────────────────────────────────── */
+.learn-picker { display: flex; flex-direction: column; gap: 10px; }
+.segmented { display: inline-flex; align-self: flex-start; padding: 4px; gap: 4px; border-radius: var(--r-pill); background: var(--surface-2); border: 1px solid var(--border); }
+.segmented button { border: 0; background: transparent; padding: 8px 16px; border-radius: var(--r-pill); font-weight: 800; font-size: 15px; cursor: pointer; color: var(--ink-soft); }
+.segmented button[aria-pressed='true'] { background: var(--surface); color: var(--accent-strong); box-shadow: var(--shadow-1); }
+.letter-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 8px; }
+.letter-btn {
+  aspect-ratio: 1; border-radius: var(--r-md); border: 1px solid var(--border); background: var(--surface);
+  font: 800 30px 'Baloo 2', system-ui; color: var(--accent-strong); cursor: pointer; box-shadow: var(--shadow-1);
+}
+.letter-btn:active { transform: scale(0.94); }
+.view.learn-mode { overflow: hidden; padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); }
+.lesson { display: flex; flex-direction: column; gap: 8px; flex: 1; min-height: 0; }
+.step-pill { flex: 0 0 auto; padding: 4px 12px; border-radius: var(--r-pill); background: var(--accent-soft); color: var(--accent-strong); font-weight: 800; font-size: 14px; }
+.lesson-stage { position: relative; width: 300px; height: 300px; border-radius: var(--r-lg); overflow: hidden; background: #fff; border: 1px solid var(--border); box-shadow: var(--shadow-2); }
+.lesson-stage .guide-svg, .lesson-stage .canvas-wrap { position: absolute; inset: 0; }
+.lesson-stage .guide-svg svg { width: 100%; height: 100%; display: block; }
+.lesson-stage .canvas-wrap { background: transparent; border: 0; box-shadow: none; border-radius: 0; min-height: 0; }
+.lesson-bottom {
+  display: grid; grid-template-columns: 1fr auto; grid-template-areas: 'hint next' 'inks stars'; gap: 6px 10px; align-items: center;
+  padding: 8px 10px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md);
+}
+.lesson-hint { grid-area: hint; margin: 0; font-size: 18px; font-weight: 800; }
+.lesson-bottom .palette { grid-area: inks; gap: 6px; flex-wrap: nowrap; }
+.lesson-bottom .swatch { width: 30px; height: 30px; }
+.lesson-bottom .toolbtn.big { grid-area: next; min-height: 50px; flex-direction: row; gap: 6px; padding: 6px 18px; border-radius: var(--r-pill); }
+.step-stars { grid-area: stars; display: flex; gap: 2px; justify-content: flex-end; min-height: 24px; }
+.step-stars span, .big-stars span { opacity: 0.2; filter: grayscale(1); }
+.step-stars span.on, .big-stars span.on { opacity: 1; filter: none; animation: bump 0.5s var(--ease-spring) both; }
+.step-stars span:nth-child(2) { animation-delay: 0.1s; } .step-stars span:nth-child(3) { animation-delay: 0.2s; }
+.big-stars { display: flex; justify-content: center; gap: 6px; }
+.big-stars svg { width: 54px; height: 54px; }
+.big-stars span:nth-child(2) svg { width: 66px; height: 66px; }
+.learn-end-card { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+.end-actions { justify-content: center; }
+@keyframes guide-draw { to { stroke-dashoffset: 0; } }
+.marching { animation: march 1.2s linear infinite; }
+@keyframes march { to { stroke-dashoffset: -25; } }

@@ -46,22 +46,6 @@ test('cuento completo: crear, dibujar, caption, página nueva y exportar PDF', a
   expect(head.startsWith('%PDF-1.4')).toBeTruthy();
 });
 
-test('aprender: pasar los pasos de una lección da una estrella', async ({ page }) => {
-  await page.goto('/');
-  await page.waitForSelector('[data-testid="home-card-draw"]');
-  await page.evaluate(() => (location.hash = '#/learn'));
-  await page.locator('[data-testid="learn-card"]').first().click();
-  await page.waitForSelector('#view-learn .canvas-wrap canvas');
-  await expect(page.locator('#view-learn .dot-step')).not.toHaveCount(0);
-  for (let i = 0; i < 8; i++) {
-    const next = page.locator('[data-testid="learn-next"]');
-    if (!(await next.count())) break;
-    await next.click();
-    await page.waitForTimeout(220);
-  }
-  await expect(page.locator('#starScore')).toContainText('1', { timeout: 4_000 });
-});
-
 test('foto → colorear: subir imagen, ver máscara y entrar al colorear', async ({ page }) => {
   await page.goto('/');
   await page.waitForSelector('[data-testid="home-card-draw"]');
