@@ -100,3 +100,9 @@ test('el aviso inofensivo "ResizeObserver loop" no abre la caja de Reparar', asy
   await page.waitForTimeout(200);
   await expect(page.locator('#pk-repair')).toHaveCount(0);
 });
+
+test('las etiquetas accesibles de la barra siguen el idioma', async ({ page }) => {
+  const lang = await page.evaluate(() => document.documentElement.lang);
+  const label = await page.locator('#appbar [data-testid="parents"]').getAttribute('aria-label');
+  expect(label).toBe(lang === 'en' ? 'Parents' : 'Padres');
+});

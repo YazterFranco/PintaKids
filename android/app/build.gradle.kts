@@ -33,8 +33,8 @@ android {
         applicationId = "com.pintakids.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = (project.findProperty("versionCodeOverride") as? String)?.toIntOrNull() ?: 3
-        versionName = (project.findProperty("versionNameOverride") as? String) ?: "1.0.2"
+        versionCode = (project.findProperty("versionCodeOverride") as? String)?.toIntOrNull() ?: 4
+        versionName = (project.findProperty("versionNameOverride") as? String) ?: "2.0.0"
         buildConfigField("String", "API_BASE_URL", "\"https://pintakids-production.up.railway.app\"")
     }
 
@@ -66,9 +66,11 @@ android {
 
 // La app es la PWA: los assets del APK son server/web, copiados en cada build.
 // Así el APK offline y la web servida son SIEMPRE el mismo código.
-val syncWebAssets = tasks.register<Copy>("syncWebAssets") {
-    from(rootProject.projectDir.resolve("../server/web").normalize())
-    into(projectDir.resolve("src/main/assets/app"))
+val syncWebAssets = tasks.register<Sync>("syncWebAssets") {
+    into(projectDir.resolve("src/main/assets"))
+    from(rootProject.projectDir.resolve("../server/web").normalize()) { into("app") }
+    // El catálogo de dibujos también va dentro: la app funciona sin red desde la instalación.
+    from(rootProject.projectDir.resolve("../server/catalog").normalize()) { into("catalog") }
 }
 tasks.named("preBuild") { dependsOn(syncWebAssets) }
 

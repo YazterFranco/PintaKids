@@ -29,7 +29,10 @@ async function loadDicts() {
 
 export function applyI18n(root = document) {
   for (const el of root.querySelectorAll('[data-i18n]')) el.textContent = app.t(el.dataset.i18n);
-  for (const el of root.querySelectorAll('[data-i18n-title]')) el.title = app.t(el.dataset.i18nTitle);
+  for (const el of root.querySelectorAll('[data-i18n-title]')) {
+    el.title = app.t(el.dataset.i18nTitle);
+    el.setAttribute('aria-label', el.title); // los lectores de pantalla también cambian de idioma
+  }
   document.documentElement.lang = app.lang;
 }
 
@@ -156,7 +159,8 @@ function injectIcons() {
 }
 
 async function boot() {
-  if ('serviceWorker' in navigator) {
+  // En el APK todo ya es local (y el SW del WebView saltaría el servidor de assets): sin SW.
+  if ('serviceWorker' in navigator && !window.PintakidsBridge) {
     // Sin recarga forzada: el SW es network-first y la próxima visita ya trae lo nuevo.
     navigator.serviceWorker.register('/sw.js').catch(() => {});
   }

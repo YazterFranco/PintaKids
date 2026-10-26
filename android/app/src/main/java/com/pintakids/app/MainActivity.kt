@@ -17,6 +17,7 @@ import android.webkit.WebViewClient
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.webkit.WebViewAssetLoader
+import com.pintakids.app.web.LocalWeb
 import com.pintakids.app.update.UpdateChecker
 
 /**
@@ -47,9 +48,12 @@ class MainActivity : ComponentActivity() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Depuración remota del WebView (chrome://inspect) solo en compilaciones de depuración.
+        WebView.setWebContentsDebuggingEnabled(BuildConfig.DEBUG)
 
+        // La PWA usa rutas absolutas (/app.js, /v1/catalog…): todo se sirve desde los assets del APK.
         val assetLoader = WebViewAssetLoader.Builder()
-            .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(this))
+            .addPathHandler("/", LocalWeb(assets))
             .build()
 
         webView = WebView(this).apply {
@@ -66,7 +70,7 @@ class MainActivity : ComponentActivity() {
 
                 // Barrera exterior: cualquier destino que no sea la propia app empaquetada se bloquea.
                 override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean =
-                    !(request.url.host == "appassets.androidplatform.net" && request.url.path?.startsWith("/assets/app/") == true)
+                    request.url.host != "appassets.androidplatform.net"
             }
 
             webChromeClient = object : WebChromeClient() {
@@ -100,7 +104,7 @@ class MainActivity : ComponentActivity() {
             }
 
             addJavascriptInterface(Bridge(this@MainActivity, this), "PintakidsBridge")
-            loadUrl("https://appassets.androidplatform.net/assets/app/index.html")
+            loadUrl("https://appassets.androidplatform.net/index.html")
         }
 
         setContentView(webView)
