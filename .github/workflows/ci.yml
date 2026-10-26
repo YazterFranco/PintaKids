@@ -11,7 +11,7 @@ jobs:
     defaults: { run: { working-directory: server } }
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with: { node-version: '24' }
       - name: Type-check (TypeScript)
         run: |
@@ -50,7 +50,7 @@ jobs:
     defaults: { run: { working-directory: tests-e2e } }
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with: { node-version: '24' }
       - run: npm ci
       - run: npx playwright install --with-deps chromium
