@@ -170,7 +170,8 @@ export async function mount(ctx) {
   lesson.append(top, stageBox, bottom);
   root.append(picker, lesson, endCard);
 
-  const surface = createSurface(wrap, { label: app.t('learn.title') });
+  // Sin zoom: la guía y la puntuación usan el lienzo sin transformar.
+  const surface = createSurface(wrap, { label: app.t('learn.title'), zoom: false });
   surface.state.tool = 'crayon';
   surface.state.size = 9;
   surface.state.color = INKS[0];

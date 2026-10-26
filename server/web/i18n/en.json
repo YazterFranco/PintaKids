@@ -198,5 +198,6 @@
   "story.deletePage": "Delete page",
   "story.prev": "Previous page",
   "story.next": "Next page",
-  "gallery.deleteConfirm": "Delete this drawing?"
+  "gallery.deleteConfirm": "Delete this drawing?",
+  "gallery.autoSaved": "We saved your previous drawing in the gallery"
 }

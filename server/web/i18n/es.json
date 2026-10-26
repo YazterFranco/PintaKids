@@ -198,5 +198,6 @@
   "story.deletePage": "Borrar página",
   "story.prev": "Página anterior",
   "story.next": "Página siguiente",
-  "gallery.deleteConfirm": "¿Borrar este dibujo?"
+  "gallery.deleteConfirm": "¿Borrar este dibujo?",
+  "gallery.autoSaved": "Guardamos tu dibujo anterior en la galería"
 }

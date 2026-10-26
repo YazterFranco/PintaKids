@@ -93,8 +93,11 @@ export async function mount(ctx) {
 
   async function openItem(it) {
     if (it.kind === 'drawing') {
+      // Lo que estaba sin guardar en Dibujar no se pierde: va a la galería antes de abrir el otro.
+      const cur = app.settings.drawDraft ?? (await store.getSettings()).drawDraft;
+      if (cur?.dirty && cur.itemId !== it.id && hasStrokes(cur.strokes)) await keepDraft(cur);
       // Dibujar recoge el borrador al montarse (o al volver, si ya estaba montado).
-      const draft = { strokes: it.strokes ?? '[]', bg: it.bgKey ?? 'white', page: it.page ?? null };
+      const draft = { strokes: it.strokes ?? '[]', bg: it.bgKey ?? 'white', page: it.page ?? null, itemId: it.id, dirty: false };
       app.settings.drawDraft = draft;
       app.settings.drawOpenRequest = true;
       await store.setSetting('drawDraft', draft);
@@ -110,6 +113,28 @@ export async function mount(ctx) {
     }
     if (it.kind === 'story') return app.go('story');
     viewer(it);
+  }
+
+  function hasStrokes(json) {
+    const st = deserializeStrokes(json ?? '[]');
+    return st.ok && st.strokes.length > 0;
+  }
+
+  async function keepDraft(d) {
+    const st = deserializeStrokes(d.strokes);
+    const bg = d.bgColor ?? '#ffffff';
+    const thumb = d.thumb ?? renderToCanvas(st.strokes, 300, 300, bg).toDataURL('image/png');
+    await store.putItem({
+      id: d.itemId ?? 'd_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      kind: 'drawing',
+      name: app.t('draw.title'),
+      strokes: d.strokes,
+      thumb,
+      bg,
+      bgKey: d.bg ?? 'white',
+      page: d.page ?? null,
+    });
+    toast(app.t('gallery.autoSaved'));
   }
 
   function viewer(it) {

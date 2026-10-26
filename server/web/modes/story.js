@@ -13,6 +13,8 @@ const PAGE_W = 640;
 const PAGE_H = 480;
 
 let editing = null; // { story, item }
+let pageFlush = null; // guarda la página que se está dibujando (al salir de la vista o tras cada trazo)
+window.addEventListener('hashchange', () => pageFlush?.());
 
 /** Imagen de una página: la guardada (v2) o, si es un cuento viejo, re-pintada desde los trazos. */
 export function pageImage(pg) {
@@ -25,6 +27,7 @@ export function pageImage(pg) {
 export async function mount(ctx) {
   const { app, toast, addStar, applyI18n, store } = ctx;
   const root = document.getElementById('view-story');
+  await pageFlush?.();
   root.replaceChildren();
   root.classList.remove('story-drawing');
 
@@ -192,13 +195,7 @@ export async function mount(ctx) {
     label.textContent = `${editing.story.title} · ${app.t('story.pageOf', { n: pi + 1 })}`;
     const undo = iconBtn(ACTION_ICONS.undo, app.t('draw.undo'), () => surface.undo());
     const done = iconBtn(checkIcon + `<small>${app.t('learn.done')}</small>`, app.t('learn.done'), async () => {
-      const out = surface.toCanvas(PAGE_W, PAGE_H, '#ffffff');
-      editing.story.pages[pi] = {
-        ...editing.story.pages[pi],
-        drawing: serializeStrokes(surface.strokes),
-        png: surface.strokes.length ? out.toDataURL('image/jpeg', 0.85) : null,
-      };
-      await persist();
+      await pageFlush?.();
       renderEditor();
     }, 'toolbtn save');
     done.dataset.testid = 'story-back';
@@ -213,7 +210,27 @@ export async function mount(ctx) {
     pal.className = 'palette tray-palette story-palette';
     root.append(bar, stage, pal);
 
-    const surface = createSurface(wrap, {});
+    let timer = 0;
+    const story = editing;
+    const savePage = async () => {
+      clearTimeout(timer);
+      story.story.pages[pi] = {
+        ...story.story.pages[pi],
+        drawing: serializeStrokes(surface.strokes),
+        png: surface.strokes.length ? surface.toCanvas(PAGE_W, PAGE_H, '#ffffff').toDataURL('image/jpeg', 0.85) : null,
+      };
+      await persist();
+    };
+    // Cada trazo se guarda solo (si el niño sale con el botón de inicio o la app se cierra, no se pierde).
+    const surface = createSurface(wrap, { onStroke: () => {
+      clearTimeout(timer);
+      timer = setTimeout(savePage, 500);
+    } });
+    pageFlush = async () => {
+      pageFlush = null;
+      await savePage();
+      surface.destroy();
+    };
     const st = deserializeStrokes(editing.story.pages[pi].drawing);
     if (st.ok) surface.load(st.strokes);
     surface.state.tool = 'crayon';

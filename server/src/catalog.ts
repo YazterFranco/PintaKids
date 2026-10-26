@@ -64,6 +64,8 @@ export interface LoadReport {
 export function svgIsSafe(svg: string): boolean {
   const s = svg.toLowerCase();
   if (/<script|javascript:|foreignobject|\bimage\b[^>]*href|xlink:href\s*=\s*["']?https?:|<!entity|<!doctype/.test(s)) return false;
+  // Manejadores de eventos (onload=, onclick=…): ejecutarían código si el SVG se inserta en la página.
+  if (/\son[a-z]+\s*=/.test(s)) return false;
   return /<svg[\s>]/.test(s);
 }
 

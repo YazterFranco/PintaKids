@@ -6,13 +6,17 @@
 
 import { BRUSHES, paintBrush } from './brushes.js';
 
-export function paintStroke(ctx, stroke, w, h) {
+/**
+ * opts.underlay(ctx, w, h): capa de fondo que se ve debajo (papel, dibujo para pintar encima).
+ * El balde la usa como límite para no inundar toda la hoja.
+ */
+export function paintStroke(ctx, stroke, w, h, opts = {}) {
   const { t: tool, c: color, s: size, p: pts } = stroke;
   ctx.save();
   const base = { lineWidth: size, lineCap: 'round', lineJoin: 'round', strokeStyle: color, fillStyle: color };
 
   if (tool === 'fill') {
-    floodFill(ctx, w, h, Math.round(pts[0] * (w - 1)), Math.round(pts[1] * (h - 1)), color);
+    floodFill(ctx, w, h, Math.round(pts[0] * (w - 1)), Math.round(pts[1] * (h - 1)), color, opts.underlay ? composite(ctx, w, h, opts.underlay) : null);
     ctx.restore();
     return;
   }
@@ -69,18 +73,31 @@ export function mirrorTransforms(m, w, h) {
 }
 
 /** Pinta un trazo con todas sus copias de espejo. */
-export function paintMirrored(ctx, s, w, h) {
+export function paintMirrored(ctx, s, w, h, opts = {}) {
   const tfs = s.t === 'fill' ? [[1, 0, 0, 1, 0, 0]] : mirrorTransforms(s.m, w, h);
   for (const t of tfs) {
     ctx.save();
     ctx.transform(...t);
-    paintStroke(ctx, s, w, h);
+    paintStroke(ctx, s, w, h, opts);
     ctx.restore();
   }
 }
 
-export function paintAll(ctx, strokes, w, h) {
-  for (const s of strokes) paintMirrored(ctx, s, w, h);
+export function paintAll(ctx, strokes, w, h, opts = {}) {
+  for (const s of strokes) paintMirrored(ctx, s, w, h, opts);
+}
+
+/** Lo que el niño ve: blanco + fondo + trazos actuales. Solo para decidir los límites del balde. */
+function composite(ctx, w, h, underlay) {
+  const c = document.createElement('canvas');
+  c.width = w;
+  c.height = h;
+  const g = c.getContext('2d', { willReadFrequently: true });
+  g.fillStyle = '#ffffff';
+  g.fillRect(0, 0, w, h);
+  underlay(g, w, h);
+  g.drawImage(ctx.canvas, 0, 0);
+  return g.getImageData(0, 0, w, h);
 }
 
 export function renderToCanvas(strokes, w, h, background = '#ffffff') {
@@ -129,10 +146,12 @@ function hexToRgb(hex) {
  * Balde de pintura: relleno por inundación (scanline) con tolerancia.
  * Determinista: se repite igual al re-pintar la lista de trazos en orden.
  */
-export function floodFill(ctx, w, h, sx, sy, color) {
+export function floodFill(ctx, w, h, sx, sy, color, boundary = null) {
   if (sx < 0 || sy < 0 || sx >= w || sy >= h) return;
   const img = ctx.getImageData(0, 0, w, h);
-  const d = img.data;
+  const out = img.data;
+  // Se decide la zona con lo que se ve (boundary) y se pinta en la capa propia (out).
+  const d = boundary ? boundary.data : out;
   const at = (x, y) => (y * w + x) * 4;
   const si = at(sx, sy);
   const tr = d[si];
@@ -155,10 +174,10 @@ export function floodFill(ctx, w, h, sx, sy, color) {
     let spanDown = false;
     while (x < w && match(at(x, y)) && !painted[y * w + x]) {
       const i = at(x, y);
-      d[i] = fr;
-      d[i + 1] = fg;
-      d[i + 2] = fb;
-      d[i + 3] = 255;
+      out[i] = fr;
+      out[i + 1] = fg;
+      out[i + 2] = fb;
+      out[i + 3] = 255;
       painted[y * w + x] = 1;
       if (y > 0) {
         const up = match(at(x, y - 1)) && !painted[(y - 1) * w + x];

@@ -36,6 +36,8 @@ export async function mount(ctx) {
   root.classList.add('draw-mode');
 
   let bgKey = 'white';
+  let itemId = null; // dibujo de la galería que se está editando (guardar lo actualiza, no duplica)
+  let dirty = false; // hay trazos sin guardar en la galería
   let page = null; // { src, img } dibujo del catálogo como fondo
   let recents = Array.isArray(app.settings.recentColors) ? app.settings.recentColors : [];
 
@@ -55,7 +57,10 @@ export async function mount(ctx) {
       BACKGROUNDS[bgKey].underlay?.(c, w, h);
       if (page?.img?.complete) drawPage(c, page.img, w, h);
     },
-    onStroke: () => refresh(),
+    onStroke: () => {
+      dirty = true;
+      refresh();
+    },
     onPickColor: (hex) => setColor(hex),
     onZoom: (s) => (zoomBtn.hidden = s <= 1.01),
   });
@@ -79,6 +84,9 @@ export async function mount(ctx) {
   const clearBtn = iconBtn(ACTION_ICONS.clear, app.t('draw.clear'), () => {
     if (surface.strokes.length && !confirm(app.t('draw.confirmClear'))) return;
     surface.clear();
+    itemId = null; // hoja nueva
+    dirty = false;
+    flushDraft();
   });
   clearBtn.dataset.testid = 'clear';
   const shareBtn = iconBtn(shareIcon, app.t('draw.share'), share);
@@ -282,12 +290,12 @@ export async function mount(ctx) {
     page = null;
     if (pageRef?.src) {
       const img = new Image();
-      img.onload = () => surface.present();
+      img.onload = () => surface.redraw(); // re-aplica los baldes con las líneas del dibujo ya cargado
       img.src = pageRef.src;
       page = { src: pageRef.src, img };
     }
     if (bgKey === 'board' && surface.state.color === '#6c5ce7') setColor('#ffffff');
-    surface.present();
+    surface.redraw(); // los baldes dependen del fondo visible
     scheduleDraft();
   }
 
@@ -340,12 +348,24 @@ export async function mount(ctx) {
   let draftTimer = 0;
   function scheduleDraft() {
     clearTimeout(draftTimer);
-    draftTimer = setTimeout(() => {
-      const draft = { strokes: serializeStrokes(surface.strokes), bg: bgKey, page: page?.src ?? null };
-      app.settings.drawDraft = draft;
-      store.setSetting('drawDraft', draft);
-    }, 800);
+    draftTimer = setTimeout(flushDraft, 800);
   }
+
+  /** Guarda el borrador ya (al salir de Dibujar o si la app pasa a segundo plano no se espera). */
+  function flushDraft(leaving = false) {
+    clearTimeout(draftTimer);
+    if (app.settings.drawOpenRequest) return; // la galería acaba de pedir abrir otro dibujo
+    const draft = { strokes: serializeStrokes(surface.strokes), bg: bgKey, bgColor: BACKGROUNDS[bgKey].color, page: page?.src ?? null, itemId, dirty };
+    // Al salir con cambios sin guardar se adjunta la miniatura real (la galería puede guardarlo solo).
+    if (leaving && dirty && surface.strokes.length) draft.thumb = squareThumb(snapshot(), 300, BACKGROUNDS[bgKey].color);
+    app.settings.drawDraft = draft;
+    store.setSetting('drawDraft', draft);
+  }
+  window.addEventListener('hashchange', () => {
+    if (!location.hash.startsWith('#/draw')) flushDraft(true);
+  });
+  document.addEventListener('visibilitychange', () => document.visibilityState === 'hidden' && flushDraft());
+  window.addEventListener('pagehide', () => flushDraft());
 
   function snapshot() {
     return surface.toCanvas(surface.canvas.width, surface.canvas.height, BACKGROUNDS[bgKey].color);
@@ -354,8 +374,10 @@ export async function mount(ctx) {
   async function save() {
     if (!surface.strokes.length) return toast(app.t('draw.empty.hint'));
     const img = snapshot();
+    itemId ??= 'd_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    dirty = false;
     await store.putItem({
-      id: 'd_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      id: itemId,
       kind: 'drawing',
       name: app.t('draw.title'),
       strokes: serializeStrokes(surface.strokes),
@@ -365,6 +387,7 @@ export async function mount(ctx) {
       bgKey,
       page: page?.src ?? null,
     });
+    flushDraft();
     addStar();
     toast(app.t('draw.saved'));
   }
@@ -376,8 +399,10 @@ export async function mount(ctx) {
   }
 
   async function restoreDraft() {
-    const draft = (await store.getSettings()).drawDraft;
+    const draft = app.settings.drawOpenRequest ? app.settings.drawDraft : (await store.getSettings()).drawDraft;
     if (!draft) return;
+    itemId = draft.itemId ?? null;
+    dirty = Boolean(draft.dirty);
     const st = deserializeStrokes(draft.strokes ?? '[]');
     setBackground(draft.bg ?? 'white', draft.page ? { src: draft.page } : null);
     if (st.ok) surface.load(st.strokes);
@@ -387,8 +412,8 @@ export async function mount(ctx) {
   root.__pkDraw = {
     async restoreIfRequested() {
       if (!app.settings.drawOpenRequest) return;
-      app.settings.drawOpenRequest = false;
       await restoreDraft();
+      app.settings.drawOpenRequest = false;
     },
   };
 

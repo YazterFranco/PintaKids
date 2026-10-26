@@ -20,6 +20,8 @@ const FILE_NAME = /^[a-z0-9][a-z0-9._-]{0,58}\.svg$/i;
 function svgIsSafe(svg) {
   const s = svg.toLowerCase();
   if (/<script|javascript:|foreignobject|\bimage\b[^>]*href|xlink:href\s*=\s*["']?https?:|<!entity|<!doctype/.test(s)) return false;
+  // Manejadores de eventos (onload=, onclick=…): ejecutarían código si el SVG se inserta en la página.
+  if (/\son[a-z]+\s*=/.test(s)) return false;
   return /<svg[\s>]/.test(s);
 }
 

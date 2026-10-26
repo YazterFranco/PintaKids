@@ -294,7 +294,7 @@ export async function mount(ctx) {
 
   function snapshot() {
     undo.push(fillData.slice());
-    if (undo.length > 30) undo.shift();
+    if (undo.length > 20) undo.shift(); // 20 × 1,6 MB: suficiente sin ahogar teléfonos modestos
     redo = [];
     refreshButtons();
   }
@@ -321,6 +321,7 @@ export async function mount(ctx) {
   const view = createViewport();
   const pointers = new Map();
   let stroke = null; // { region, mask, bbox, base, s }
+  let tap = null; // balde: se aplica al levantar UN dedo que casi no se movió (nunca al empezar un pellizco)
 
   function applyZoom() {
     canvas.style.transform = view.scale > 1.01 ? `translate(${view.tx * 100}%, ${view.ty * 100}%) scale(${view.scale})` : '';
@@ -351,9 +352,14 @@ export async function mount(ctx) {
   canvas.addEventListener('pointerdown', (e) => {
     if (!labels) return;
     e.preventDefault();
-    canvas.setPointerCapture(e.pointerId);
+    try {
+      canvas.setPointerCapture(e.pointerId);
+    } catch {
+      /* puntero ya liberado: seguir sin captura */
+    }
     pointers.set(e.pointerId, screen(e));
     if (pointers.size > 1) {
+      tap = null;
       if (stroke) {
         fillData = stroke.base;
         undo.pop();
@@ -366,10 +372,7 @@ export async function mount(ctx) {
     const region = regionAt(x, y);
     if (region < 0) return;
     if (tool === 'fill') {
-      snapshot();
-      fillRegionStyled(fillData, labels, region, fillKind, rgba(color), RENDER);
-      sfx.play('fill');
-      paint();
+      tap = { id: e.pointerId, region, sx: e.clientX, sy: e.clientY };
       return;
     }
     snapshot();
@@ -394,12 +397,25 @@ export async function mount(ctx) {
     const p = stroke.s.p;
     if (Math.hypot(x - p[p.length - 2], y - p[p.length - 1]) < 0.003 / view.scale) return;
     p.push(Math.min(1, Math.max(0, x)), Math.min(1, Math.max(0, y)));
-    renderStroke();
+    queueStroke();
   });
 
   const end = (e) => {
+    const wasOnly = pointers.size === 1;
     pointers.delete(e.pointerId);
+    if (tap && tap.id === e.pointerId) {
+      const t = tap;
+      tap = null;
+      if (wasOnly && e.type === 'pointerup' && Math.hypot(e.clientX - t.sx, e.clientY - t.sy) < 12) {
+        snapshot();
+        fillRegionStyled(fillData, labels, t.region, fillKind, rgba(color), RENDER);
+        sfx.play('fill');
+        paint();
+      }
+      return;
+    }
     if (stroke) {
+      if (strokeQueued) renderStroke(); // el último tramo no se pierde
       stroke = null;
       sfx.play('pop');
     }
@@ -407,8 +423,17 @@ export async function mount(ctx) {
   canvas.addEventListener('pointerup', end);
   canvas.addEventListener('pointercancel', end);
 
+  // Como mucho un re-pintado del trazo por frame (en teléfonos modestos cada mezcla cuesta).
+  let strokeQueued = false;
+  function queueStroke() {
+    if (strokeQueued) return;
+    strokeQueued = true;
+    requestAnimationFrame(() => strokeQueued && stroke && renderStroke());
+  }
+
   /** Re-pinta el trazo vivo y lo mezcla con la capa de color SOLO dentro de la zona. */
   function renderStroke() {
+    strokeQueued = false;
     const { mask, bbox, base, s } = stroke;
     const w = bbox.x1 - bbox.x0 + 1;
     const h = bbox.y1 - bbox.y0 + 1;

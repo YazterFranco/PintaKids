@@ -14,7 +14,7 @@ export function createSurface(wrap, opts = {}) {
   const canvas = document.createElement('canvas');
   canvas.setAttribute('aria-label', opts.label ?? 'lienzo');
   wrap.appendChild(canvas);
-  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+  const ctx = canvas.getContext('2d'); // visible: en GPU (solo el cuentagotas lee píxeles, rara vez)
   const cache = document.createElement('canvas');
   const cctx = cache.getContext('2d', { willReadFrequently: true });
   const scratch = document.createElement('canvas');
@@ -47,7 +47,7 @@ export function createSurface(wrap, opts = {}) {
   /** Re-pinta la caché completa (tras deshacer, cargar, redimensionar). */
   function rebuild() {
     cctx.clearRect(0, 0, cache.width, cache.height);
-    paintAll(cctx, history.strokes, cache.width, cache.height);
+    paintAll(cctx, history.strokes, cache.width, cache.height, { underlay: opts.underlay });
     present();
   }
 
@@ -98,18 +98,24 @@ export function createSurface(wrap, opts = {}) {
   }
 
   const pointers = new Map();
+  const zoomable = opts.zoom !== false;
+  let tap = null; // balde/sello: se aplica al levantar UN dedo que casi no se movió (nunca al empezar un pellizco)
 
   canvas.addEventListener('pointerdown', (e) => {
     e.preventDefault();
-    canvas.setPointerCapture(e.pointerId);
+    try {
+      canvas.setPointerCapture(e.pointerId);
+    } catch {
+      /* puntero ya liberado: seguir sin captura */
+    }
     pointers.set(e.pointerId, screenPos(e));
-    if (pointers.size === 2) {
-      // segundo dedo: era un gesto, no un trazo
+    if (pointers.size >= 2) {
+      // segundo dedo: era un gesto, no un trazo ni un toque
       live = null;
+      tap = null;
       present();
       return;
     }
-    if (pointers.size > 2) return;
     const [x, y] = pos(e);
     if (state.tool === 'picker') {
       const [sx, sy] = screenPos(e);
@@ -121,8 +127,8 @@ export function createSurface(wrap, opts = {}) {
       }
       return;
     }
-    if (state.tool === 'fill') {
-      commit(makeStroke('fill', state.color, state.size, [x, y], mirror));
+    if (state.tool === 'fill' || state.tool === 'stamp') {
+      tap = { id: e.pointerId, x, y, sx: e.clientX, sy: e.clientY };
       return;
     }
     const scale = Math.min(canvas.width, canvas.height) / 400 / view.scale;
@@ -131,13 +137,6 @@ export function createSurface(wrap, opts = {}) {
     if (SHAPE_TOOLS.includes(state.tool)) {
       live.p = [x, y, x, y];
       schedule();
-      return;
-    }
-    if (state.tool === 'stamp') {
-      live.ch = state.stamp;
-      const s = live;
-      live = null;
-      commit(s);
       return;
     }
     const p = e.pressure && e.pressure > 0 && e.pressure !== 0.5 ? e.pressure : 1;
@@ -151,6 +150,7 @@ export function createSurface(wrap, opts = {}) {
     const prev = pointers.get(e.pointerId);
     const now = screenPos(e);
     if (pointers.size === 2) {
+      if (!zoomable) return;
       const [otherId] = [...pointers.keys()].filter((id) => id !== e.pointerId);
       const other = pointers.get(otherId);
       view.pinch(prev, other, now, other);
@@ -176,7 +176,22 @@ export function createSurface(wrap, opts = {}) {
   });
 
   const end = (e) => {
+    const wasOnly = pointers.size === 1;
     pointers.delete(e.pointerId);
+    if (tap && tap.id === e.pointerId) {
+      const t = tap;
+      tap = null;
+      if (wasOnly && e.type === 'pointerup' && Math.hypot(e.clientX - t.sx, e.clientY - t.sy) < 12) {
+        if (state.tool === 'fill') commit(makeStroke('fill', state.color, state.size, [t.x, t.y], mirror));
+        else {
+          const s = makeStroke('stamp', state.color, state.size * (Math.min(canvas.width, canvas.height) / 400) / view.scale, [t.x, t.y], mirror);
+          s.ch = state.stamp;
+          if (state.opacity < 1) s.o = state.opacity;
+          commit(s);
+        }
+      }
+      return;
+    }
     if (!live) return;
     const s = live;
     live = null;
@@ -196,7 +211,7 @@ export function createSurface(wrap, opts = {}) {
 
   function commit(stroke) {
     history.set([...history.strokes, stroke]);
-    paintMirrored(cctx, stroke, cache.width, cache.height);
+    paintMirrored(cctx, stroke, cache.width, cache.height, { underlay: opts.underlay });
     present();
     changed();
   }
@@ -274,7 +289,7 @@ export function createSurface(wrap, opts = {}) {
     },
     setUnderlay(fn) {
       opts.underlay = fn;
-      present();
+      rebuild(); // los rellenos dependen del fondo visible
     },
     destroy() {
       ro.disconnect();

@@ -120,3 +120,9 @@ test('Catalog.file sirve solo lo indexado: nunca lee rutas ajenas', () => {
     rmSync(root, { recursive: true, force: true });
   }
 });
+
+test('svgIsSafe rechaza manejadores de eventos (on*=) aunque no haya <script>', () => {
+  ok(!svgIsSafe('<svg viewBox="0 0 4 4"><circle r="1" onload="alert(1)"/></svg>'));
+  ok(!svgIsSafe('<svg viewBox="0 0 4 4" onmouseover = "x()"><path d="M0 0"/></svg>'));
+  ok(svgIsSafe('<svg viewBox="0 0 4 4"><g data-name="ojos"><circle r="1"/></g></svg>'), 'data-name no es un manejador');
+});
